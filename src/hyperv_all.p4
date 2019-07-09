@@ -42,7 +42,7 @@ header_type intrinsic_metadata_t {
         egress_rid               : 16;
         resubmit_flag            : 8 ;
         recirculate_flag         : 8 ;
-        qid                      : 8 ;
+        //qid                      : 8 ; //hr-modified
     }
 }
 
@@ -225,9 +225,10 @@ action do_multicast(mcast_grp) {
  * Set the queue id.
  * @param qid <> queue id
  */
-action do_queue(qid) {
-	modify_field(intrinsic_metadata.qid, qid);
-}
+//hr-modified
+//action do_queue(qid) {
+//	modify_field(intrinsic_metadata.qid, qid);
+//}
 
 /**
  * Forward packets
@@ -402,11 +403,14 @@ action do_subtract_meta_from_meta(left1, right1, mask1) {
  * @param mask2  <header length> value mask
  * @param length1 <header length> header length
  */
+ 
+ //hr-modified
 action do_add_header_1(value,
 					   mask1, 
 					   mask2, 
 					   length1) {
-	push(byte_stack, length1*1);
+	//push(byte_stack, length1*1);hr-modified
+	push(byte_stack, 8);
 
 	bit_or(HDR, HDR & mask1, 
 		(HDR & (~mask1) )>>(length1*8));
@@ -426,7 +430,8 @@ action do_add_header_1(value,
  * @param length1 <header length> header length
  */
 action do_remove_header_1(mask1, mask2, length1) {
-	push(byte_stack, length1*1);
+//	push(byte_stack, length1*1); hr-modified
+	push(byte_stack, 8);
 	subtract_from_field(HEADER_LENGTH, length1);
 	
 	modify_field(byte_stack[0].byte, HEADER_FLAG);
@@ -899,7 +904,7 @@ register global_register {
 #ifndef HYPERVISOR_CONTROL
 #define HYPERVISOR_CONTROL
 
-#include "define.p4"
+//#include "define.p4"
 
 //-----------------------------------------------------
 // Actions for control logic
@@ -943,7 +948,11 @@ action set_action_id(match_result, action_bitmap,
 }
 
 //-----------------------------------------------------
-action set_next_stage(match_bitmap, next_stage, next_prog) {
+action set_next_stage_a(match_bitmap, next_stage, next_prog) {
+	set_stage_and_bitmap(0, match_bitmap,
+        next_stage, next_prog);
+}
+action set_next_stage_b(match_bitmap, next_stage, next_prog) {
 	set_stage_and_bitmap(0, match_bitmap,
         next_stage, next_prog);
 }
@@ -1106,7 +1115,7 @@ header_type description_hdr_t {
 		flag		: 8 ;
 		len         : 8 ;
 		vdp_id      : 16;
-		load_header : * ;
+		load_header : * ; //varbit
 	}
 
 	length : len;
@@ -1133,7 +1142,7 @@ header byte_stack_t byte_stack[64];
 #ifndef HYPERVISOR_INSTANCE
 #define HYPERVISOR_INSTANCE
 
-#include "config.p4"
+//#include "config.p4"
 
 
 
@@ -1242,7 +1251,7 @@ metadata context_metadata_t context_metadata;
 #ifndef HYPERVISOR_TEMPLATE
 #define HYPERVISOR_TEMPLATE
 
-#include "define.p4"
+//#include "define.p4"
 
 //---------------------------------------------------------------------------
 /*
@@ -1280,7 +1289,7 @@ table table_header_match_##X {                                              \
 	actions { 																\
 		set_match_result; 												\
 		set_action_id;														\
-		set_next_stage;													\
+		set_next_stage_a;													\
 		set_action_id_direct;												\
 		end;																\
 		set_match_result_with_next_stage;								\
@@ -1297,7 +1306,7 @@ table table_std_meta_match_##X {                                            \
 	actions { 																\
 		set_match_result; 												\
 		set_action_id;														\
-		set_next_stage;													\
+		set_next_stage_a;													\
 		end;																\
 		set_action_id_direct;												\
 		set_match_result_with_next_stage;								\
@@ -1313,7 +1322,7 @@ table table_user_meta_##X {	                                                \
 		set_match_result;												\
 		set_action_id; 														\
 		set_action_id_direct;												\
-		set_next_stage;													\
+		set_next_stage_a;													\
 		set_match_result_with_next_stage;								\
 		end;																\
 	}                    													\
@@ -1325,7 +1334,7 @@ table table_match_result_##X {                                				\
 	actions {																\
 		set_action_id_direct; 												\ 
 		set_stage_and_bitmap; 												\
-		set_next_stage;														\
+		set_next_stage_a;														\
 	}                														\
 }                                                           				
 
@@ -1371,10 +1380,10 @@ table table_branch_1_##X {													\
 		vdp_metadata.stage_id : exact ;										\
 	}																		\
 	actions { 																\
-		set_next_stage; 													\
+		set_next_stage_a; 													\
 		set_match_result;												\
 		set_action_id; 														\
-		set_next_stage;													\
+		set_next_stage_b;													\
 		end;																\
 	}																		\
 }																			\
@@ -1384,10 +1393,10 @@ table table_branch_2_##X {													\
 		vdp_metadata.stage_id : exact ;										\
 	}																		\
 	actions { 																\
-		set_next_stage;													\
+		set_next_stage_a;													\
 		set_match_result;												\
 		set_action_id; 														\
-		set_next_stage;													\
+		set_next_stage_b;													\
 		end;																\
 	}																		\
 }																			\
@@ -1397,10 +1406,10 @@ table table_branch_3_##X {													\
 		vdp_metadata.stage_id : exact ;										\
 	}																		\
 	actions { 																\
-		set_next_stage;													\
+		set_next_stage_a;													\
 		set_match_result;												\
 		set_action_id; 														\
-		set_next_stage;													\
+		set_next_stage_b;													\
 		end;																\
 	}																		\
 }																			
@@ -1503,7 +1512,7 @@ table table_mod_std_meta_##X {											\
 		do_mod_std_meta;												\
 		do_loopback;													\
 		do_forward;														\
-		do_queue;														\
+		//do_queue;	//hr-modified													\ 
 		do_drop;														\
 		do_multicast;													\
 	}																	\

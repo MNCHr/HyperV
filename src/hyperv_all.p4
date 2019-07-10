@@ -32,7 +32,7 @@ metadata queueing_metadata_t queueing_metadata;
 
 /**
  * intrinsic_metadata_t
- * Predefined metadate related with targets.
+ * Predefined metadata related with targets.
  */
 header_type intrinsic_metadata_t {
     fields {

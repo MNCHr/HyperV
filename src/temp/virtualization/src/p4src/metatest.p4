@@ -306,10 +306,10 @@ control MyIngress(inout headers hdr,
         table_config_at_initial.apply();
         if ((meta.vdp_metadata.stage_id & CONST_NUM_OF_STAGE) == 1) {
             if (meta.vdp_metadata.match_chain_bitmap&4 != 0) {
-		if(meta.vdp_metadata.table_chain&1 != 0)
-                table_header_match_stage1_1.apply();
- 		else if(meta.vdp_metadata.table_chain&2 != 0)
-		table_header_match_stage1_2.apply();
+		        if(meta.vdp_metadata.table_chain&1 != 0)
+                    table_header_match_stage1_1.apply();
+ 		        else if(meta.vdp_metadata.table_chain&2 != 0)
+		            table_header_match_stage1_2.apply();
             }
             if (meta.vdp_metadata.match_chain_bitmap&1 != 0) {
                 table_std_meta_match_stage1.apply();

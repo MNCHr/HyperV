@@ -162,12 +162,15 @@ metadata intrinsic_metadata_t intrinsic_metadata;
 
 
 #define PROG_ID	  vdp_metadata.inst_id
-#define MOD_FLAG  vdp_metadata.mod_flag
+// = PROGRAM_ID
+//#define MOD_FLAG  vdp_metadata.mod_flag
 #define REMOVE_OR_ADD_HEADER vdp_metadata.remove_or_add_flag
-
+// = REMOVE_OR_ADD_FLAG
 #define VDP_META vdp_metadata
 #define HDR  user_metadata.load_header
+// = LOAD_HEADER
 #define META user_metadata.meta
+// = USER_META
 
 #define CPU_PORT    255
 #define DROP_PORT   511

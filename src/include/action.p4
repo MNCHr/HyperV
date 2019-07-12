@@ -64,9 +64,13 @@ action do_multicast(mcast_grp) {
  * Set the queue id.
  * @param qid <> queue id
  */
+ 
+ //hr-modified-exclude
+ /*
 action do_queue(qid) {
 	modify_field(intrinsic_metadata.qid, qid);
 }
+*/
 
 /**
  * Forward packets
@@ -241,11 +245,13 @@ action do_subtract_meta_from_meta(left1, right1, mask1) {
  * @param mask2  <header length> value mask
  * @param length1 <header length> header length
  */
+ 
+ //push(byte_stack, length1*1); hr-modified
 action do_add_header_1(value,
 					   mask1, 
 					   mask2, 
 					   length1) {
-	push(byte_stack, length1*1);
+	push(byte_stack, 8);
 
 	bit_or(HDR, HDR & mask1, 
 		(HDR & (~mask1) )>>(length1*8));
@@ -264,8 +270,10 @@ action do_add_header_1(value,
  * @param mask2  <header length> value mask
  * @param length1 <header length> header length
  */
+ 
+ //push(byte_stack, length1*1); hr-modified
 action do_remove_header_1(mask1, mask2, length1) {
-	push(byte_stack, length1*1);
+	push(byte_stack, 8);
 	subtract_from_field(HEADER_LENGTH, length1);
 	
 	modify_field(byte_stack[0].byte, HEADER_FLAG);

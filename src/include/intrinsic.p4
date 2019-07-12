@@ -41,8 +41,9 @@ header_type intrinsic_metadata_t {
         egress_rid               : 16;
         resubmit_flag            : 8 ;
         recirculate_flag         : 8 ;
-        qid                      : 8 ;
+        
     }
 }
+//qid                      : 8 ;
 
 metadata intrinsic_metadata_t intrinsic_metadata;

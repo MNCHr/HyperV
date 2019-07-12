@@ -16,6 +16,10 @@
 #ifndef HYPERVISOR_EXECUTE
 #define HYPERVISOR_EXECUTE
 
+//hr-modified-inserted-head
+#include "template.p4"
+#include "define.p4"
+//hr-modified-inserted-tail
 
 //----------------- execute ------------------------
 

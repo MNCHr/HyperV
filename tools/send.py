@@ -13,11 +13,11 @@ def get_if():
     ifs=get_if_list()
     iface=None # "h1-eth0"
     for i in get_if_list():
-        if "veth0" in i:
+        if "p4p1" in i:
             iface=i
             break;
     if not iface:
-        print "Cannot find veth0 interface"
+        print "Cannot find p4p1 interface"
         exit(1)
     return iface
 

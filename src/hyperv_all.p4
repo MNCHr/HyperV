@@ -1347,18 +1347,7 @@ table table_match_result_##X {                                				\
  * counter can only be compared with const?
  */
 #define CONDITIONAL_STAGE(X)												\
-control conditional_##X {		    										\
-	apply(table_get_expression_##X);										\
-	if (context_metadata.left_expr < context_metadata.right_expr) {			\
-		apply(table_branch_1_##X);											\
-	} 																		\
-	else if(context_metadata.left_expr > context_metadata.right_expr) {		\
-		apply(table_branch_2_##X);										    \	
-	} 																		\
-	else {																	\
-		apply(table_branch_3_##X);											\
-	}																		\
-}																			\
+
 table table_get_expression_##X {											\
 	reads {																	\
 		vdp_metadata.inst_id : exact ;										\
@@ -1412,7 +1401,20 @@ table table_branch_3_##X {													\
 		set_next_stage_b;													\
 		end;																\
 	}																		\
-}																			
+}	
+control conditional_##X {		    										\
+	apply(table_get_expression_##X);										\
+	if (context_metadata.left_expr < context_metadata.right_expr) {			\
+		apply(table_branch_1_##X);											\
+	} 																		\
+	else if(context_metadata.left_expr > context_metadata.right_expr) {		\
+		apply(table_branch_2_##X);										    \	
+	} 																		\
+	else {																	\
+		apply(table_branch_3_##X);											\
+	}																		\
+}																			\
+																		
 
 
 //-----------------------------------------------------------------------

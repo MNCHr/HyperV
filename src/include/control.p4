@@ -60,8 +60,14 @@ action set_action_id(match_result, action_bitmap,
         match_bitmap, next_stage, next_prog);
 }
 
+
 //-----------------------------------------------------
 action set_next_stage(match_bitmap, next_stage, next_prog) {
+	set_stage_and_bitmap(0, match_bitmap,
+        next_stage, next_prog);
+}
+//hr-modified
+action set_next_stage_extra(match_bitmap, next_stage, next_prog) {
 	set_stage_and_bitmap(0, match_bitmap,
         next_stage, next_prog);
 }

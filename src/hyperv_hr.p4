@@ -1290,12 +1290,12 @@ table table_header_match_##X {                                              \
 		user_metadata.load_header : ternary ;                             	\
 	}                                                                       \
 	actions { 																\
-		set_match_result; 												\
+		set_match_result; 													\
 		set_action_id;														\
 		set_next_stage_a;													\
 		set_action_id_direct;												\
 		end;																\
-		set_match_result_with_next_stage;								\
+		set_match_result_with_next_stage;									\
 	}    									                                \
 }                                                                           \
 table table_std_meta_match_##X {                                            \
@@ -1307,12 +1307,12 @@ table table_std_meta_match_##X {                                            \
 		standard_metadata.instance_type : ternary ;                         \
 	}                                                                       \
 	actions { 																\
-		set_match_result; 												\
+		set_match_result; 													\
 		set_action_id;														\
 		set_next_stage_a;													\
 		end;																\
 		set_action_id_direct;												\
-		set_match_result_with_next_stage;								\
+		set_match_result_with_next_stage;									\
 	}									                                    \
 }                                                                           \
 table table_user_meta_##X {	                                                \
@@ -1322,11 +1322,11 @@ table table_user_meta_##X {	                                                \
 		user_metadata.meta 	        : ternary;	            				\
 	}                                                       				\
 	actions { 																\
-		set_match_result;												\
+		set_match_result;													\
 		set_action_id; 														\
 		set_action_id_direct;												\
 		set_next_stage_a;													\
-		set_match_result_with_next_stage;								\
+		set_match_result_with_next_stage;									\
 		end;																\
 	}                    													\
 }                                                           				\
@@ -1337,7 +1337,7 @@ table table_match_result_##X {                                				\
 	actions {																\
 		set_action_id_direct; 												\ 
 		set_stage_and_bitmap; 												\
-		set_next_stage_a;														\
+		set_next_stage_a;													\
 	}                														\
 }                                                           				
 
@@ -1350,7 +1350,6 @@ table table_match_result_##X {                                				\
  * counter can only be compared with const?
  */
 #define CONDITIONAL_STAGE(X)												\
-
 table table_get_expression_##X {											\
 	reads {																	\
 		vdp_metadata.inst_id : exact ;										\

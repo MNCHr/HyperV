@@ -99,7 +99,7 @@
 #define BIT_MASK_USER_META    2
 ///vdp_metadata.match_chain_bitmap &, apply(table_user_meta_##X)
 #define BIT_MASK_HEADER       4
-///vdp_metadata.match_chain_bitmap &, apply(table_header_match_##X)
+//vdp_metadata.match_chain_bitmap &, apply(table_header_match_##X)
 
 #define USER_META     		user_metadata.meta
 #define LOAD_HEADER   		user_metadata.load_header

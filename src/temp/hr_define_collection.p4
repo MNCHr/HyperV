@@ -94,9 +94,12 @@
 #define	CONST_CONDITIONAL_STAGE_9				18
 
 // Match bitmap
-#define BIT_MASK_STD_META     1
+#define BIT_MASK_STD_META     1 
+///vdp_metadata.match_chain_bitmap &, apply(table_std_meta_match_##X)
 #define BIT_MASK_USER_META    2
+///vdp_metadata.match_chain_bitmap &, apply(table_user_meta_##X)
 #define BIT_MASK_HEADER       4
+///vdp_metadata.match_chain_bitmap &, apply(table_header_match_##X)
 
 #define USER_META     		user_metadata.meta
 #define LOAD_HEADER   		user_metadata.load_header

@@ -105,16 +105,23 @@ metadata context_metadata_t context_metadata;
 parser start {
 	extract(desc_hdr); // Rapid Parsing
 	set_metadata(vdp_metadata.vdp_id, desc_hdr.vdp_id); //??
-	set_metadata(HDR, desc_hdr.load_header);
+	set_metadata(HDR, desc_hdr.load_header); //??
     return ingress;
+}
+/////////////////codemark///////////////#include "include/action.p4"
+
+//***********************************************************
+//				       HyperV primitives
+//***********************************************************
+
+action noop() {
+
 }
 
 /////////////////codemark///////////////#include "include/template.p4"
 
 #ifndef HYPERVISOR_TEMPLATE
 #define HYPERVISOR_TEMPLATE
-
-//#include "define_hr.p4"
 
 //---------------------------------------------------------------------------
 /*
@@ -202,6 +209,223 @@ table table_match_result_##X {                                				\
 }                                                           				
 
 
+//-----------------------------------------------------------------------
+/* 
+ * 
+ */
+#define EXECUTE_ACTION(X)												\
+control execute_do_##X {												\
+	if ((ACTION_BITMAP & BIT_MASK_MOD_HEADER_WITH_META) != 0) {			\
+		apply(table_mod_header_with_meta_##X);							\
+	}																	\
+	if ((ACTION_BITMAP & BIT_MASK_MOD_META_WITH_META) != 0) {			\
+		apply(table_mod_meta_with_meta_##X);							\
+	}																	\
+	if ((ACTION_BITMAP & BIT_MASK_MOD_HEADER_WITH_HEADER) != 0) {		\
+		apply(table_mod_header_with_header_##X);						\
+	}																	\
+	if ((ACTION_BITMAP & BIT_MASK_MOD_META_WITH_HEADER) != 0) {			\
+		apply(table_mod_meta_with_header_##X);							\
+	}																	\
+	if ((ACTION_BITMAP & BIT_MASK_MOD_HEADER_WITH_CONST) != 0) {		\
+		apply(table_mod_header_with_const_##X);							\
+	}																	\
+	if ((ACTION_BITMAP & BIT_MASK_MOD_META_WITH_CONST) != 0) {			\
+		apply(table_mod_meta_with_const_##X);							\
+	}																	\
+	if ((ACTION_BITMAP & BIT_MASK_ADD_HEDAER) != 0) {					\
+		apply(table_add_header_##X);									\
+	}																	\
+	if ((ACTION_BITMAP & BIT_MASK_REMOVE_HEADER) != 0) {				\
+		apply(table_remove_header_##X);									\
+	}																	\
+	if ((ACTION_BITMAP & BIT_MASK_MOD_STD_META) != 0) {					\
+		apply(table_mod_std_meta_##X);									\
+	}																	\
+	if ((ACTION_BITMAP & BIT_MASK_GENERATE_DIGIST) != 0) {			    \
+		apply(table_generate_digest_##X);								\
+	}																	\
+	if ((ACTION_BITMAP & BIT_MASK_ADD ) != 0) {							\
+		apply(table_add_##X);											\
+	}																	\
+	if ((ACTION_BITMAP & BIT_MASK_SUBTRACT ) != 0) {					\
+		apply(table_subtract_##X);										\
+	}																	\
+	if ((ACTION_BITMAP & BIT_MASK_REGISTER) != 0) {						\
+		apply(table_register_##X);										\
+	}																	\
+	if ((ACTION_BITMAP & BIT_MASK_COUNTER) != 0) {						\
+		apply(table_counter_##X);										\
+	}																	\
+	if ((ACTION_BITMAP & BIT_MASK_HASH) != 0) {							\
+	    apply(table_hash_##X);											\
+	}																	\				
+	if ((ACTION_BITMAP & BIT_MASK_PROFILE) != 0) {						\
+	    apply(table_action_profile_##X);								\
+	}																	\
+}																		\
+table table_add_##X {													\
+	reads {																\
+		ACTION_ID : exact;												\
+	}																	\
+	actions {															\
+		do_add_header_with_const;							    		\
+		do_add_meta_with_const;									    	\
+		do_add_header_with_header;									    \
+		do_add_meta_with_header;									    \   
+		do_add_header_with_meta;									    \
+		do_add_meta_with_meta;										    \
+	}																	\
+}																		\
+table table_generate_digest_##X {										\
+	reads {																\
+		ACTION_ID : exact;												\
+	}																	\
+	actions {															\
+		do_gen_digest;											    	\
+	}																	\
+}																		\
+table table_subtract_##X {												\
+	reads {																\
+		ACTION_ID : exact;												\
+	}																	\
+	actions {															\
+		do_subtract_const_from_header;									\
+		do_subtract_const_from_meta;									\
+		do_subtract_header_from_header;									\
+		do_subtract_header_from_meta;									\
+		do_subtract_meta_from_header;									\
+		do_subtract_meta_from_meta;										\
+	}																	\
+}																		\
+table table_mod_std_meta_##X {											\
+	reads {																\
+		ACTION_ID : exact;												\
+	}																	\
+	actions {															\
+		do_mod_std_meta;												\
+		do_loopback;													\
+		do_forward;														\
+		do_drop;														\
+		do_multicast;													\
+	}																	\
+}																		\
+table table_mod_header_with_const_##X {									\
+	reads {																\
+		ACTION_ID : exact;												\
+	}																	\
+	actions {															\
+		do_mod_header_with_const;									    \
+		do_mod_header_with_const_and_checksum;					    	\
+	}																	\
+}																		\
+table table_mod_meta_with_const_##X {									\
+	reads {																\
+		ACTION_ID : exact;												\
+	}																	\
+	actions {															\
+		do_mod_meta_with_const;										    \
+	}																	\
+}																		\
+table table_mod_header_with_meta_##X {									\
+	reads {																\
+		ACTION_ID : exact;												\
+	}																	\
+	actions {															\
+		do_mod_header_with_meta_1;								    	\
+		do_mod_header_with_meta_2;									    \
+		do_mod_header_with_meta_3;								    	\
+	}																	\
+}																		\
+table table_mod_meta_with_meta_##X {									\
+	reads {																\
+		ACTION_ID : exact;												\
+	}																	\
+	actions {															\
+		do_mod_meta_with_meta_1;				    					\
+		do_mod_meta_with_meta_2;					    				\
+		do_mod_meta_with_meta_3;						    			\
+	}																	\
+}																		\
+table table_mod_header_with_header_##X {								\
+	reads {																\
+		ACTION_ID : exact;												\
+	}																	\
+	actions {															\
+		do_mod_header_with_header_1;					    			\
+		do_mod_header_with_header_2;						    		\
+		do_mod_header_with_header_3;							    	\
+	}																	\
+}																		\
+table table_mod_meta_with_header_##X {									\
+	reads {																\
+		ACTION_ID : exact;												\
+	}																	\
+	actions {															\
+		do_mod_meta_with_header_1;						    			\
+		do_mod_meta_with_header_2;							    		\
+		do_mod_meta_with_header_3;								    	\
+	}																	\
+}																		\
+table table_add_header_##X {											\
+	reads {																\
+		ACTION_ID : exact;												\
+	}																	\
+	actions {															\
+		do_add_header_1;									    		\
+	}																	\
+}																		\	
+table table_remove_header_##X {											\
+	reads {																\
+		ACTION_ID : exact;												\
+	}																	\
+	actions {															\
+		do_remove_header_1;												\
+	}																	\
+}																		\
+table table_hash_##X {													\
+	reads {																\
+		ACTION_ID : exact;												\
+	}																	\
+	actions {															\
+		do_hash_crc16;													\
+		do_hash_crc32;													\	
+	}																	\
+}																		\
+table table_action_profile_##X {   										\
+	reads {																\
+		ACTION_ID : exact;												\
+	}																	\
+	action_profile : hash_profile;  									\
+}																		\
+table table_counter_##X {												\
+	reads {																\
+		ACTION_ID : exact;												\
+	}																	\
+	actions {															\
+		packet_count;													\
+		packet_count_clear;												\
+	}																	\
+}																		\
+table table_register_##X {												\
+	reads {																\
+		ACTION_ID : exact;												\
+	}																	\
+	actions {															\
+		do_load_register_into_header;									\
+		do_load_register_into_meta;										\
+		do_write_header_into_register;									\
+		do_wirte_meta_into_register;									\
+		do_wirte_const_into_register;									\
+	}																	\
+}																		\
+counter counter_##X {													\
+ 	type : packets_and_bytes;											\
+	direct : table_counter_##X;											\
+}																		
+
+
+#endif
 
 
 //--------------------------------ingress--------------------------

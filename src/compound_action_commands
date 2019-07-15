@@ -1,0 +1,2 @@
+table_set_default MA1 do_drop
+table_add MA1 do_compound 0 0x00010000000000000000&&&0xFFFF0000000000000000 => 1 0x000020000000000000000 1

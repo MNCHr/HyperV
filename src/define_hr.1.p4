@@ -46,31 +46,31 @@
 #define EXTEND_ACTION_PROFILE                                39
 
 // MASK
-#define BIT_MASK_MOD_HEADER_WITH_CONST                      (1<<EXTEND_ACTION_MODIFY_HEADER_WITH_CONST)
-#define BIT_MASK_MOD_META_WITH_CONST                        (1<<EXTEND_ACTION_MODIFY_METADATA_WITH_CONST)
-#define BIT_MASK_MOD_HEADER_WITH_META                       (1<<EXTEND_ACTION_MODIFY_HEADER_WITH_METADATA)
-#define BIT_MASK_MOD_META_WITH_META                         (1<<EXTEND_ACTION_MODIFY_METADATA_WITH_METADATA)
-#define BIT_MASK_MOD_HEADER_WITH_HEADER                     (1<<EXTEND_ACTION_MODIFY_HEADER_WITH_HEADER)
-#define BIT_MASK_MOD_META_WITH_HEADER                       (1<<EXTEND_ACTION_MODIFY_METADATA_WITH_HEADER)
-#define BIT_MASK_MOD_STD_META                               (1<<EXTEND_ACTION_MODIFY_STANDARD_METADATA)
+#define BIT_MASK_MOD_HEADER_WITH_CONST                      1<<31 (1<<EXTEND_ACTION_MODIFY_HEADER_WITH_CONST)
+#define BIT_MASK_MOD_META_WITH_CONST                        1<<32 (1<<EXTEND_ACTION_MODIFY_METADATA_WITH_CONST)
+#define BIT_MASK_MOD_HEADER_WITH_META                       1<<33 (1<<EXTEND_ACTION_MODIFY_HEADER_WITH_METADATA)
+#define BIT_MASK_MOD_META_WITH_META                         1<<34 (1<<EXTEND_ACTION_MODIFY_METADATA_WITH_METADATA)
+#define BIT_MASK_MOD_HEADER_WITH_HEADER                     1<<35 (1<<EXTEND_ACTION_MODIFY_HEADER_WITH_HEADER)
+#define BIT_MASK_MOD_META_WITH_HEADER                       1<<36 (1<<EXTEND_ACTION_MODIFY_METADATA_WITH_HEADER)
+#define BIT_MASK_MOD_STD_META                               1<<37 (1<<EXTEND_ACTION_MODIFY_STANDARD_METADATA)
 
-#define BIT_MASK_ADD_HEDAER                                 (1<<PRIMITIVE_ACTION_ADD_HEDAER)
-#define BIT_MASK_COPY_HEADER                                (1<<PRIMITIVE_ACTION_COPY_HEADER)
-#define BIT_MASK_REMOVE_HEADER                              (1<<PRIMITIVE_ACTION_REMOVE_HEDAER)
-#define BIT_MASK_GENERATE_DIGIST                            (1<<PRIMITIVE_ACTION_GENERATE_DIGEST)
+#define BIT_MASK_ADD_HEDAER                                 1<<0 (1<<PRIMITIVE_ACTION_ADD_HEDAER)
+#define BIT_MASK_COPY_HEADER                                1<<1 (1<<PRIMITIVE_ACTION_COPY_HEADER)
+#define BIT_MASK_REMOVE_HEADER                              1<<2 (1<<PRIMITIVE_ACTION_REMOVE_HEDAER)
+#define BIT_MASK_GENERATE_DIGIST                            1<<24 (1<<PRIMITIVE_ACTION_GENERATE_DIGEST)
 
-#define BIT_MASK_ADD                                        ((1<<PRIMITIVE_ACTION_ADD_TO_FIELD) | (1<<PRIMITIVE_ACTION_ADD))
-#define BIT_MASK_SUBTRACT                                   ((1<<PRIMITIVE_ACTION_SUBTRACT_FROM_FIELD) | (1<<PRIMITIVE_ACTION_SUBTRACT))
-#define BIT_MASK_REGISTER                                   ((1<<PRIMITIVE_ACTION_REGISTER_READ) | (1<<PRIMITIVE_ACTION_REGISTER_WRITE))
-#define BIT_MASK_COUNTER                                    ((1<<PRIMITIVE_ACTION_COUNT))
+#define BIT_MASK_ADD                                        1<<4 ((1<<PRIMITIVE_ACTION_ADD_TO_FIELD) | (1<<PRIMITIVE_ACTION_ADD))
+#define BIT_MASK_SUBTRACT                                   1<<6 ((1<<PRIMITIVE_ACTION_SUBTRACT_FROM_FIELD) | (1<<PRIMITIVE_ACTION_SUBTRACT))
+#define BIT_MASK_REGISTER                                   1<<22 ((1<<PRIMITIVE_ACTION_REGISTER_READ) | (1<<PRIMITIVE_ACTION_REGISTER_WRITE))
+#define BIT_MASK_COUNTER                                    1<<20 ((1<<PRIMITIVE_ACTION_COUNT))
 
-#define BIT_MASK_DROP                                       (1<<PRIMITIVE_ACTION_DROP)
-#define BIT_MASK_BIT_OR                                     (1<<PRIMITIVE_ACTION_BIT_OR)
-#define BIT_MASK_BIT_XOR                                    (1<<PRIMITIVE_ACTION_BIT_XOR)
-#define BIT_MASK_BIT_AND                                    (1<<PRIMITIVE_ACTION_BIT_AND)
-#define BIT_MASK_TRUNCATE                                   (1<<PRIMITIVE_ACTION_TRUNCATE)
-#define BIT_MASK_HASH                                       (1<<EXTEND_ACTION_HASH)
-#define BIT_MASK_PROFILE                                    (1<<EXTEND_ACTION_PROFILE)
+#define BIT_MASK_DROP                                       1<<16 (1<<PRIMITIVE_ACTION_DROP)
+#define BIT_MASK_BIT_OR                                     1<<11 (1<<PRIMITIVE_ACTION_BIT_OR)
+#define BIT_MASK_BIT_XOR                                    1<<12 (1<<PRIMITIVE_ACTION_BIT_XOR)
+#define BIT_MASK_BIT_AND                                    1<<10 (1<<PRIMITIVE_ACTION_BIT_AND)
+#define BIT_MASK_TRUNCATE                                   1<<15 (1<<PRIMITIVE_ACTION_TRUNCATE)
+#define BIT_MASK_HASH                                       1<<38 (1<<EXTEND_ACTION_HASH)
+#define BIT_MASK_PROFILE                                    1<<39 (1<<EXTEND_ACTION_PROFILE)
 
 // STAGE
 #define CONST_NUM_OF_STAGE			0x1f

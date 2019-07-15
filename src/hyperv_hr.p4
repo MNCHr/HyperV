@@ -42,7 +42,6 @@ header_type intrinsic_metadata_t {
         egress_rid               : 16;
         resubmit_flag            : 8 ;
         recirculate_flag         : 8 ;
-        //qid                      : 8 ; //hr-modified
     }
 }
 
@@ -189,49 +188,12 @@ action noop() {
 }
 
 /**
- * Count packets with global register.
- * @param index <> packet counter index.
- */
-action packet_count(index) {
-	register_read(context_metadata.count, global_register, index);
-	register_write(global_register,  // Global register 
-				   index, 
-				   context_metadata.count + 1);
-}
-
-/**
- * Clear packet counter.
- * @param index <> pakcet counter index
- */ 
-action packet_count_clear(index) {
-	register_write(global_register, index, 0);
-}
-
-/**
  * Loop back packets.
  */
 action do_loopback() {
 	modify_field(standard_metadata.egress_spec, 
 		standard_metadata.ingress_port);
 }
-
-
-/**
- * Set the multicast group.
- * @param mcast_grp <> multicast group ID. 
- */
-action do_multicast(mcast_grp) {
-	modify_field(intrinsic_metadata.mcast_grp, mcast_grp);
-}
-
-/**
- * Set the queue id.
- * @param qid <> queue id
- */
-//hr-modified
-//action do_queue(qid) {
-//	modify_field(intrinsic_metadata.qid, qid);
-//}
 
 /**
  * Forward packets
@@ -247,16 +209,6 @@ action do_forward(port) {
 action do_drop() {
 	drop();
 } 
-
-
-/**
- * Generate digest to the CPU receiver.
- * @param receiver
- */
-action do_gen_digest(receiver) {
-	generate_digest(receiver, digest_list);
-}
-
 
 /**
  * Add header fileds with const integers.
@@ -290,7 +242,7 @@ action do_add_header_with_header(left1,
 	bit_or(HDR, HDR & (~mask1), 
 		(HDR + (((HDR<<left1)>>right1)&mask1)) & mask1);
 }
-
+//??
 /**
  * Add user defiend metadata with the header values.
  * @param left1 <header length> left shift
@@ -303,7 +255,7 @@ action do_add_meta_with_header(left1,
 	bit_or(META, META & (~mask1), 
 		(META + (((HDR<<left1)>>right1)&mask1)) & mask1);
 }
-
+//??
 /**
  * Add header with the metadata values.
  * @param left1 <header length> left shift
@@ -316,7 +268,7 @@ action do_add_header_with_meta(left1,
 	bit_or(HDR, HDR & (~mask1), 
 		(HDR + (((META<<left1)>>right1)&mask1)) & mask1);
 }
-
+//??
 /**
  * Add metadata with the metadata values.
  * @param left1 <header length> left shift
@@ -329,7 +281,7 @@ action do_add_meta_with_meta(left1,
 	bit_or(META, META & (~mask1), 
 		(META + (((META<<left1)>>right1)&mask1)) & mask1);
 }
-
+//??
 /**
  * Substract header with the const values.
  * @param value1 <header length> the const value
@@ -339,7 +291,7 @@ action do_subtract_const_from_header(value1, mask1) {
 	bit_or(HDR, HDR & (~mask1), 
 		(HDR - value1) & mask1);
 }
-
+//??
 /**
  * Substract metadata with the const values.
  * @param value1 <header length> the const value
@@ -349,7 +301,7 @@ action do_subtract_const_from_meta(value1, mask1) {
 	bit_or(META, META & (~mask1), 
 		(META - value1) & mask1);
 }
-
+//??
 /**
  * Substract header with the header values.
  * @param left1 <header length> left shift
@@ -362,7 +314,7 @@ action do_subtract_header_from_header(left1,
 	bit_or(HDR, HDR & (~mask1), 
 		(HDR - (((HDR<<left1)>>right1)&mask1)) & mask1);
 }
-
+//??
 /**
  * Substract header with the metadata values.
  * @param left1 <header length> left shift
@@ -376,7 +328,7 @@ action do_subtract_header_from_meta(left1,
 		(META - (((HDR<<left1)>>right1)&mask1)) & mask1);
 }
 
-
+//??
 /**
  * Substract metadata with the header values.
  * @param left1 <header length> left shift
@@ -387,7 +339,7 @@ action do_subtract_meta_from_header(left1, right1, mask1) {
 	bit_or(HDR, HDR & (~mask1), 
 		(HDR - (((META<<left1)>>right1)&mask1)) & mask1);
 }
-
+//??
 /**
  * Substract metadata with the metadata values.
  * @param left1 <header length> left shift
@@ -766,9 +718,9 @@ action do_write_header_into_register(index,
 								     right1, 
 								     mask1) {
 	register_write(global_register, index, 
-		(HDR>>right1) & mask1);
+		(HDR>>right1) & 800);
 }
-
+//??
 /**
  * Load the metadata field into the register.
  * @param index register index
@@ -777,9 +729,9 @@ action do_write_header_into_register(index,
  */
 action do_wirte_meta_into_register(index, right1, mask1) {
 	register_write(global_register, index, 
-		(META>>right1) & mask1);
+		(META>>right1) & 256);
 }
-
+//??
 /**
  * Load the const value into the register.
  * @param index register index
@@ -955,6 +907,7 @@ action set_next_stage_a(match_bitmap, next_stage, next_prog) {
 	set_stage_and_bitmap(0, match_bitmap,
         next_stage, next_prog);
 }
+//
 action set_next_stage_b(match_bitmap, next_stage, next_prog) {
 	set_stage_and_bitmap(0, match_bitmap,
         next_stage, next_prog);
@@ -1118,7 +1071,7 @@ header_type description_hdr_t {
 		flag		: 8 ;
 		len         : 8 ;
 		vdp_id      : 16;
-		load_header : * ; //varbit
+		load_header : 800 ; //varbit
 	}
 
 	length : len;
@@ -1203,7 +1156,7 @@ header_type vdp_metadata_t {
 		match_chain_result  : 48;
 		match_chain_bitmap  : 3 ;
 
-		recirculation_flag    : 1 ;      
+		recirculation_flag  : 1 ;      
 		remove_or_add_flag  : 1 ;
 		mod_flag			: 1 ;
 	}
@@ -1249,400 +1202,10 @@ metadata context_metadata_t context_metadata;
 
 #endif
 
-/////////////////codemark///////////////#include "include/template.p4"
-
-#ifndef HYPERVISOR_TEMPLATE
-#define HYPERVISOR_TEMPLATE
-
-//#include "define.p4"
-
-//---------------------------------------------------------------------------
-/*
- * In the match pipeline, we classify the match fields in a standard match-
- * action table into three types: packet header, standard metadata and user-
- * defined matadata. The fourth table maps the combined result to an action
- * bitmap. In this way we avoid using an exceedingly large match filed in one
- * table to reduce TCAM pressure. A match bitmap is also used to indicate whe-
- * ther a table should be executed or skipped in a match pipeline.
- */
-#define STAGE(X)															\
-control match_action_##X {		                                          	\
-	if (vdp_metadata.match_chain_bitmap & BIT_MASK_HEADER    != 0) {     	\
-		apply(table_header_match_##X);                                      \
-	}                                                                       \
-	if (vdp_metadata.match_chain_bitmap & BIT_MASK_STD_META  != 0) {     	\
-		apply(table_std_meta_match_##X);                                    \
-	}                                                                       \
-	if (vdp_metadata.match_chain_bitmap & BIT_MASK_USER_META != 0) {     	\
-		apply(table_user_meta_##X);                                         \
-	}																		\
-	if (MATCH_RESULT != 0) {												\
-		apply(table_match_result_##X);										\
-	}																		\
-	if (ACTION_BITMAP != 0)	{												\
-		execute_do_##X();													\
-    }						                                                \
-}                                                                           \
-table table_header_match_##X {                                              \
-	reads {                                                                 \
-		vdp_metadata.inst_id : exact ;                                		\
-		vdp_metadata.stage_id : exact ;                                  	\
-		user_metadata.load_header : ternary ;                             	\
-	}                                                                       \
-	actions { 																\
-		set_match_result; 													\
-		set_action_id;														\
-		set_next_stage_a;													\
-		set_action_id_direct;												\
-		end;																\
-		set_match_result_with_next_stage;									\
-	}    									                                \
-}                                                                           \
-table table_std_meta_match_##X {                                            \
-	reads{                                                                  \
-		vdp_metadata.inst_id : exact ;                                		\
-		vdp_metadata.stage_id : exact ;                                  	\
-		standard_metadata.ingress_port : ternary ;                          \
-		standard_metadata.egress_spec : ternary ;                           \
-		standard_metadata.instance_type : ternary ;                         \
-	}                                                                       \
-	actions { 																\
-		set_match_result; 													\
-		set_action_id;														\
-		set_next_stage_a;													\
-		end;																\
-		set_action_id_direct;												\
-		set_match_result_with_next_stage;									\
-	}									                                    \
-}                                                                           \
-table table_user_meta_##X {	                                                \
-	reads {                             				                    \
-		vdp_metadata.inst_id 		: exact ;       				        \
-		vdp_metadata.stage_id 		: exact ;   	               			\
-		user_metadata.meta 	        : ternary;	            				\
-	}                                                       				\
-	actions { 																\
-		set_match_result;													\
-		set_action_id; 														\
-		set_action_id_direct;												\
-		set_next_stage_a;													\
-		set_match_result_with_next_stage;									\
-		end;																\
-	}                    													\
-}                                                           				\
-table table_match_result_##X {                                				\
-	reads {																	\
-		MATCH_RESULT 	: exact;         									\
-	}                                                       				\
-	actions {																\
-		set_action_id_direct; 												\ 
-		set_stage_and_bitmap; 												\
-		set_next_stage_a;													\
-	}                														\
-}                                                           				
-
-
-//---------------------------------------------------------------------------
-/* Stages can branch to another stage depending on the result of a boolean 
- * expression.
- * table_get_expression_x is used to calculate all types of boolean expressions
- * e.g. header <|=|> const, header <|=|> header, header <|=|> meta
- * counter can only be compared with const?
- */
-#define CONDITIONAL_STAGE(X)												\
-table table_get_expression_##X {											\
-	reads {																	\
-		vdp_metadata.inst_id : exact ;										\
-		vdp_metadata.stage_id : exact ;										\
-	}																		\
-	actions {																\
-		set_expr_header_op_const;										\
-		set_expr_header_op_header;										\
-		set_expr_header_op_meta;											\
-		set_expr_meta_op_const;											\
-		set_expr_meta_op_header;											\
-		set_expr_meta_op_meta;											\
-		set_expr_counter_op_const;										\
-	}																		\
-}																			\
-table table_branch_1_##X {													\
-	reads {																	\
-		vdp_metadata.inst_id : exact ;										\
-		vdp_metadata.stage_id : exact ;										\
-	}																		\
-	actions { 																\
-		set_next_stage_a; 													\
-		set_match_result;												\
-		set_action_id; 														\
-		set_next_stage_b;													\
-		end;																\
-	}																		\
-}																			\
-table table_branch_2_##X {													\
-	reads {																	\
-		vdp_metadata.inst_id : exact ;										\
-		vdp_metadata.stage_id : exact ;										\
-	}																		\
-	actions { 																\
-		set_next_stage_a;													\
-		set_match_result;												\
-		set_action_id; 														\
-		set_next_stage_b;													\
-		end;																\
-	}																		\
-}																			\
-table table_branch_3_##X {													\
-	reads {																	\
-		vdp_metadata.inst_id : exact ;										\
-		vdp_metadata.stage_id : exact ;										\
-	}																		\
-	actions { 																\
-		set_next_stage_a;													\
-		set_match_result;												\
-		set_action_id; 														\
-		set_next_stage_b;													\
-		end;																\
-	}																		\
-}	
-control conditional_##X {		    										\
-	apply(table_get_expression_##X);										\
-	if (context_metadata.left_expr < context_metadata.right_expr) {			\
-		apply(table_branch_1_##X);											\
-	} 																		\
-	else if(context_metadata.left_expr > context_metadata.right_expr) {		\
-		apply(table_branch_2_##X);										    \	
-	} 																		\
-	else {																	\
-		apply(table_branch_3_##X);											\
-	}																		\
-}																			\
-																		
-
-
-//-----------------------------------------------------------------------
-/* 
- * 
- */
-#define EXECUTE_ACTION(X)												\
-control execute_do_##X {												\
-	if ((ACTION_BITMAP & BIT_MASK_MOD_HEADER_WITH_META) != 0) {			\
-		apply(table_mod_header_with_meta_##X);							\
-	}																	\
-	if ((ACTION_BITMAP & BIT_MASK_MOD_META_WITH_META) != 0) {			\
-		apply(table_mod_meta_with_meta_##X);							\
-	}																	\
-	if ((ACTION_BITMAP & BIT_MASK_MOD_HEADER_WITH_HEADER) != 0) {		\
-		apply(table_mod_header_with_header_##X);						\
-	}																	\
-	if ((ACTION_BITMAP & BIT_MASK_MOD_META_WITH_HEADER) != 0) {			\
-		apply(table_mod_meta_with_header_##X);							\
-	}																	\
-	if ((ACTION_BITMAP & BIT_MASK_MOD_HEADER_WITH_CONST) != 0) {		\
-		apply(table_mod_header_with_const_##X);							\
-	}																	\
-	if ((ACTION_BITMAP & BIT_MASK_MOD_META_WITH_CONST) != 0) {			\
-		apply(table_mod_meta_with_const_##X);							\
-	}																	\
-	if ((ACTION_BITMAP & BIT_MASK_ADD_HEDAER) != 0) {					\
-		apply(table_add_header_##X);									\
-	}																	\
-	if ((ACTION_BITMAP & BIT_MASK_REMOVE_HEADER) != 0) {				\
-		apply(table_remove_header_##X);									\
-	}																	\
-	if ((ACTION_BITMAP & BIT_MASK_MOD_STD_META) != 0) {					\
-		apply(table_mod_std_meta_##X);									\
-	}																	\
-	if ((ACTION_BITMAP & BIT_MASK_GENERATE_DIGIST) != 0) {			    \
-		apply(table_generate_digest_##X);								\
-	}																	\
-	if ((ACTION_BITMAP & BIT_MASK_ADD ) != 0) {							\
-		apply(table_add_##X);											\
-	}																	\
-	if ((ACTION_BITMAP & BIT_MASK_SUBTRACT ) != 0) {					\
-		apply(table_subtract_##X);										\
-	}																	\
-	if ((ACTION_BITMAP & BIT_MASK_REGISTER) != 0) {						\
-		apply(table_register_##X);										\
-	}																	\
-	if ((ACTION_BITMAP & BIT_MASK_COUNTER) != 0) {						\
-		apply(table_counter_##X);										\
-	}																	\
-	if ((ACTION_BITMAP & BIT_MASK_HASH) != 0) {							\
-	    apply(table_hash_##X);											\
-	}																	\				
-	if ((ACTION_BITMAP & BIT_MASK_PROFILE) != 0) {						\
-	    apply(table_action_profile_##X);								\
-	}																	\
-}																		\
-table table_add_##X {													\
-	reads {																\
-		ACTION_ID : exact;												\
-	}																	\
-	actions {															\
-		do_add_header_with_const;									\
-		do_add_meta_with_const;										\
-		do_add_header_with_header;									\
-		do_add_meta_with_header;									\
-		do_add_header_with_meta;									\
-		do_add_meta_with_meta;										\
-	}																	\
-}																		\
-table table_generate_digest_##X {										\
-	reads {																\
-		ACTION_ID : exact;												\
-	}																	\
-	actions {															\
-		do_gen_digest;												\
-	}																	\
-}																		\
-table table_subtract_##X {												\
-	reads {																\
-		ACTION_ID : exact;												\
-	}																	\
-	actions {															\
-		do_subtract_const_from_header;									\
-		do_subtract_const_from_meta;									\
-		do_subtract_header_from_header;									\
-		do_subtract_header_from_meta;									\
-		do_subtract_meta_from_header;									\
-		do_subtract_meta_from_meta;										\
-	}																	\
-}																		\
-table table_mod_std_meta_##X {											\
-	reads {																\
-		ACTION_ID : exact;												\
-	}																	\
-	actions {															\
-		do_mod_std_meta;												\
-		do_loopback;													\
-		do_forward;														\
-		//do_queue;	//hr-modified													\ 
-		do_drop;														\
-		do_multicast;													\
-	}																	\
-}																		\
-table table_mod_header_with_const_##X {									\
-	reads {																\
-		ACTION_ID : exact;												\
-	}																	\
-	actions {															\
-		do_mod_header_with_const;									\
-		do_mod_header_with_const_and_checksum;						\
-	}																	\
-}																		\
-table table_mod_meta_with_const_##X {									\
-	reads {																\
-		ACTION_ID : exact;												\
-	}																	\
-	actions {															\
-		do_mod_meta_with_const;										\
-	}																	\
-}																		\
-table table_mod_header_with_meta_##X {									\
-	reads {																\
-		ACTION_ID : exact;												\
-	}																	\
-	actions {															\
-		do_mod_header_with_meta_1;									\
-		do_mod_header_with_meta_2;									\
-		do_mod_header_with_meta_3;									\
-	}																	\
-}																		\
-table table_mod_meta_with_meta_##X {									\
-	reads {																\
-		ACTION_ID : exact;												\
-	}																	\
-	actions {															\
-		do_mod_meta_with_meta_1;									\
-		do_mod_meta_with_meta_2;									\
-		do_mod_meta_with_meta_3;									\
-	}																	\
-}																		\
-table table_mod_header_with_header_##X {								\
-	reads {																\
-		ACTION_ID : exact;												\
-	}																	\
-	actions {															\
-		do_mod_header_with_header_1;								\
-		do_mod_header_with_header_2;								\
-		do_mod_header_with_header_3;								\
-	}																	\
-}																		\
-table table_mod_meta_with_header_##X {									\
-	reads {																\
-		ACTION_ID : exact;												\
-	}																	\
-	actions {															\
-		do_mod_meta_with_header_1;									\
-		do_mod_meta_with_header_2;									\
-		do_mod_meta_with_header_3;									\
-	}																	\
-}																		\
-table table_add_header_##X {											\
-	reads {																\
-		ACTION_ID : exact;												\
-	}																	\
-	actions {															\
-		do_add_header_1;											\
-	}																	\
-}																		\	
-table table_remove_header_##X {											\
-	reads {																\
-		ACTION_ID : exact;												\
-	}																	\
-	actions {															\
-		do_remove_header_1;												\
-	}																	\
-}																		\
-table table_hash_##X {													\
-	reads {																\
-		ACTION_ID : exact;												\
-	}																	\
-	actions {															\
-		do_hash_crc16;													\
-		do_hash_crc32;													\	
-	}																	\
-}																		\
-table table_action_profile_##X {   										\
-	reads {																\
-		ACTION_ID : exact;												\
-	}																	\
-	action_profile : hash_profile;  									\
-}																		\
-table table_counter_##X {												\
-	reads {																\
-		ACTION_ID : exact;												\
-	}																	\
-	actions {															\
-		packet_count;													\
-		packet_count_clear;												\
-	}																	\
-}																		\
-table table_register_##X {												\
-	reads {																\
-		ACTION_ID : exact;												\
-	}																	\
-	actions {															\
-		do_load_register_into_header;									\
-		do_load_register_into_meta;										\
-		do_write_header_into_register;									\
-		do_wirte_meta_into_register;									\
-		do_wirte_const_into_register;									\
-	}																	\
-}																		\
-counter counter_##X {													\
- 	type : packets_and_bytes;											\
-	direct : table_counter_##X;											\
-}																		
-
-
-#endif
+/////////////////codemark///////////////
+#include "template_hr.p4"
 
 /////////////////codemark///////////////#include "include/execute.p4"
-
-#ifndef HYPERVISOR_EXECUTE
-#define HYPERVISOR_EXECUTE
-
 
 //----------------- execute ------------------------
 
@@ -1672,9 +1235,6 @@ EXECUTE_ACTION(stage8)
 
 //------------------ stage 8 -----------------------
 EXECUTE_ACTION(stage9)
-
-#endif
-
 
 /////////////////codemark///////////////#include "include/checksum.p4"
 
@@ -1779,19 +1339,11 @@ control ingress {
 	if (PROG_ID != 0 and PROG_ID != 0xFF) {
 		//--------------------stage 1-----------------
 		if (((vdp_metadata.stage_id & CONST_NUM_OF_STAGE)) == 
-											CONST_CONDITIONAL_STAGE_1) {
-			conditional_stage1();
-		}
-		if (((vdp_metadata.stage_id & CONST_NUM_OF_STAGE)) == 
 														CONST_STAGE_1) {
 			match_action_stage1();
 		}
 		
 		//--------------------stage 2-----------------
-		if (((vdp_metadata.stage_id & CONST_NUM_OF_STAGE)) == 
-											CONST_CONDITIONAL_STAGE_2) {
-			conditional_stage2();
-		}
 		if (((vdp_metadata.stage_id & CONST_NUM_OF_STAGE)) == 
 														CONST_STAGE_2) {
 			match_action_stage2();
@@ -1799,19 +1351,11 @@ control ingress {
 
 		//--------------------stage 3-----------------
 		if (((vdp_metadata.stage_id & CONST_NUM_OF_STAGE)) == 
-											CONST_CONDITIONAL_STAGE_3) {
-			conditional_stage3();
-		}
-		if (((vdp_metadata.stage_id & CONST_NUM_OF_STAGE)) == 
 														CONST_STAGE_3) {
 			match_action_stage3();
 		}
 
 		//--------------------stage 4-----------------
-		if (((vdp_metadata.stage_id & CONST_NUM_OF_STAGE)) == 
-											CONST_CONDITIONAL_STAGE_4) {
-			conditional_stage4();
-		}
 		if (((vdp_metadata.stage_id & CONST_NUM_OF_STAGE)) == 
 														CONST_STAGE_4) {
 			match_action_stage4();
@@ -1819,19 +1363,11 @@ control ingress {
 
 		//--------------------stage 5-----------------
 		if (((vdp_metadata.stage_id & CONST_NUM_OF_STAGE)) == 
-											CONST_CONDITIONAL_STAGE_5) {
-			conditional_stage5();
-		}
-		if (((vdp_metadata.stage_id & CONST_NUM_OF_STAGE)) == 
 														CONST_STAGE_5) {
 			match_action_stage5();
 		}
 		
 		//--------------------stage 6-----------------
-		if (((vdp_metadata.stage_id & CONST_NUM_OF_STAGE)) == 
-											CONST_CONDITIONAL_STAGE_6) {
-			conditional_stage6();
-		}
 		if (((vdp_metadata.stage_id & CONST_NUM_OF_STAGE)) == 
 														CONST_STAGE_6) {
 			match_action_stage6();
@@ -1839,29 +1375,17 @@ control ingress {
 
 		//--------------------stage 7-----------------
 		if (((vdp_metadata.stage_id & CONST_NUM_OF_STAGE)) == 
-											CONST_CONDITIONAL_STAGE_7) {
-			conditional_stage7();
-		}
-		if (((vdp_metadata.stage_id & CONST_NUM_OF_STAGE)) == 
 														CONST_STAGE_7) {
 			match_action_stage7();
 		}
 
 		//--------------------stage 8-----------------
 		if (((vdp_metadata.stage_id & CONST_NUM_OF_STAGE)) == 
-											CONST_CONDITIONAL_STAGE_8) {
-			conditional_stage8();
-		}
-		if (((vdp_metadata.stage_id & CONST_NUM_OF_STAGE)) == 
 														CONST_STAGE_8) {
 			match_action_stage8();
 		}
 
 				//--------------------stage 8-----------------
-		if (((vdp_metadata.stage_id & CONST_NUM_OF_STAGE)) == 
-											CONST_CONDITIONAL_STAGE_9) {
-			conditional_stage9();
-		}
 		if (((vdp_metadata.stage_id & CONST_NUM_OF_STAGE)) == 
 														CONST_STAGE_9) {
 			match_action_stage9();
@@ -1873,32 +1397,6 @@ control ingress {
 		}
 	}
 }
-
-//---------conditional stage 1-------------------------
-CONDITIONAL_STAGE(stage1)
-
-//---------conditional stage 2-------------------------
-CONDITIONAL_STAGE(stage2)
-
-//---------conditional stage 3-------------------------
-CONDITIONAL_STAGE(stage3)
-
-//---------conditional stage 4-------------------------
-CONDITIONAL_STAGE(stage4)
-//---------conditional stage 1-------------------------
-CONDITIONAL_STAGE(stage5)
-
-//---------conditional stage 2-------------------------
-CONDITIONAL_STAGE(stage6)
-
-//---------conditional stage 3-------------------------
-CONDITIONAL_STAGE(stage7)
-
-//---------conditional stage 4-------------------------
-CONDITIONAL_STAGE(stage8)
-
-//---------conditional stage 4-------------------------
-CONDITIONAL_STAGE(stage9)
 
 //---------stage 1--------------------------------------
 STAGE(stage1)

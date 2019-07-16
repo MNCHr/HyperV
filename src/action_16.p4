@@ -39,8 +39,7 @@ action shift_112(bit<112> temp_mask_112, bit<8> l_shift, bit<8> r_shift) {
 action mod_field_with_field_112(bit<112> temp_value_112, bit<112> temp_mask_112, bit<8>l_shift, bit<8>r_shift){
     extract_112(temp_mask_112);
     shift_112(l_shift,r_shift);
-    temp_value_112 = temp_metadata.temp_112;
-    hdr.hdr_112.buffer | temp_value_112;
+    (hdr.hdr_112.buffer & ~temp_mask_112) | temp_value_112;
 }
 
 //for ipv4 field

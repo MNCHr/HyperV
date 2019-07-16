@@ -1,0 +1,1307 @@
+# 1 "main.p4"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "main.p4"
+# 1 "/usr/local/share/p4c/p4include/core.p4" 1
+/*
+Copyright 2013-present Barefoot Networks, Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+/* This is the P4-16 core library, which declares some built-in P4 constructs using P4 */
+
+
+
+
+/// Standard error codes.  New error codes can be declared by users.
+error {
+    NoError, /// No error.
+    PacketTooShort, /// Not enough bits in packet for 'extract'.
+    NoMatch, /// 'select' expression has no matches.
+    StackOutOfBounds, /// Reference to invalid element of a header stack.
+    HeaderTooShort, /// Extracting too many bits into a varbit field.
+    ParserTimeout, /// Parser execution time limit exceeded.
+    ParserInvalidArgument /// Parser operation was called with a value
+                           /// not supported by the implementation.
+}
+
+extern packet_in {
+    /// Read a header from the packet into a fixed-sized header @hdr and advance the cursor.
+    /// May trigger error PacketTooShort or StackOutOfBounds.
+    /// @T must be a fixed-size header type
+    void extract<T>(out T hdr);
+    /// Read bits from the packet into a variable-sized header @variableSizeHeader
+    /// and advance the cursor.
+    /// @T must be a header containing exactly 1 varbit field.
+    /// May trigger errors PacketTooShort, StackOutOfBounds, or HeaderTooShort.
+    void extract<T>(out T variableSizeHeader,
+                    in bit<32> variableFieldSizeInBits);
+    /// Read bits from the packet without advancing the cursor.
+    /// @returns: the bits read from the packet.
+    /// T may be an arbitrary fixed-size type.
+    T lookahead<T>();
+    /// Advance the packet cursor by the specified number of bits.
+    void advance(in bit<32> sizeInBits);
+    /// @return packet length in bytes.  This method may be unavailable on
+    /// some target architectures.
+    bit<32> length();
+}
+
+extern packet_out {
+    /// Write @hdr into the output packet, advancing cursor.
+    /// @T can be a header type, a header stack, a header_union, or a struct
+    /// containing fields with such types.
+    void emit<T>(in T hdr);
+}
+
+// TODO: remove from this file, convert to built-in
+/// Check a predicate @check in the parser; if the predicate is true do nothing,
+/// otherwise set the parser error to @toSignal, and transition to the `reject` state.
+extern void verify(in bool check, in error toSignal);
+
+/// Built-in action that does nothing.
+action NoAction() {}
+
+/// Standard match kinds for table key fields.
+/// Some architectures may not support all these match kinds.
+/// Architectures can declare additional match kinds.
+match_kind {
+    /// Match bits exactly.
+    exact,
+    /// Ternary match, using a mask.
+    ternary,
+    /// Longest-prefix match.
+    lpm
+}
+# 2 "main.p4" 2
+# 1 "/usr/local/share/p4c/p4include/v1model.p4" 1
+/*
+Copyright 2013-present Barefoot Networks, Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+/* P4-16 declaration of the P4 v1.0 switch model */
+
+
+
+
+# 1 "/usr/local/share/p4c/p4include/core.p4" 1
+/*
+Copyright 2013-present Barefoot Networks, Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+/* This is the P4-16 core library, which declares some built-in P4 constructs using P4 */
+# 23 "/usr/local/share/p4c/p4include/v1model.p4" 2
+
+match_kind {
+    range,
+    // Used for implementing dynamic_action_selection
+    selector
+}
+
+// Are these correct?
+@metadata @name("standard_metadata")
+struct standard_metadata_t {
+    bit<9> ingress_port;
+    bit<9> egress_spec;
+    bit<9> egress_port;
+    bit<32> clone_spec;
+    bit<32> instance_type;
+    // The drop and recirculate_port fields are not used at all by the
+    // behavioral-model simple_switch software switch as of September
+    // 2018, and perhaps never was.  They may be considered
+    // deprecated, at least for that P4 target device.  simple_switch
+    // uses the value of the egress_spec field to determine whether a
+    // packet is dropped or not, and it is recommended to use the
+    // P4_14 drop() primitive action, or the P4_16 + v1model
+    // mark_to_drop() primitive action, to cause that field to be
+    // changed so the packet will be dropped.
+    bit<1> drop;
+    bit<16> recirculate_port;
+    bit<32> packet_length;
+    //
+    // @alias is used to generate the field_alias section of the BMV2 JSON.
+    // Field alias creates a mapping from the metadata name in P4 program to
+    // the behavioral model's internal metadata name. Here we use it to
+    // expose all metadata supported by simple switch to the user through
+    // standard_metadata_t.
+    //
+    // flattening fields that exist in bmv2-ss
+    // queueing metadata
+    @alias("queueing_metadata.enq_timestamp")
+    bit<32> enq_timestamp;
+    @alias("queueing_metadata.enq_qdepth")
+    bit<19> enq_qdepth;
+    @alias("queueing_metadata.deq_timedelta")
+    bit<32> deq_timedelta;
+    /// queue depth at the packet dequeue time.
+    @alias("queueing_metadata.deq_qdepth")
+    bit<19> deq_qdepth;
+
+    // intrinsic metadata
+    @alias("intrinsic_metadata.ingress_global_timestamp")
+    bit<48> ingress_global_timestamp;
+    @alias("intrinsic_metadata.egress_global_timestamp")
+    bit<48> egress_global_timestamp;
+    /// Learn filter field list
+    @alias("intrinsic_metadata.lf_field_list")
+    bit<32> lf_field_list;
+    /// multicast group id (key for the mcast replication table)
+    @alias("intrinsic_metadata.mcast_grp")
+    bit<16> mcast_grp;
+    /// resubmit metadata field list id, or 0 if no resubmit operation has been performed
+    @alias("intrinsic_metadata.resubmit_flag")
+    bit<32> resubmit_flag;
+    /// Replication ID for multicast
+    @alias("intrinsic_metadata.egress_rid")
+    bit<16> egress_rid;
+    @alias("intrinsic_metadata.recirculate_flag")
+    bit<32> recirculate_flag;
+    /// Indicates that a verify_checksum() method has failed.
+    /// 1 if a checksum error was found, otherwise 0.
+    bit<1> checksum_error;
+    /// Error produced by parsing
+    error parser_error;
+    /// set packet priority
+    @alias("intrinsic_metadata.priority")
+    bit<3> priority;
+}
+
+enum CounterType {
+    packets,
+    bytes,
+    packets_and_bytes
+}
+
+enum MeterType {
+    packets,
+    bytes
+}
+
+extern counter {
+    counter(bit<32> size, CounterType type);
+    /***
+     * count() causes the counter state with the specified index to be
+     * read, modified, and written back, atomically relative to the
+     * processing of other packets, updating the packet count, byte
+     * count, or both, depending upon the CounterType of the counter
+     * instance used when it was constructed.
+     *
+     * @param index The index of the counter state in the array to be
+     *              updated, normally a value in the range [0,
+     *              size-1].  If index >= size, no counter state will be
+     *              updated.
+     */
+    void count(in bit<32> index);
+}
+
+extern direct_counter {
+    /***
+     * A direct_counter object is created by calling its constructor.
+     * You must provide a choice of whether to maintain only a packet
+     * count (CounterType.packets), only a byte count
+     * (CounterType.bytes), or both (CounterType.packets_and_bytes).
+     * After constructing the object, you can associate it with at
+     * most one table, by adding the following table property to the
+     * definition of that table:
+     *
+     *     counters = <object_name>;
+     */
+    direct_counter(CounterType type);
+    /***
+     * The count() method is actually unnecessary in the v1model
+     * architecture.  This is because after a direct_counter object
+     * has been associated with a table as described in the
+     * documentation for the direct_counter constructor, every time
+     * the table is applied and a table entry is matched, the counter
+     * state associated with the matching entry is read, modified, and
+     * written back, atomically relative to the processing of other
+     * packets, regardless of whether the count() method is called in
+     * the body of that action.
+     */
+    void count();
+}
+
+
+
+
+
+extern meter {
+    meter(bit<32> size, MeterType type);
+    /***
+     * execute_meter() causes the meter state with the specified index
+     * to be read, modified, and written back, atomically relative to
+     * the processing of other packets, and an integer encoding of one
+     * of the colors green, yellow, or red to be written to the result
+     * out parameter.
+     *
+     * @param index The index of the meter state in the array to be
+     *              updated, normally a value in the range [0,
+     *              size-1].  If index >= size, no meter state will be
+     *              updated.
+     * @param result Type T must be bit<W> with W >= 2.  When index is
+     *              in range, the value of result will be assigned 0
+     *              for color GREEN, 1 for color YELLOW, and 2 for
+     *              color RED (see RFC 2697 and RFC 2698 for the
+     *              meaning of these colors).  When index is out of
+     *              range, the final value of result is not specified,
+     *              and should be ignored by the caller.
+     */
+    void execute_meter<T>(in bit<32> index, out T result);
+}
+
+extern direct_meter<T> {
+    /***
+     * A direct_meter object is created by calling its constructor.
+     * You must provide a choice of whether to meter based on the
+     * number of packets, regardless of their size
+     * (MeterType.packets), or based upon the number of bytes the
+     * packets contain (MeterType.bytes).  After constructing the
+     * object, you can associate it with at most one table, by adding
+     * the following table property to the definition of that table:
+     *
+     *     meters = <object_name>;
+     */
+    direct_meter(MeterType type);
+    /***
+     * After a direct_meter object has been associated with a table as
+     * described in the documentation for the direct_meter
+     * constructor, every time the table is applied and a table entry
+     * is matched, the meter state associated with the matching entry
+     * is read, modified, and written back, atomically relative to the
+     * processing of other packets, regardless of whether the read()
+     * method is called in the body of that action.
+     *
+     * read() may only be called within an action executed as a result
+     * of matching a table entry, of a table that has a direct_meter
+     * associated with it.  Calling read() causes an integer encoding
+     * of one of the colors green, yellow, or red to be written to the
+     * result out parameter.
+     *
+     * @param result Type T must be bit<W> with W >= 2.  The value of
+     *              result will be assigned 0 for color GREEN, 1 for
+     *              color YELLOW, and 2 for color RED (see RFC 2697
+     *              and RFC 2698 for the meaning of these colors).
+     */
+    void read(out T result);
+}
+
+extern register<T> {
+    register(bit<32> size);
+    /***
+     * read() reads the state of the register array stored at the
+     * specified index, and returns it as the value written to the
+     * result parameter.
+     *
+     * @param index The index of the register array element to be
+     *              read, normally a value in the range [0, size-1].
+     * @param result Only types T that are bit<W> are currently
+     *              supported.  When index is in range, the value of
+     *              result becomes the value read from the register
+     *              array element.  When index >= size, the final
+     *              value of result is not specified, and should be
+     *              ignored by the caller.
+     */
+    void read(out T result, in bit<32> index);
+    /***
+     * write() writes the state of the register array at the specified
+     * index, with the value provided by the value parameter.
+     *
+     * If you wish to perform a read() followed later by a write() to
+     * the same register array element, and you wish the
+     * read-modify-write sequence to be atomic relative to other
+     * processed packets, then there may be parallel implementations
+     * of the v1model architecture for which you must execute them in
+     * a P4_16 block annotated with an @atomic annotation.  See the
+     * P4_16 language specification description of the @atomic
+     * annotation for more details.
+     *
+     * @param index The index of the register array element to be
+     *              written, normally a value in the range [0,
+     *              size-1].  If index >= size, no register state will
+     *              be updated.
+     * @param value Only types T that are bit<W> are currently
+     *              supported.  When index is in range, this
+     *              parameter's value is written into the register
+     *              array element specified by index.
+     */
+    void write(in bit<32> index, in T value);
+}
+
+// used as table implementation attribute
+extern action_profile {
+    action_profile(bit<32> size);
+}
+
+/***
+ * Generate a random number in the range lo..hi, inclusive, and write
+ * it to the result parameter.  The value written to result is not
+ * specified if lo > hi.
+ *
+ * @param T          Must be a type bit<W>
+ */
+extern void random<T>(out T result, in T lo, in T hi);
+
+// If the type T is a named struct, the name is used
+// to generate the control-plane API.
+extern void digest<T>(in bit<32> receiver, in T data);
+
+enum HashAlgorithm {
+    crc32,
+    crc32_custom,
+    crc16,
+    crc16_custom,
+    random,
+    identity,
+    csum16,
+    xor16
+}
+
+@deprecated("Please use mark_to_drop(standard_metadata) instead.")
+extern void mark_to_drop();
+
+/***
+ * mark_to_drop(standard_metadata) is a primitive action that modifies
+ * standard_metadata.egress_spec to an implementation-specific special
+ * value that in some cases causes the packet to be dropped at the end
+ * of ingress or egress processing.  It also assigns 0 to
+ * standard_metadata.mcast_grp.  Either of those metadata fields may
+ * be changed by executing later P4 code, after calling
+ * mark_to_drop(), and this can change the resulting behavior of the
+ * packet to do something other than drop.
+ *
+ * See
+ * https://github.com/p4lang/behavioral-model/blob/master/docs/simple_switch.md
+ * -- in particular the section "Pseudocode for what happens at the
+ * end of ingress and egress processing" -- for the relative priority
+ * of the different possible things that can happen to a packet when
+ * ingress and egress processing are complete.
+ */
+extern void mark_to_drop(inout standard_metadata_t standard_metadata);
+
+/***
+ * Calculate a hash function of the value specified by the data
+ * parameter.  The value written to the out parameter named result
+ * will always be in the range [base, base+max-1] inclusive, if max >=
+ * 1.  If max=0, the value written to result will always be base.
+ *
+ * @param O          Must be a type bit<W>
+ * @param D          Must be a tuple type where all the fields are bit-fields (type bit<W> or int<W>) or varbits.
+ * @param T          Must be a type bit<W>
+ * @param M          Must be a type bit<W>
+ */
+extern void hash<O, T, D, M>(out O result, in HashAlgorithm algo, in T base, in D data, in M max);
+
+extern action_selector {
+    action_selector(HashAlgorithm algorithm, bit<32> size, bit<32> outputWidth);
+}
+
+enum CloneType {
+    I2E,
+    E2E
+}
+
+@deprecated("Please use verify_checksum/update_checksum instead.")
+extern Checksum16 {
+    Checksum16();
+    bit<16> get<D>(in D data);
+}
+
+/**
+Verifies the checksum of the supplied data.
+If this method detects that a checksum of the data is not correct it
+sets the standard_metadata checksum_error bit.
+@param T          Must be a tuple type where all the tuple elements are of type bit<W>, int<W>, or varbit<W>.
+                  The total dynamic length of the fields is a multiple of the output size.
+@param O          Checksum type; must be bit<X> type.
+@param condition  If 'false' the verification always succeeds.
+@param data       Data whose checksum is verified.
+@param checksum   Expected checksum of the data; note that is must be a left-value.
+@param algo       Algorithm to use for checksum (not all algorithms may be supported).
+                  Must be a compile-time constant.
+*/
+extern void verify_checksum<T, O>(in bool condition, in T data, inout O checksum, HashAlgorithm algo);
+/**
+Computes the checksum of the supplied data.
+@param T          Must be a tuple type where all the tuple elements are of type bit<W>, int<W>, or varbit<W>.
+                  The total dynamic length of the fields is a multiple of the output size.
+@param O          Output type; must be bit<X> type.
+@param condition  If 'false' the checksum is not changed
+@param data       Data whose checksum is computed.
+@param checksum   Checksum of the data.
+@param algo       Algorithm to use for checksum (not all algorithms may be supported).
+                  Must be a compile-time constant.
+*/
+extern void update_checksum<T, O>(in bool condition, in T data, inout O checksum, HashAlgorithm algo);
+
+/**
+Verifies the checksum of the supplied data including the payload.
+The payload is defined as "all bytes of the packet which were not parsed by the parser".
+If this method detects that a checksum of the data is not correct it
+sets the standard_metadata checksum_error bit.
+@param T          Must be a tuple type where all the tuple elements are of type bit<W>, int<W>, or varbit<W>.
+                  The total dynamic length of the fields is a multiple of the output size.
+@param O          Checksum type; must be bit<X> type.
+@param condition  If 'false' the verification always succeeds.
+@param data       Data whose checksum is verified.
+@param checksum   Expected checksum of the data; note that is must be a left-value.
+@param algo       Algorithm to use for checksum (not all algorithms may be supported).
+                  Must be a compile-time constant.
+*/
+extern void verify_checksum_with_payload<T, O>(in bool condition, in T data, inout O checksum, HashAlgorithm algo);
+/**
+Computes the checksum of the supplied data including the payload.
+The payload is defined as "all bytes of the packet which were not parsed by the parser".
+@param T          Must be a tuple type where all the tuple elements are of type bit<W>, int<W>, or varbit<W>.
+                  The total dynamic length of the fields is a multiple of the output size.
+@param O          Output type; must be bit<X> type.
+@param condition  If 'false' the checksum is not changed
+@param data       Data whose checksum is computed.
+@param checksum   Checksum of the data.
+@param algo       Algorithm to use for checksum (not all algorithms may be supported).
+                  Must be a compile-time constant.
+*/
+extern void update_checksum_with_payload<T, O>(in bool condition, in T data, inout O checksum, HashAlgorithm algo);
+
+extern void resubmit<T>(in T data);
+extern void recirculate<T>(in T data);
+extern void clone(in CloneType type, in bit<32> session);
+extern void clone3<T>(in CloneType type, in bit<32> session, in T data);
+
+extern void truncate(in bit<32> length);
+
+
+extern void assert(in bool check);
+extern void assume(in bool check);
+
+// The name 'standard_metadata' is reserved
+
+// Architecture.
+// M should be a struct of structs
+// H should be a struct of headers, stacks or header_unions
+
+parser Parser<H, M>(packet_in b,
+                    out H parsedHdr,
+                    inout M meta,
+                    inout standard_metadata_t standard_metadata);
+
+/* The only legal statements in the implementation of the
+VerifyChecksum control are: block statements, calls to the
+verify_checksum and verify_checksum_with_payload methods,
+and return statements. */
+control VerifyChecksum<H, M>(inout H hdr,
+                             inout M meta);
+@pipeline
+control Ingress<H, M>(inout H hdr,
+                      inout M meta,
+                      inout standard_metadata_t standard_metadata);
+@pipeline
+control Egress<H, M>(inout H hdr,
+                     inout M meta,
+                     inout standard_metadata_t standard_metadata);
+
+/* The only legal statements in the implementation of the
+ComputeChecksum control are: block statements, calls to the
+update_checksum and update_checksum_with_payload methods,
+and return statements. */
+control ComputeChecksum<H, M>(inout H hdr,
+                              inout M meta);
+
+/* The only legal statements in a Deparser control are: calls to the
+packet_out.emit() method. */
+@deparser
+control Deparser<H>(packet_out b, in H hdr);
+
+package V1Switch<H, M>(Parser<H, M> p,
+                       VerifyChecksum<H, M> vr,
+                       Ingress<H, M> ig,
+                       Egress<H, M> eg,
+                       ComputeChecksum<H, M> ck,
+                       Deparser<H> dep
+                       );
+# 3 "main.p4" 2
+# 1 "headers.p4" 1
+
+
+
+
+
+header description_hdr_t {
+    bit<8> flag;
+    bit<8> len;
+    bit<16> vdp_id;
+}
+
+//L2 format
+header hdr_112_t {
+    bit<112> buffer;
+}
+
+//L3/L4 format
+header hdr_160_t {
+    bit<160> buffer;
+}
+
+//L3
+header hdr_224_t {
+    bit<224> buffer;
+}
+
+//L4
+header hdr_64_t {
+    bit<64> buf;
+}
+
+
+struct headers {
+    description_hdr_t desc_hdr;
+    hdr_112_t hdr_112;
+    hdr_160_t[2] hdr_160;
+    hdr_224_t hdr_224;
+    hdr_64_t hdr_64;
+
+}
+# 4 "main.p4" 2
+# 1 "metadata.p4" 1
+
+
+
+struct vdp_metadata_t {
+    bit<8> inst_id;
+    bit<8> stage_id;
+    bit<3> match_chain_bitmap;
+    bit<48> match_chain_result;
+    bit<48> action_chain_bitmap;
+    bit<48> action_chain_id;
+    bit<3> table_chain;
+}
+
+struct user_metadata_t {
+    bit<256> meta;
+
+}
+
+struct temp_metadata_t {
+    bit<112> temp_112;
+    bit<112> temp_md_mask_112;
+    bit<160> temp_160_1;
+    bit<160> temp_md_mask_160_1;
+    bit<160> temp_160_2;
+    bit<160> temp_md_mask_160_2;
+    bit<224> temp_224;
+    bit<224> temp_md_mask_224;
+}
+
+struct metadata {
+    vdp_metadata_t vdp_metadata;
+    user_metadata_t user_metadata;
+    temp_metadata_t temp_metadata;
+}
+# 5 "main.p4" 2
+# 1 "parser.p4" 1
+
+
+
+
+
+//Static parser to demonstrate the functionality of desc.header in P4 hypervisor 
+
+parser MyParser(packet_in packet,
+                out headers hdr,
+                inout metadata meta,
+                inout standard_metadata_t standard_metadata) {
+
+    state start {
+        transition parse_112;
+    }
+
+
+    state parse_112 {
+        packet.extract(hdr.hdr_112);
+
+        transition parse_desc;
+    }
+
+    state parse_desc {
+        packet.extract(hdr.desc_hdr);
+        transition select(meta.vdp_metadata.inst_id){
+            1: parse_vPDP1; //Arp Proxy
+            2: parse_vPDP2; //L2switching
+            3: parse_vPDP3; //Firewall
+            4: parse_vPDP4; //NAT
+            default: accept;
+        }
+    }
+
+    state parse_vPDP1 {
+        packet.extract(hdr.hdr_224);
+        transition accept;
+    }
+
+    state parse_vPDP2 {
+        transition accept;
+    }
+
+    state parse_vPDP3 {
+        packet.extract(hdr.hdr_160.next);
+        transition parse_vPDP3_1;
+    }
+
+    state parse_vPDP3_1 {
+        packet.extract(hdr.hdr_160.next);
+        transition accept;
+    }
+
+    state parse_vPDP4 {
+        packet.extract(hdr.hdr_160.next);
+        transition accept;
+    }
+}
+# 6 "main.p4" 2
+# 1 "define.p4" 1
+# 57 "define.p4"
+// MASK
+# 7 "main.p4" 2
+
+control MyVerifyChecksum(inout headers hdr, inout metadata meta) {
+    apply { }
+}
+
+control MyIngress(inout headers hdr,
+                  inout metadata meta,
+                  inout standard_metadata_t standard_metadata) {
+
+
+ action set_initial_config (bit<8> progid, bit<8> stageid, bit<3> match_bitmap, bit<3> table_chain) {
+  meta.vdp_metadata.inst_id = progid;
+  meta.vdp_metadata.stage_id = stageid;
+  meta.vdp_metadata.match_chain_bitmap = match_bitmap;
+  meta.vdp_metadata.table_chain = table_chain;
+ }
+
+ action do_forward(bit<9> port) {
+  standard_metadata.egress_spec = port;
+ }
+
+ action do_drop() {
+  mark_to_drop();
+ }
+
+ action set_stage_and_bitmap(bit<48> action_bitmap, bit<3> match_bitmap, bit<8> next_stage, bit<8> next_prog) {
+  meta.vdp_metadata.action_chain_bitmap = action_bitmap;
+  meta.vdp_metadata.match_chain_bitmap = match_bitmap;
+  meta.vdp_metadata.stage_id = next_stage;
+  meta.vdp_metadata.inst_id = next_prog;
+  meta.vdp_metadata.action_chain_id = meta.vdp_metadata.match_chain_result;
+  meta.vdp_metadata.match_chain_result = 0;
+ }
+
+ action set_match_result(bit<48> match_result) {
+  meta.vdp_metadata.match_chain_result = match_result|meta.vdp_metadata.match_chain_result;
+ }
+
+ action set_action_id(bit<48> match_result, bit<48> action_bitmap, bit<3> match_bitmap, bit<8> next_stage, bit<8> next_prog) {
+  set_match_result(match_result);
+  set_stage_and_bitmap(action_bitmap, match_bitmap, next_stage, next_prog);
+ }
+
+ action end(bit<8> next_prog) {
+  set_action_id(0,0,0,0,next_prog);
+ }
+
+ action action_do(){
+
+ }
+
+ /*
+	-------------------------------------Arp_proxy_head---------------------------
+	*/
+ ////for ethernet field
+ action mod_field_with_const_112(bit<112> value_112, bit<112> mask_112) {
+  hdr.hdr_112.buffer = (hdr.hdr_112.buffer&(~mask_112))|(value_112&mask_112);
+ }
+
+ action extract_temp_112(bit<112> temp_mask_112) {
+  meta.temp_metadata.temp_112 = (hdr.hdr_112.buffer & temp_mask_112);
+ } //extract from buffer -> temp
+
+ action shift_112(bit<112> temp_mask_112, bit<8> l_shift, bit<8> r_shift) {
+  meta.temp_metadata.temp_md_mask_112 = temp_mask_112 << l_shift;
+  meta.temp_metadata.temp_md_mask_112 = temp_mask_112 >> r_shift;
+  meta.temp_metadata.temp_112 = meta.temp_metadata.temp_112 << l_shift;
+  meta.temp_metadata.temp_112 = meta.temp_metadata.temp_112 >> r_shift;
+ }
+ // shift temp, mask to indicate fields should be modified
+ // (l_shift, r_shift) = (n, 0) or (0, n)
+
+ action mod_field_with_field_112(bit<112> temp_mask_112, bit<8>l_shift, bit<8>r_shift){
+  extract_temp_112(temp_mask_112);
+  shift_112(temp_mask_112, l_shift, r_shift);
+  hdr.hdr_112.buffer = (hdr.hdr_112.buffer & (~meta.temp_metadata.temp_md_mask_112))|(meta.temp_metadata.temp_112&meta.temp_metadata.temp_md_mask_112);
+ }
+ // temp_mask=enabled with 1 to indicate field for extractioin 
+ //shift=difference between target field for modification and extracted field
+
+ ////for ipv4 field
+ action mod_field_with_const_160_1(bit<160> value_160_1, bit<160> mask_160_1){
+  hdr.hdr_160[0].buffer = (hdr.hdr_160[0].buffer&~mask_160_1)|(value_160_1&mask_160_1);
+ }
+
+ action extract_temp_160_1(bit<160> temp_mask_160_1) {
+  meta.temp_metadata.temp_160_1 = (hdr.hdr_160[0].buffer & temp_mask_160_1);
+ } //extract from buffer -> temp
+
+ action shift_160_1(bit<160> temp_mask_160_1, bit<8> l_shift, bit<8> r_shift) {
+  meta.temp_metadata.temp_md_mask_160_1 = temp_mask_160_1 << l_shift;
+  meta.temp_metadata.temp_md_mask_160_1 = temp_mask_160_1 >> r_shift;
+  meta.temp_metadata.temp_160_1 = meta.temp_metadata.temp_160_1 << l_shift;
+  meta.temp_metadata.temp_160_1 = meta.temp_metadata.temp_160_1 >> r_shift;
+ }
+ // shift temp, mask to indicate fields should be modified
+ // (l_shift, r_shift) = (n, 0) or (0, n)
+
+ action mod_field_with_field_160_1(bit<160> temp_mask_160_1, bit<8>l_shift, bit<8>r_shift){
+  extract_temp_160_1(temp_mask_160_1);
+  shift_160_1(temp_mask_160_1, l_shift, r_shift);
+  hdr.hdr_160[0].buffer = (hdr.hdr_160[0].buffer & (~meta.temp_metadata.temp_md_mask_160_1))|(meta.temp_metadata.temp_160_1 & meta.temp_metadata.temp_md_mask_160_1);
+ }
+ // temp_mask=enabled with 1 to indicate field for extractioin 
+ //shift=difference between target field for modification and extracted field
+
+ ////for tcp field
+ action mod_field_with_const_160_2(bit<160> value_160_2, bit<160> mask_160_2){
+  hdr.hdr_160[1].buffer = (hdr.hdr_160[1].buffer & ~mask_160_2)|(value_160_2 & mask_160_2);
+ }
+
+ action extract_temp_160_2(bit<160> temp_mask_160_2) {
+  meta.temp_metadata.temp_160_2 = (hdr.hdr_160[1].buffer & temp_mask_160_2);
+ } //extract from buffer -> temp
+
+ action shift_160_2(bit<160> temp_mask_160_2, bit<8> l_shift, bit<8> r_shift) {
+  meta.temp_metadata.temp_md_mask_160_2 = temp_mask_160_2 << l_shift;
+  meta.temp_metadata.temp_md_mask_160_2 = temp_mask_160_2 >> r_shift;
+  meta.temp_metadata.temp_160_2 = meta.temp_metadata.temp_160_2 << l_shift;
+  meta.temp_metadata.temp_160_2 = meta.temp_metadata.temp_160_2 >> r_shift;
+ }
+ // shift temp, mask to indicate fields should be modified
+ // (l_shift, r_shift) = (n, 0) or (0, n)
+
+ action mod_field_with_field_160_2(bit<160> temp_mask_160_2, bit<8>l_shift, bit<8>r_shift){
+  extract_temp_160_2(temp_mask_160_2);
+  shift_160_2(temp_mask_160_2, l_shift, r_shift);
+  hdr.hdr_160[1].buffer = (hdr.hdr_160[1].buffer & (~meta.temp_metadata.temp_md_mask_160_2))|(meta.temp_metadata.temp_160_2 & meta.temp_metadata.temp_md_mask_160_2);
+ }
+ // temp_mask=enabled with 1 to indicate field for extractioin 
+ //shift=difference between target field for modification and extracted field
+
+ ////for arp field
+ action mod_field_with_const_224(bit<224> value_224, bit<224> mask_224){
+  hdr.hdr_224.buffer = (hdr.hdr_224.buffer & (~mask_224))|(value_224 & mask_224);
+ }
+
+ action extract_temp_224(bit<224> temp_mask_224) {
+  meta.temp_metadata.temp_224 = (hdr.hdr_224.buffer & temp_mask_224);
+ }
+ //extract from buffer, put to temp
+
+ action shift_224(bit<224> temp_mask_224, bit<8> l_shift, bit<8> r_shift) {
+  meta.temp_metadata.temp_md_mask_224 = temp_mask_224 << l_shift;
+  meta.temp_metadata.temp_md_mask_224 = temp_mask_224 >> r_shift;
+  meta.temp_metadata.temp_224 = meta.temp_metadata.temp_224 << l_shift;
+  meta.temp_metadata.temp_224 = meta.temp_metadata.temp_224 >> r_shift;
+ }
+ // shift temp, mask to indicate fields should be modified
+ // (l_shift, r_shift) = (n, 0) or (0, n)
+
+ action mod_field_with_field_224(bit<224> temp_mask_224, bit<8>l_shift, bit<8>r_shift){
+  extract_temp_224(temp_mask_224);
+  shift_224(temp_mask_224, l_shift, r_shift);
+  hdr.hdr_224.buffer = (hdr.hdr_224.buffer & (~meta.temp_metadata.temp_md_mask_224))|(meta.temp_metadata.temp_224 & meta.temp_metadata.temp_md_mask_224);
+ }
+ //temp_mask=enabled with 1 to indicate field for extraction 
+ //shift=difference between target field for modification and extracted field
+
+ action response(){
+  standard_metadata.egress_spec = standard_metadata.ingress_port;
+ }
+
+ action arp_reply( bit<224> mask_arp_sender_MAC, bit<8> l_shift_arp_sender_MAC, bit<8> r_shift_arp_sender_MAC,
+      bit<224> mask_arp_send_ip , bit<8> l_shift_arp_send_ip, bit<8> r_shift_arp_send_ip,
+      bit<112> mask_ethernet_src, bit<8> l_shift_ethernet_src, bit<8> r_shift_ethernet_src,
+      bit<224> value_arp_sender_MAC,
+      bit<224> value_arp_sender_IP,
+      bit<112> value_ethernet_src,
+      bit<224> mask_arp_opcode ) {
+  response();
+  mod_field_with_field_224(mask_arp_sender_MAC, l_shift_arp_sender_MAC, r_shift_arp_sender_MAC);
+  mod_field_with_field_224(mask_arp_send_ip, l_shift_arp_send_ip, r_shift_arp_send_ip);
+  mod_field_with_field_112(mask_ethernet_src, l_shift_ethernet_src, r_shift_ethernet_src);
+  mod_field_with_const_224(value_arp_sender_MAC, mask_arp_sender_MAC);
+  mod_field_with_const_224(value_arp_sender_IP, mask_arp_send_ip);
+  mod_field_with_const_112(value_ethernet_src, mask_ethernet_src);
+  mod_field_with_const_224(2, mask_arp_opcode);
+ }
+ /*
+	-------------------------------------Arp_proxy_tail-------------------------
+	*/
+
+////////////////////////////////////////////////////////////TABLES//////////////////////////////////////////////////////////////////////                
+
+ table table_config_at_initial {
+  key = {
+   hdr.desc_hdr.vdp_id: exact; //At initial state, 1,2,3,4  
+   meta.vdp_metadata.inst_id: exact; //At initial state, it should be 0
+   meta.vdp_metadata.stage_id: exact; //At initial state, it should be 0
+  }
+  actions = {
+   set_initial_config();
+  }
+ }
+
+ table table_header_match_112_stage1 {
+  key = {
+   meta.vdp_metadata.inst_id : exact ;
+   meta.vdp_metadata.stage_id : exact ;
+   hdr.hdr_112.buffer : ternary ;
+  }
+  actions = {
+   set_action_id;
+   end;
+  }
+ }
+
+ table table_header_match_112_stage2 {
+  key = {
+   meta.vdp_metadata.inst_id : exact ;
+   meta.vdp_metadata.stage_id : exact ;
+   hdr.hdr_112.buffer : ternary ;
+  }
+  actions = {
+   set_action_id;
+   end;
+  }
+ }
+ table table_header_match_112_stage3 {
+  key = {
+   meta.vdp_metadata.inst_id : exact ;
+   meta.vdp_metadata.stage_id : exact ;
+   hdr.hdr_112.buffer : ternary ;
+  }
+  actions = {
+   set_action_id;
+   end;
+  }
+ }
+ table table_header_match_112_stage4 {
+  key = {
+   meta.vdp_metadata.inst_id : exact ;
+   meta.vdp_metadata.stage_id : exact ;
+   hdr.hdr_112.buffer : ternary ;
+  }
+  actions = {
+   set_action_id;
+   end;
+  }
+ }
+
+
+ table table_header_match_160_1_stage1 {
+  key = {
+   meta.vdp_metadata.inst_id : exact ;
+   meta.vdp_metadata.stage_id : exact ;
+   hdr.hdr_160[0].buffer : ternary ;
+  }
+  actions = {
+   set_action_id;
+   end;
+  }
+ }
+ table table_header_match_160_1_stage2 {
+  key = {
+   meta.vdp_metadata.inst_id : exact ;
+   meta.vdp_metadata.stage_id : exact ;
+   hdr.hdr_160[0].buffer : ternary ;
+  }
+  actions = {
+   set_action_id;
+   end;
+  }
+ }
+ table table_header_match_160_1_stage3 {
+  key = {
+   meta.vdp_metadata.inst_id : exact ;
+   meta.vdp_metadata.stage_id : exact ;
+   hdr.hdr_160[0].buffer : ternary ;
+  }
+  actions = {
+   set_action_id;
+   end;
+  }
+ }
+ table table_header_match_160_1_stage4 {
+  key = {
+   meta.vdp_metadata.inst_id : exact ;
+   meta.vdp_metadata.stage_id : exact ;
+   hdr.hdr_160[0].buffer : ternary ;
+  }
+  actions = {
+   set_action_id;
+   end;
+  }
+ }
+
+ table table_header_match_160_2_stage1 {
+  key = {
+   meta.vdp_metadata.inst_id : exact ;
+   meta.vdp_metadata.stage_id : exact ;
+   hdr.hdr_160[1].buffer : ternary ;
+  }
+  actions = {
+   set_action_id;
+   end;
+  }
+ }
+ table table_header_match_160_2_stage2 {
+  key = {
+   meta.vdp_metadata.inst_id : exact ;
+   meta.vdp_metadata.stage_id : exact ;
+   hdr.hdr_160[1].buffer : ternary ;
+  }
+  actions = {
+   set_action_id;
+   end;
+  }
+ }
+ table table_header_match_160_2_stage3 {
+  key = {
+   meta.vdp_metadata.inst_id : exact ;
+   meta.vdp_metadata.stage_id : exact ;
+   hdr.hdr_160[1].buffer : ternary ;
+  }
+  actions = {
+   set_action_id;
+   end;
+  }
+ }
+ table table_header_match_160_2_stage4 {
+  key = {
+   meta.vdp_metadata.inst_id : exact ;
+   meta.vdp_metadata.stage_id : exact ;
+   hdr.hdr_160[1].buffer : ternary ;
+  }
+  actions = {
+   set_action_id;
+   end;
+  }
+ }
+
+ table table_header_match_224_stage1 {
+  key = {
+   meta.vdp_metadata.inst_id : exact ;
+   meta.vdp_metadata.stage_id : exact ;
+   hdr.hdr_224.buffer : ternary ;
+  }
+  actions = {
+   set_action_id;
+   end;
+  }
+ }
+ table table_header_match_224_stage2 {
+  key = {
+   meta.vdp_metadata.inst_id : exact ;
+   meta.vdp_metadata.stage_id : exact ;
+   hdr.hdr_224.buffer : ternary ;
+  }
+  actions = {
+   set_action_id;
+   end;
+  }
+ }
+ table table_header_match_224_stage3 {
+  key = {
+   meta.vdp_metadata.inst_id : exact ;
+   meta.vdp_metadata.stage_id : exact ;
+   hdr.hdr_224.buffer : ternary ;
+  }
+  actions = {
+   set_action_id;
+   end;
+  }
+ }
+ table table_header_match_224_stage4 {
+  key = {
+   meta.vdp_metadata.inst_id : exact ;
+   meta.vdp_metadata.stage_id : exact ;
+   hdr.hdr_224.buffer : ternary ;
+  }
+  actions = {
+   set_action_id;
+   end;
+  }
+ }
+ table table_std_meta_match_stage1 {
+  key = {
+   meta.vdp_metadata.inst_id : exact ;
+   meta.vdp_metadata.stage_id : exact ;
+   standard_metadata.ingress_port : ternary ;
+   standard_metadata.egress_spec : ternary ;
+   standard_metadata.instance_type : ternary ;
+  }
+  actions = {
+   set_action_id;
+   end;
+  }
+ }
+ table table_std_meta_match_stage2 {
+  key = {
+   meta.vdp_metadata.inst_id : exact ;
+   meta.vdp_metadata.stage_id : exact ;
+   standard_metadata.ingress_port : ternary ;
+   standard_metadata.egress_spec : ternary ;
+   standard_metadata.instance_type : ternary ;
+  }
+  actions = {
+   set_action_id;
+   end;
+  }
+ }
+ table table_std_meta_match_stage3 {
+  key = {
+   meta.vdp_metadata.inst_id : exact ;
+   meta.vdp_metadata.stage_id : exact ;
+   standard_metadata.ingress_port : ternary ;
+   standard_metadata.egress_spec : ternary ;
+   standard_metadata.instance_type : ternary ;
+  }
+  actions = {
+   set_action_id;
+   end;
+  }
+ }
+ table table_std_meta_match_stage4 {
+  key = {
+   meta.vdp_metadata.inst_id : exact ;
+   meta.vdp_metadata.stage_id : exact ;
+   standard_metadata.ingress_port : ternary ;
+   standard_metadata.egress_spec : ternary ;
+   standard_metadata.instance_type : ternary ;
+  }
+  actions = {
+   set_action_id;
+   end;
+  }
+ }
+ table table_user_meta_stage1 {
+  key = {
+   meta.vdp_metadata.inst_id : exact ;
+   meta.vdp_metadata.stage_id : exact ;
+   meta.user_metadata.meta : ternary;
+  }
+  actions = {
+   set_action_id;
+   end;
+  }
+ }
+ table table_user_meta_stage2 {
+  key = {
+   meta.vdp_metadata.inst_id : exact ;
+   meta.vdp_metadata.stage_id : exact ;
+   meta.user_metadata.meta : ternary;
+  }
+  actions = {
+   set_action_id;
+   end;
+  }
+ }
+ table table_user_meta_stage3 {
+  key = {
+   meta.vdp_metadata.inst_id : exact ;
+   meta.vdp_metadata.stage_id : exact ;
+   meta.user_metadata.meta : ternary;
+  }
+  actions = {
+   set_action_id;
+   end;
+  }
+ }
+ table table_user_meta_stage4 {
+  key = {
+   meta.vdp_metadata.inst_id : exact ;
+   meta.vdp_metadata.stage_id : exact ;
+   meta.user_metadata.meta : ternary;
+  }
+  actions = {
+   set_action_id;
+   end;
+  }
+ }
+    apply {
+        if (meta.vdp_metadata.inst_id == 0) { // TBD-define
+            table_config_at_initial.apply();
+        }
+
+        if (meta.vdp_metadata.inst_id != 0) {
+            ////////////////////////////////////////STAGE1/////////////////////////////////////////
+            if((meta.vdp_metadata.stage_id & 0x1f) == 1){
+                if((meta.vdp_metadata.match_chain_bitmap & 4) != 0){
+                    if(meta.vdp_metadata.table_chain&1 != 0)
+                      table_header_match_112_stage1.apply();
+                    else if(meta.vdp_metadata.table_chain&2 != 0)
+                      table_header_match_160_1_stage1.apply();
+                    else if(meta.vdp_metadata.table_chain&3 != 0)
+                      table_header_match_160_2_stage1.apply();
+                    else if(meta.vdp_metadata.table_chain&4 != 0)
+                      table_header_match_224_stage1.apply();
+                }
+            if (meta.vdp_metadata.match_chain_bitmap & 1 !=0 ){
+                      table_std_meta_match_stage1.apply();
+            }
+            if (meta.vdp_metadata.match_chain_bitmap & 2 !=0){
+                      table_user_meta_stage1.apply();
+            }
+            if (meta.vdp_metadata.action_chain_bitmap != 0){
+                action_do();
+            }
+            }
+            ////////////////////////////////////////STAGE2/////////////////////////////////////////
+            if((meta.vdp_metadata.stage_id & 0x1f) == 2){
+                if((meta.vdp_metadata.match_chain_bitmap & 4) != 0){
+                    if(meta.vdp_metadata.table_chain&1 != 0)
+                      table_header_match_112_stage2.apply();
+                    else if(meta.vdp_metadata.table_chain&2 != 0)
+                      table_header_match_160_1_stage2.apply();
+                    else if(meta.vdp_metadata.table_chain&3 != 0)
+                      table_header_match_160_2_stage2.apply();
+                    else if(meta.vdp_metadata.table_chain&4 != 0)
+                      table_header_match_224_stage2.apply();
+                }
+            if (meta.vdp_metadata.match_chain_bitmap & 1 !=0 ){
+                      table_std_meta_match_stage2.apply();
+            }
+            if (meta.vdp_metadata.match_chain_bitmap & 2 !=0){
+                      table_user_meta_stage2.apply();
+            }
+            if (meta.vdp_metadata.action_chain_bitmap != 0){
+                action_do();
+            }
+            }
+            ////////////////////////////////////////STAGE3/////////////////////////////////////////
+
+            if((meta.vdp_metadata.stage_id & 0x1f) == 3){
+                if((meta.vdp_metadata.match_chain_bitmap & 4) != 0){
+                    if(meta.vdp_metadata.table_chain&1 != 0)
+                      table_header_match_112_stage3.apply();
+                    else if(meta.vdp_metadata.table_chain&2 != 0)
+                      table_header_match_160_1_stage3.apply();
+                    else if(meta.vdp_metadata.table_chain&3 != 0)
+                      table_header_match_160_2_stage3.apply();
+                    else if(meta.vdp_metadata.table_chain&4 != 0)
+                      table_header_match_224_stage3.apply();
+                }
+            if (meta.vdp_metadata.match_chain_bitmap & 1 !=0 ){
+                      table_std_meta_match_stage3.apply();
+            }
+            if (meta.vdp_metadata.match_chain_bitmap & 2 !=0){
+                      table_user_meta_stage3.apply();
+            }
+            if (meta.vdp_metadata.action_chain_bitmap != 0){
+                action_do();
+            }
+            }
+            ////////////////////////////////////////STAGE4/////////////////////////////////////////
+            if((meta.vdp_metadata.stage_id & 0x1f) == 4){
+                if((meta.vdp_metadata.match_chain_bitmap & 4) != 0){
+                    if(meta.vdp_metadata.table_chain&1 != 0)
+                      table_header_match_112_stage4.apply();
+                    else if(meta.vdp_metadata.table_chain&2 != 0)
+                      table_header_match_160_1_stage4.apply();
+                    else if(meta.vdp_metadata.table_chain&3 != 0)
+                      table_header_match_160_2_stage4.apply();
+                    else if(meta.vdp_metadata.table_chain&4 != 0)
+                      table_header_match_224_stage4.apply();
+                }
+            if (meta.vdp_metadata.match_chain_bitmap & 1 !=0 ){
+                      table_std_meta_match_stage4.apply();
+            }
+            if (meta.vdp_metadata.match_chain_bitmap & 2 !=0){
+                      table_user_meta_stage4.apply();
+            }
+            if (meta.vdp_metadata.action_chain_bitmap != 0){
+                action_do();
+            }
+
+            }
+        }
+    }
+
+
+
+}
+
+
+control MyEgress(inout headers hdr,
+                 inout metadata meta,
+                 inout standard_metadata_t standard_metadata) {
+    apply {
+
+    }
+}
+
+control MyComputeChecksum(inout headers hdr, inout metadata meta) {
+     apply {
+    }
+}
+
+control MyDeparser(packet_out packet, in headers hdr) {
+    apply {
+        packet.emit(hdr.hdr_112);
+        packet.emit(hdr.desc_hdr);
+        packet.emit(hdr.hdr_224);
+        packet.emit(hdr.hdr_160[0]);
+        packet.emit(hdr.hdr_160[1]);
+        packet.emit(hdr.hdr_64);
+    }
+}
+
+V1Switch(
+MyParser(),
+MyVerifyChecksum(),
+MyIngress(),
+MyEgress(),
+MyComputeChecksum(),
+MyDeparser()
+) main;

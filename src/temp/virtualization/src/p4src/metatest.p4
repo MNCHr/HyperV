@@ -13,18 +13,19 @@ header description_hdr_t {
     bit<8> len;
     bit<16> vdp_id;
 }
-
+//tcp(160)+ipv4(160)+ethernet(112)
 header original_hdr1_t {
     bit<432> hdr1;
 }
-
+//ipv4(160)+ethernet(112)
 header original_hdr2_t {
     bit<272> hdr2;
 }
-
+//ethernet
 header hdr1_t {
     bit<112> buf;
 }
+//ipv4
 header hdr2_t {
     bit<160> buf;
 }

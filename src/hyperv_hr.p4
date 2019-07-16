@@ -909,17 +909,19 @@ action set_next_stage_a(match_bitmap, next_stage, next_prog) {
 }
 //
 action set_next_stage_b(match_bitmap, next_stage, next_prog) {
-	set_stage_and_bitmap(0, match_bitmap,
-        next_stage, next_prog);
+	set_stage_and_bitmap(0, match_bitmap, 
+		next_stage, next_prog);
 }
 
 //-----------------------------------------------------
 action end(next_prog) {
 	set_action_id(0, 0, 0 , 0, next_prog);
 }
+//match_result, action_bitmap, match_bitmap, next_stage, next_prog
 
 //-----------------------------------------------------
-action set_stage_and_bitmap (action_bitmap, 
+action set_stage_and_bitmap (
+							action_bitmap, 
                 match_bitmap , next_stage, next_prog) {
 	modify_field(ACTION_BITMAP, action_bitmap);
 	modify_field(MATCH_BITMAP, match_bitmap);
@@ -927,10 +929,11 @@ action set_stage_and_bitmap (action_bitmap,
 	modify_field(PROGRAM_ID, next_prog);
 	modify_field(ACTION_ID, MATCH_RESULT);
 	modify_field(MATCH_RESULT, 0);
-}
+} //STAGE(X) 4th if, match phase to action phase 
 
 //-----------------------------------------------------
-action set_action_id_direct (action_id, action_bitmap, 
+action set_action_id_direct (action_id, 
+							action_bitmap, 
                 match_bitmap , next_stage, next_prog) {
 	modify_field(ACTION_BITMAP, action_bitmap);
 	modify_field(MATCH_BITMAP, match_bitmap);
@@ -938,7 +941,14 @@ action set_action_id_direct (action_id, action_bitmap,
 	modify_field(PROGRAM_ID, next_prog);
 	modify_field(ACTION_ID, action_id);
 }
-
+//temp_hr
+action set_action_id (match_result, action_bitmap,
+                match_bitmap, next_stage, next_prog) {
+	set_match_result(match_result);
+	set_stage_and_bitmap(action_bitmap, 
+        match_bitmap, next_stage, next_prog);
+}
+//temp_hr
 //-----------------------------------------------------
 action set_match_result_with_next_stage (match_result, 
 			     match_bitmap, next_stage) {

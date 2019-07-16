@@ -11,6 +11,10 @@
  * bitmap. In this way we avoid using an exceedingly large match filed in one
  * table to reduce TCAM pressure. A match bitmap is also used to indicate whe-
  * ther a table should be executed or skipped in a match pipeline.
+ 
+ * {BIT_MASK_HEADER, BIT_MASK_STD_META, BIT_MASK_USER_META} = {4, 1, 2}
+ * MATCH_BITMAP = vdp_metadata.match_chain_bitmap
+ 
  */
 #define STAGE(X)															\
 control match_action_##X {		                                          	\

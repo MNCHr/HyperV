@@ -1,6 +1,13 @@
 #ifndef _ACTIONS_
 #define _ACTIONS_
 
+action set_initial_config (bit<8> progid, bit<8> stageid, bit<3> match_bitmap, bit<3> table_chain) {
+    meta.vdp_metadata.inst_id = progid; 
+    meta.vdp_metadata.stage_id = stageid;
+    meta.vdp_metadata.match_chain_bitmap = match_bitmap;
+    meta.vdp_metadata.table_chain = table_chain;        
+}
+
 action do_forward(bit<9> port) {
     standard_metadata.egress_spec = port;
 }
@@ -9,23 +16,35 @@ action do_drop() {
     mark_to_drop();
 }
 
-/////////////////////////need to declare/////////////////////
-struct temp_metadata_t {
-    bit<112> temp_112;
-    bit<112> temp_md_mask_112;
-    bit<160> temp_160_1;
-    bit<160> temp_md_mask_160_1;
-    bit<160> temp_160_2;
-    bit<160> temp_md_mask_160_2;
-    bit<224> temp_224;
-    bit<224> temp_md_mask_224;
+action set_stage_and_bitmap(bit<48> action_bitmap, bit<3> match_bitmap, bit<8> next_stage, bit<8> next_prog) {
+    meta.vdp_metadata.action_chain_bitmap = action_bitmap;
+    meta.vdp_metadata.match_chain_bitmap = match_bitmap;
+    meta.vdp_metadata.stage_id = next_stage;
+    meta.vdp_metadata.inst_id = next_prog;
+    meta.vdp_metadata.action_chain_id = meta.vdp_metadata.match_chain_result;
+    meta.vdp_metadata.match_chain_result = 0;
 }
-struct metadata {
-    temp_metadata_t temp_metadata;
+    
+action set_match_result(bit<48> match_result) {
+    meta.vdp_metadata.match_chain_result = match_result|meta.vdp_metadata.match_chain_result;
 }
-/////////////////////////////////////////////////////////////
-///does 'hdr' mean 'load header' ?
+    
+action set_action_id(bit<48> match_result, bit<48> action_bitmap, bit<3> match_bitmap, bit<8> next_stage, bit<8> next_prog) {
+    set_match_result(match_result);
+    set_stage_and_bitmap(action_bitmap, match_bitmap, next_stage, next_prog);
+}
 
+action end(bit<8> next_prog) {
+    set_action_id(0,0,0,0,next_prog);
+}
+
+action action_do(){
+
+}
+
+/*
+-------------------------------------Arp_proxy_head---------------------------
+*/
 ////for ethernet field
 action mod_field_with_const_112(bit<112> value_112, bit<112> mask_112){
     (hdr.hdr_112.buffer & ~mask_112) | value_112;
@@ -156,38 +175,7 @@ action arp_reply(   bit<224> mask_arp_sender_MAC, bit<8> l_shift_arp_sender_MAC,
     mod_field_with_const_224(2, mask_arp_opcode);
 }
 /*
-
+-------------------------------------Arp_proxy_tail-------------------------
 */
-
-
-
- action set_initial_config(bit<8> progid, bit<8> stageid, bit<3> match_bitmap, bit<3> table_chain) {
-    meta.vdp_metadata.inst_id = progid; 
-    meta.vdp_metadata.stage_id = stageid;
-    meta.vdp_metadata.match_chain_bitmap = match_bitmap;
-    meta.vdp_metadata.table_chain = table_chain;        
-}
-
-action set_stage_and_bitmap(bit<48> action_bitmap, bit<3> match_bitmap, bit<8> next_stage, bit<8> next_prog) {
-    meta.vdp_metadata.action_chain_bitmap = action_bitmap;
-    meta.vdp_metadata.match_chain_bitmap = match_bitmap;
-    meta.vdp_metadata.stage_id = next_stage;
-    meta.vdp_metadata.inst_id = next_prog;
-    meta.vdp_metadata.action_chain_id = meta.vdp_metadata.match_chain_result;
-    meta.vdp_metadata.match_chain_result = 0;
-}
-    
-action set_match_result(bit<48> match_result) {
-    meta.vdp_metadata.match_chain_result = match_result|meta.vdp_metadata.match_chain_result;
-}
-    
-action set_action_id(bit<48> match_result, bit<48> action_bitmap, bit<3> match_bitmap, bit<8> next_stage, bit<8> next_prog) {
-    set_match_result(match_result);
-    set_stage_and_bitmap(action_bitmap, match_bitmap, next_stage, next_prog);
-}
-
-action end(bit<8> next_prog) {
-    set_action_id(0,0,0,0,next_prog);
-}
 
 #endif

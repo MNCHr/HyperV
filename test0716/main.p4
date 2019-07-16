@@ -4,6 +4,7 @@
 #include "metadata.p4"
 #include "parser.p4"
 #include "define.p4"
+#include "action.p4"
 
 control MyVerifyChecksum(inout headers hdr, inout metadata meta) {   
     apply {  }
@@ -13,345 +14,296 @@ control MyIngress(inout headers hdr,
                   inout metadata meta,
                   inout standard_metadata_t standard_metadata) {
 
-////////////////////////////////////////////////////////////ACTIONS//////////////////////////////////////////////////////////////////////
-
-action set_initial_config (bit<8> progid, bit<8> stageid, bit<3> match_bitmap, bit<3> table_chain) {
-    meta.vdp_metadata.inst_id = progid; 
-    meta.vdp_metadata.stage_id = stageid;
-    meta.vdp_metadata.match_chain_bitmap = match_bitmap;
-    meta.vdp_metadata.table_chain = table_chain;        
-}
-
-action do_forward(bit<9> port) {
-    standard_metadata.egress_spec = port;
-}
-
-action do_drop() {
-    mark_to_drop();
-}
-
-action response(){
-    standard_metadata.egress_spec = standard_metadata.ingress_port;
-}
-
-action set_stage_and_bitmap(bit<48> action_bitmap, bit<3> match_bitmap, bit<8> next_stage, bit<8> next_prog) {
-    meta.vdp_metadata.action_chain_bitmap = action_bitmap;
-    meta.vdp_metadata.match_chain_bitmap = match_bitmap;
-    meta.vdp_metadata.stage_id = next_stage;
-    meta.vdp_metadata.inst_id = next_prog;
-    meta.vdp_metadata.action_chain_id = meta.vdp_metadata.match_chain_result;
-    meta.vdp_metadata.match_chain_result = 0;
-}
-    
-action set_match_result(bit<48> match_result) {
-    meta.vdp_metadata.match_chain_result = match_result|meta.vdp_metadata.match_chain_result;
-}
-    
-action set_action_id(bit<48> match_result, bit<48> action_bitmap, bit<3> match_bitmap, bit<8> next_stage, bit<8> next_prog) {
-    set_match_result(match_result);
-    set_stage_and_bitmap(action_bitmap, match_bitmap, next_stage, next_prog);
-}
-
-action end(bit<8> next_prog) {
-    set_action_id(0,0,0,0,next_prog);
-}
-
-action action_do(){
-
-}
-
-
 ////////////////////////////////////////////////////////////TABLES//////////////////////////////////////////////////////////////////////                
 
+	table table_config_at_initial {
+		key = {
+			hdr.desc_hdr.vdp_id: exact;        //At initial state, 1,2,3,4  
+			meta.vdp_metadata.inst_id: exact;  //At initial state, it should be 0
+			meta.vdp_metadata.stage_id: exact; //At initial state, it should be 0
+		}
+		actions = {
+			set_initial_config();
+		}
+	}    
 
-table table_config_at_initial {
-       key = {
-           hdr.desc_hdr.vdp_id: exact;        //At initial state, 1,2,3,4  
-           meta.vdp_metadata.inst_id: exact;  //At initial state, it should be 0
-           meta.vdp_metadata.stage_id: exact; //At initial state, it should be 0
-       }
-       actions = {
-           set_initial_config();
-       }
-}    
+	table table_header_match_112_stage1 {                                          
+		key = {                                                                 
+			meta.vdp_metadata.inst_id : exact ;                                		
+			meta.vdp_metadata.stage_id : exact ;                                  	
+			hdr.hdr_112.buffer : ternary ;                                   	
+		}                                                                       
+		actions = { 																
+			set_action_id;                                                        
+			end;							                                    
+		}    									                                
+	}
 
-table table_header_match_112_stage1 {                                          
-	key = {                                                                 
-		meta.vdp_metadata.inst_id : exact ;                                		
-		meta.vdp_metadata.stage_id : exact ;                                  	
-		hdr.hdr_112.buffer : ternary ;                                   	
-	}                                                                       
-	actions = { 																
-		 set_action_id;                                                        
-         end;							                                    
-	}    									                                
-}
-
-table table_header_match_112_stage2 {                                          
-	key = {                                                                 
-		meta.vdp_metadata.inst_id : exact ;                                		
-		meta.vdp_metadata.stage_id : exact ;                                  	
-		hdr.hdr_112.buffer : ternary ;                                   	
-	}                                                                       
-	actions = { 																
-		 set_action_id;                                                        
-         end;							                                    
-	}    									                                
-}       
-table table_header_match_112_stage3 {                                          
-	key = {                                                                 
-		meta.vdp_metadata.inst_id : exact ;                                		
-		meta.vdp_metadata.stage_id : exact ;                                  	
-		hdr.hdr_112.buffer : ternary ;                                   	
-	}                                                                       
-	actions = { 																
-		 set_action_id;                                                        
-         end;							                                    
-	}    									                                
-}       
-table table_header_match_112_stage4 {                                          
-	key = {                                                                 
-		meta.vdp_metadata.inst_id : exact ;                                		
-		meta.vdp_metadata.stage_id : exact ;                                  	
-		hdr.hdr_112.buffer : ternary ;                                   	
-	}                                                                       
-	actions = { 																
-		 set_action_id;                                                        
-         end;							                                    
-	}    									                                
-}
+	table table_header_match_112_stage2 {                                          
+		key = {                                                                 
+			meta.vdp_metadata.inst_id : exact ;                                		
+			meta.vdp_metadata.stage_id : exact ;                                  	
+			hdr.hdr_112.buffer : ternary ;                                   	
+		}                                                                       
+		actions = { 																
+			set_action_id;                                                        
+			end;							                                    
+		}    									                                
+	}       
+	table table_header_match_112_stage3 {                                          
+		key = {                                                                 
+			meta.vdp_metadata.inst_id : exact ;                                		
+			meta.vdp_metadata.stage_id : exact ;                                  	
+			hdr.hdr_112.buffer : ternary ;                                   	
+		}                                                                       
+		actions = { 																
+			set_action_id;                                                        
+			end;							                                    
+		}    									                                
+	}       
+	table table_header_match_112_stage4 {                                          
+		key = {                                                                 
+			meta.vdp_metadata.inst_id : exact ;                                		
+			meta.vdp_metadata.stage_id : exact ;                                  	
+			hdr.hdr_112.buffer : ternary ;                                   	
+		}                                                                       
+		actions = { 																
+			set_action_id;                                                        
+			end;							                                    
+		}    									                                
+	}
 
 
-table table_header_match_160_1_stage1 {                                        
-	key = {                                                                 
-		meta.vdp_metadata.inst_id : exact ;                                		
-		meta.vdp_metadata.stage_id : exact ;                                  	
-		hdr.hdr_160[0].buffer : ternary ;                                 	
-	}                                                                       
-	actions = { 																
-		 set_action_id;                                                        
-         end;							                                    
-	}    									                                
-}
-table table_header_match_160_1_stage2 {                                        
-	key = {                                                                 
-		meta.vdp_metadata.inst_id : exact ;                                		
-		meta.vdp_metadata.stage_id : exact ;                                  	
-		hdr.hdr_160[0].buffer : ternary ;                                 	
-	}                                                                       
-	actions = { 																
-		 set_action_id;                                                        
-         end;							                                    
-	}    									                                
-}
-table table_header_match_160_1_stage3 {                                        
-	key = {                                                                 
-		meta.vdp_metadata.inst_id : exact ;                                		
-		meta.vdp_metadata.stage_id : exact ;                                  	
-		hdr.hdr_160[0].buffer : ternary ;                                 	
-	}                                                                       
-	actions = { 																
-		 set_action_id;                                                        
-         end;							                                    
-	}    									                                
-} 
-table table_header_match_160_1_stage4 {                                        
-	key = {                                                                 
-		meta.vdp_metadata.inst_id : exact ;                                		
-		meta.vdp_metadata.stage_id : exact ;                                  	
-		hdr.hdr_160[0].buffer : ternary ;                                 	
-	}                                                                       
-	actions = { 																
-		 set_action_id;                                                        
-         end;							                                    
-	}    									                                
-}
+	table table_header_match_160_1_stage1 {                                        
+		key = {                                                                 
+			meta.vdp_metadata.inst_id : exact ;                                		
+			meta.vdp_metadata.stage_id : exact ;                                  	
+			hdr.hdr_160[0].buffer : ternary ;                                 	
+		}                                                                       
+		actions = { 																
+			set_action_id;                                                        
+			end;							                                    
+		}    									                                
+	}
+	table table_header_match_160_1_stage2 {                                        
+		key = {                                                                 
+			meta.vdp_metadata.inst_id : exact ;                                		
+			meta.vdp_metadata.stage_id : exact ;                                  	
+			hdr.hdr_160[0].buffer : ternary ;                                 	
+		}                                                                       
+		actions = { 																
+			set_action_id;                                                        
+			end;							                                    
+		}    									                                
+	}
+	table table_header_match_160_1_stage3 {                                        
+		key = {                                                                 
+			meta.vdp_metadata.inst_id : exact ;                                		
+			meta.vdp_metadata.stage_id : exact ;                                  	
+			hdr.hdr_160[0].buffer : ternary ;                                 	
+		}                                                                       
+		actions = { 																
+			set_action_id;                                                        
+			end;							                                    
+		}    									                                
+	} 
+	table table_header_match_160_1_stage4 {                                        
+		key = {                                                                 
+			meta.vdp_metadata.inst_id : exact ;                                		
+			meta.vdp_metadata.stage_id : exact ;                                  	
+			hdr.hdr_160[0].buffer : ternary ;                                 	
+		}                                                                       
+		actions = { 																
+			set_action_id;                                                        
+			end;							                                    
+		}    									                                
+	}
 
-table table_header_match_160_2_stage1 {                                        
-	key = {                                                                 
-		meta.vdp_metadata.inst_id : exact ;                                		
-		meta.vdp_metadata.stage_id : exact ;                                  	
-		hdr.hdr_160[1].buffer : ternary ;                                  	
-	}                                                                       
-	actions = { 																
-		 set_action_id;                                                          
-         end;							                                    
-	}    									                                
-}
-table table_header_match_160_2_stage2 {                                        
-	key = {                                                                 
-		meta.vdp_metadata.inst_id : exact ;                                		
-		meta.vdp_metadata.stage_id : exact ;                                  	
-		hdr.hdr_160[1].buffer : ternary ;                                  	
-	}                                                                       
-	actions = { 																
-		 set_action_id;                                                          
-         end;							                                    
-	}    									                                
-}
-table table_header_match_160_2_stage3 {                                        
-	key = {                                                                 
-		meta.vdp_metadata.inst_id : exact ;                                		
-		meta.vdp_metadata.stage_id : exact ;                                  	
-		hdr.hdr_160[1].buffer : ternary ;                                  	
-	}                                                                       
-	actions = { 																
-		 set_action_id;                                                          
-         end;							                                    
-	}    									                                
-} 
-table table_header_match_160_2_stage4 {                                        
-	key = {                                                                 
-		meta.vdp_metadata.inst_id : exact ;                                		
-		meta.vdp_metadata.stage_id : exact ;                                  	
-		hdr.hdr_160[1].buffer : ternary ;                                  	
-	}                                                                       
-	actions = { 																
-		 set_action_id;                                                          
-         end;							                                    
-	}    									                                
-}
+	table table_header_match_160_2_stage1 {                                        
+		key = {                                                                 
+			meta.vdp_metadata.inst_id : exact ;                                		
+			meta.vdp_metadata.stage_id : exact ;                                  	
+			hdr.hdr_160[1].buffer : ternary ;                                  	
+		}                                                                       
+		actions = { 																
+			set_action_id;                                                          
+			end;							                                    
+		}    									                                
+	}
+	table table_header_match_160_2_stage2 {                                        
+		key = {                                                                 
+			meta.vdp_metadata.inst_id : exact ;                                		
+			meta.vdp_metadata.stage_id : exact ;                                  	
+			hdr.hdr_160[1].buffer : ternary ;                                  	
+		}                                                                       
+		actions = { 																
+			set_action_id;                                                          
+			end;							                                    
+		}    									                                
+	}
+	table table_header_match_160_2_stage3 {                                        
+		key = {                                                                 
+			meta.vdp_metadata.inst_id : exact ;                                		
+			meta.vdp_metadata.stage_id : exact ;                                  	
+			hdr.hdr_160[1].buffer : ternary ;                                  	
+		}                                                                       
+		actions = { 																
+			set_action_id;                                                          
+			end;							                                    
+		}    									                                
+	} 
+	table table_header_match_160_2_stage4 {                                        
+		key = {                                                                 
+			meta.vdp_metadata.inst_id : exact ;                                		
+			meta.vdp_metadata.stage_id : exact ;                                  	
+			hdr.hdr_160[1].buffer : ternary ;                                  	
+		}                                                                       
+		actions = { 																
+			set_action_id;                                                          
+			end;							                                    
+		}    									                                
+	}
 
-table table_header_match_224_stage1 {                                          
-	key = {                                                                
-		meta.vdp_metadata.inst_id : exact ;                                		
-		meta.vdp_metadata.stage_id : exact ;                                
-		hdr.hdr_224.buffer : ternary ;                                   	
-	}                                                                       
-	actions = { 																
-		 set_action_id;                                                          
-         end;							                                    
-	}    									                                
-} 
-table table_header_match_224_stage2 {                                          
-	key = {                                                                
-		meta.vdp_metadata.inst_id : exact ;                                		
-		meta.vdp_metadata.stage_id : exact ;                                
-		hdr.hdr_224.buffer : ternary ;                                   	
-	}                                                                       
-	actions = { 																
-		 set_action_id;                                                          
-         end;							                                    
-	}    									                                
-}
-table table_header_match_224_stage3 {                                          
-	key = {                                                                
-		meta.vdp_metadata.inst_id : exact ;                                		
-		meta.vdp_metadata.stage_id : exact ;                                
-		hdr.hdr_224.buffer : ternary ;                                   	
-	}                                                                       
-	actions = { 																
-		 set_action_id;                                                          
-         end;							                                    
-	}    									                                
-} 
-table table_header_match_224_stage4 {                                          
-	key = {                                                                
-		meta.vdp_metadata.inst_id : exact ;                                		
-		meta.vdp_metadata.stage_id : exact ;                                
-		hdr.hdr_224.buffer : ternary ;                                   	
-	}                                                                       
-	actions = { 																
-		 set_action_id;                                                          
-         end;							                                    
-	}    									                                
-}                                                                            
-table table_std_meta_match_stage1 {                                            
-	key = {                                                                  
-		meta.vdp_metadata.inst_id : exact ;                                		
-		meta.vdp_metadata.stage_id : exact ;                                  	
-		standard_metadata.ingress_port : ternary ;                          
-		standard_metadata.egress_spec : ternary ;                           
-		standard_metadata.instance_type : ternary ;                         
-	}                                                                       
-	actions = { 																
-		set_action_id;														
-        end;                                                                        
-	}									                                    
-}
-table table_std_meta_match_stage2 {                                            
-	key = {                                                                  
-		meta.vdp_metadata.inst_id : exact ;                                		
-		meta.vdp_metadata.stage_id : exact ;                                  	
-		standard_metadata.ingress_port : ternary ;                          
-		standard_metadata.egress_spec : ternary ;                           
-		standard_metadata.instance_type : ternary ;                         
-	}                                                                       
-	actions = { 																
-		set_action_id;														
-        end;                                                                        
-	}									                                    
-}
-table table_std_meta_match_stage3 {                                            
-	key = {                                                                  
-		meta.vdp_metadata.inst_id : exact ;                                		
-		meta.vdp_metadata.stage_id : exact ;                                  	
-		standard_metadata.ingress_port : ternary ;                          
-		standard_metadata.egress_spec : ternary ;                           
-		standard_metadata.instance_type : ternary ;                         
-	}                                                                       
-	actions = { 																
-		set_action_id;														
-        end;                                                                        
-	}									                                    
-}
-table table_std_meta_match_stage4 {                                            
-	key = {                                                                  
-		meta.vdp_metadata.inst_id : exact ;                                		
-		meta.vdp_metadata.stage_id : exact ;                                  	
-		standard_metadata.ingress_port : ternary ;                          
-		standard_metadata.egress_spec : ternary ;                           
-		standard_metadata.instance_type : ternary ;                         
-	}                                                                       
-	actions = { 																
-		set_action_id;														
-        end;                                                                        
-	}									                                    
-}                                                                              
-table table_user_meta_stage1 {	                                                
-	key = {                             				                    
-		meta.vdp_metadata.inst_id 		: exact ;       				        
-		meta.vdp_metadata.stage_id 		: exact ;   	               			
-		meta.user_metadata.meta 	        : ternary;	            				
-	}                                                       				
-	actions = { 																
-		set_action_id;                                                      
-        end;																
-	}                    													
-}
-table table_user_meta_stage2 {	                                                
-	key = {                             				                    
-		meta.vdp_metadata.inst_id 		: exact ;       				        
-		meta.vdp_metadata.stage_id 		: exact ;   	               			
-		meta.user_metadata.meta 	        : ternary;	            				
-	}                                                       				
-	actions = { 																
-		set_action_id;                                                      
-        end;																
-	}                    													
-}
-table table_user_meta_stage3 {	                                                
-	key = {                             				                    
-		meta.vdp_metadata.inst_id 		: exact ;       				        
-		meta.vdp_metadata.stage_id 		: exact ;   	               			
-		meta.user_metadata.meta 	        : ternary;	            				
-	}                                                       				
-	actions = { 																
-		set_action_id;                                                      
-        end;																
-	}                    													
-}
-table table_user_meta_stage4 {	                                                
-	key = {                             				                    
-		meta.vdp_metadata.inst_id 		: exact ;       				        
-		meta.vdp_metadata.stage_id 		: exact ;   	               			
-		meta.user_metadata.meta 	        : ternary;	            				
-	}                                                       				
-	actions = { 																
-		set_action_id;                                                      
-        end;																
-	}                    													
-}                                                                           
+	table table_header_match_224_stage1 {                                          
+		key = {                                                                
+			meta.vdp_metadata.inst_id : exact ;                                		
+			meta.vdp_metadata.stage_id : exact ;                                
+			hdr.hdr_224.buffer : ternary ;                                   	
+		}                                                                       
+		actions = { 																
+			set_action_id;                                                          
+			end;							                                    
+		}    									                                
+	} 
+	table table_header_match_224_stage2 {                                          
+		key = {                                                                
+			meta.vdp_metadata.inst_id : exact ;                                		
+			meta.vdp_metadata.stage_id : exact ;                                
+			hdr.hdr_224.buffer : ternary ;                                   	
+		}                                                                       
+		actions = { 																
+			set_action_id;                                                          
+			end;							                                    
+		}    									                                
+	}
+	table table_header_match_224_stage3 {                                          
+		key = {                                                                
+			meta.vdp_metadata.inst_id : exact ;                                		
+			meta.vdp_metadata.stage_id : exact ;                                
+			hdr.hdr_224.buffer : ternary ;                                   	
+		}                                                                       
+		actions = { 																
+			set_action_id;                                                          
+			end;							                                    
+		}    									                                
+	} 
+	table table_header_match_224_stage4 {                                          
+		key = {                                                                
+			meta.vdp_metadata.inst_id : exact ;                                		
+			meta.vdp_metadata.stage_id : exact ;                                
+			hdr.hdr_224.buffer : ternary ;                                   	
+		}                                                                       
+		actions = { 																
+			set_action_id;                                                          
+			end;							                                    
+		}    									                                
+	}                                                                            
+	table table_std_meta_match_stage1 {                                            
+		key = {                                                                  
+			meta.vdp_metadata.inst_id : exact ;                                		
+			meta.vdp_metadata.stage_id : exact ;                                  	
+			standard_metadata.ingress_port : ternary ;                          
+			standard_metadata.egress_spec : ternary ;                           
+			standard_metadata.instance_type : ternary ;                         
+		}                                                                       
+		actions = { 																
+			set_action_id;														
+			end;                                                                        
+		}									                                    
+	}
+	table table_std_meta_match_stage2 {                                            
+		key = {                                                                  
+			meta.vdp_metadata.inst_id : exact ;                                		
+			meta.vdp_metadata.stage_id : exact ;                                  	
+			standard_metadata.ingress_port : ternary ;                          
+			standard_metadata.egress_spec : ternary ;                           
+			standard_metadata.instance_type : ternary ;                         
+		}                                                                       
+		actions = { 																
+			set_action_id;														
+			end;                                                                        
+		}									                                    
+	}
+	table table_std_meta_match_stage3 {                                            
+		key = {                                                                  
+			meta.vdp_metadata.inst_id : exact ;                                		
+			meta.vdp_metadata.stage_id : exact ;                                  	
+			standard_metadata.ingress_port : ternary ;                          
+			standard_metadata.egress_spec : ternary ;                           
+			standard_metadata.instance_type : ternary ;                         
+		}                                                                       
+		actions = { 																
+			set_action_id;														
+			end;                                                                        
+		}									                                    
+	}
+	table table_std_meta_match_stage4 {                                            
+		key = {                                                                  
+			meta.vdp_metadata.inst_id : exact ;                                		
+			meta.vdp_metadata.stage_id : exact ;                                  	
+			standard_metadata.ingress_port : ternary ;                          
+			standard_metadata.egress_spec : ternary ;                           
+			standard_metadata.instance_type : ternary ;                         
+		}                                                                       
+		actions = { 																
+			set_action_id;														
+			end;                                                                        
+		}									                                    
+	}                                                                              
+	table table_user_meta_stage1 {	                                                
+		key = {                             				                    
+			meta.vdp_metadata.inst_id 		: exact ;       				        
+			meta.vdp_metadata.stage_id 		: exact ;   	               			
+			meta.user_metadata.meta 	        : ternary;	            				
+		}                                                       				
+		actions = { 																
+			set_action_id;                                                      
+			end;																
+		}                    													
+	}
+	table table_user_meta_stage2 {	                                                
+		key = {                             				                    
+			meta.vdp_metadata.inst_id 		: exact ;       				        
+			meta.vdp_metadata.stage_id 		: exact ;   	               			
+			meta.user_metadata.meta 	        : ternary;	            				
+		}                                                       				
+		actions = { 																
+			set_action_id;                                                      
+			end;																
+		}                    													
+	}
+	table table_user_meta_stage3 {	                                                
+		key = {                             				                    
+			meta.vdp_metadata.inst_id 		: exact ;       				        
+			meta.vdp_metadata.stage_id 		: exact ;   	               			
+			meta.user_metadata.meta 	        : ternary;	            				
+		}                                                       				
+		actions = { 																
+			set_action_id;                                                      
+			end;																
+		}                    													
+	}
+	table table_user_meta_stage4 {	                                                
+		key = {                             				                    
+			meta.vdp_metadata.inst_id 		: exact ;       				        
+			meta.vdp_metadata.stage_id 		: exact ;   	               			
+			meta.user_metadata.meta 	        : ternary;	            				
+		}                                                       				
+		actions = { 																
+			set_action_id;                                                      
+			end;																
+		}                    													
+	}                                                                           
     apply {
         if (PROG_ID == 0) { // TBD-define
             table_config_at_initial.apply(); 

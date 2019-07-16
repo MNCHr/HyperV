@@ -91,6 +91,8 @@ metadata intrinsic_metadata_t intrinsic_metadata;
 #define EXTEND_ACTION_MODIFY_STANDARD_METADATA               37
 #define EXTEND_ACTION_HASH                                   38
 #define EXTEND_ACTION_PROFILE                                39
+//hr
+#define COMPOUND_EXTEND_ACTION_MODIFY_STANDARD_METADATA      40
 
 // MASK
 #define BIT_MASK_MOD_HEADER_WITH_CONST                       (1<<EXTEND_ACTION_MODIFY_HEADER_WITH_CONST)
@@ -119,6 +121,8 @@ metadata intrinsic_metadata_t intrinsic_metadata;
 #define BIT_MASK_HASH                                        (1<<EXTEND_ACTION_HASH)
 #define BIT_MASK_PROFILE                                     (1<<EXTEND_ACTION_PROFILE)
 
+//hr
+#define BIT_MASK_COMPOUND_MOD_STD_META		   			(1<<COMPOUND_EXTEND_ACTION_MODIFY_STANDARD_METADATA)
 // STAGE
 #define CONST_NUM_OF_STAGE			0x1f
 #define CONST_STAGE_1				1
@@ -973,6 +977,14 @@ action set_initial_config_new (progid, initstage,
 	modify_field(PROGRAM_ID , progid);
 	modify_field(STAGE_ID, initstage);
 	modify_field(MATCH_BITMAP, match_bitmap);
+}
+
+action compound_mod_std_meta (val1, mask1, 
+							val2, mask2, 
+							val3, mask3, 
+					   		val4, mask4) {
+	do_mod_std_meta;
+	do_loopback;
 }
 
 //----------------- Egress ----------------------------

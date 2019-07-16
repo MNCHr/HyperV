@@ -141,7 +141,11 @@ control execute_do_##X {												\
 	}																	\				
 	if ((ACTION_BITMAP & BIT_MASK_PROFILE) != 0) {						\
 	    apply(table_action_profile_##X);								\
-	}																	\
+	}\
+    if ((ACTION_BITMAP & BIT_MASK_COMPOUND_MOD_STD_META) != 0) {		\
+	    apply(table_compound_mod_std_meta_##X);							\
+	}\
+    																	\
 }																		\
 table table_add_##X {													\
 	reads {																\
@@ -279,7 +283,14 @@ table table_register_##X {												\
 		do_wirte_meta_into_register;									\
 		do_wirte_const_into_register;									\
 	}																	\
+}																		\
+table table_compound_mod_std_meta_##X {									\
+	reads {																\
+		ACTION_ID : exact;												\
+	}																	\
+	actions {															\
+		compound_mod_std_meta;          								\
+	}																	\
 }																		
-
 
 #endif

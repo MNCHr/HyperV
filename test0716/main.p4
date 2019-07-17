@@ -246,7 +246,7 @@ control MyIngress(inout headers hdr,
 	*/
 	table table_arp_proxy {
 		key = {
-			ACTION_BITMAP : exact;
+			meta.vdp_metadata.action_chain_bitmap : exact;
 		}
 		actions = {
 			do_forward;

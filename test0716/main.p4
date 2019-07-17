@@ -30,7 +30,7 @@ control MyIngress(inout headers hdr,
 	}
 
 	action do_drop() {
-		mark_to_drop();
+		
 	}
 
 	action set_stage_and_bitmap(bit<48> action_bitmap, bit<3> match_bitmap, bit<8> next_stage, bit<8> next_prog) {
@@ -59,10 +59,7 @@ control MyIngress(inout headers hdr,
 
 	}
 
-	/*
-	-------------------------------------Arp_proxy_head---------------------------
-	*/
-	////for ethernet field
+	////////////for ethernet field
 	action mod_field_with_const_112(bit<112> value_112, bit<112> mask_112) {   
 		hdr.hdr_112.buffer = (hdr.hdr_112.buffer&(~mask_112))|(value_112&mask_112);
 	}
@@ -77,7 +74,7 @@ control MyIngress(inout headers hdr,
 		meta.temp_metadata.temp_112 = meta.temp_metadata.temp_112 << l_shift;
 		meta.temp_metadata.temp_112 = meta.temp_metadata.temp_112 >> r_shift;
 	}
-	// shift temp, mask to indicate fields should be modified
+	// shift temp, mask to indicate fields which should be modified
 	// (l_shift, r_shift) = (n, 0) or (0, n)
 
 	action mod_field_with_field_112(bit<112> temp_mask_112, bit<8>l_shift, bit<8>r_shift){
@@ -88,7 +85,7 @@ control MyIngress(inout headers hdr,
 	// temp_mask=enabled with 1 to indicate field for extractioin 
 	//shift=difference between target field for modification and extracted field
 
-	////for ipv4 field
+	////////////for ipv4 field
 	action mod_field_with_const_160_1(bit<160> value_160_1, bit<160> mask_160_1){
 		hdr.hdr_160[0].buffer = (hdr.hdr_160[0].buffer&~mask_160_1)|(value_160_1&mask_160_1);
 	}
@@ -103,7 +100,7 @@ control MyIngress(inout headers hdr,
 		meta.temp_metadata.temp_160_1 = meta.temp_metadata.temp_160_1 << l_shift;
 		meta.temp_metadata.temp_160_1 = meta.temp_metadata.temp_160_1 >> r_shift;
 	}
-	// shift temp, mask to indicate fields should be modified
+	// shift temp, mask to indicate fields which should be modified
 	// (l_shift, r_shift) = (n, 0) or (0, n)
 
 	action mod_field_with_field_160_1(bit<160> temp_mask_160_1, bit<8>l_shift, bit<8>r_shift){
@@ -114,7 +111,7 @@ control MyIngress(inout headers hdr,
 	// temp_mask=enabled with 1 to indicate field for extractioin 
 	//shift=difference between target field for modification and extracted field
 
-	////for tcp field
+	////////////for tcp field
 	action mod_field_with_const_160_2(bit<160> value_160_2, bit<160> mask_160_2){
 		hdr.hdr_160[1].buffer = (hdr.hdr_160[1].buffer & ~mask_160_2)|(value_160_2 & mask_160_2);
 	}
@@ -129,7 +126,7 @@ control MyIngress(inout headers hdr,
 		meta.temp_metadata.temp_160_2 = meta.temp_metadata.temp_160_2 << l_shift;
 		meta.temp_metadata.temp_160_2 = meta.temp_metadata.temp_160_2 >> r_shift;
 	}
-	// shift temp, mask to indicate fields should be modified
+	// shift temp, mask to indicate fields which should be modified
 	// (l_shift, r_shift) = (n, 0) or (0, n)
 
 	action mod_field_with_field_160_2(bit<160> temp_mask_160_2, bit<8>l_shift, bit<8>r_shift){
@@ -140,7 +137,7 @@ control MyIngress(inout headers hdr,
 	// temp_mask=enabled with 1 to indicate field for extractioin 
 	//shift=difference between target field for modification and extracted field
 
-	////for arp field
+	////////////for arp field
 	action mod_field_with_const_224(bit<224> value_224, bit<224> mask_224){
 		hdr.hdr_224.buffer = (hdr.hdr_224.buffer & (~mask_224))|(value_224 & mask_224);
 	}
@@ -156,7 +153,7 @@ control MyIngress(inout headers hdr,
 		meta.temp_metadata.temp_224 = meta.temp_metadata.temp_224 << l_shift;
 		meta.temp_metadata.temp_224 = meta.temp_metadata.temp_224 >> r_shift;
 	} 
-	// shift temp, mask to indicate fields should be modified
+	// shift temp, mask to indicate fields which should be modified
 	// (l_shift, r_shift) = (n, 0) or (0, n)
 
 	action mod_field_with_field_224(bit<224> temp_mask_224, bit<8>l_shift, bit<8>r_shift){
@@ -171,13 +168,17 @@ control MyIngress(inout headers hdr,
 		standard_metadata.egress_spec = standard_metadata.ingress_port;
 	}
 
+	/*
+	------------meta.vdp_metadata.inst_id == 1 -- arp_proxy_head-----------------
+	*/
+
 	action arp_reply(   bit<224> mask_arp_sender_MAC, bit<8> l_shift_arp_sender_MAC, bit<8> r_shift_arp_sender_MAC, 
-								 bit<224> mask_arp_send_ip , bit<8> l_shift_arp_send_ip, bit<8> r_shift_arp_send_ip,
-								 bit<112> mask_ethernet_src, bit<8> l_shift_ethernet_src, bit<8> r_shift_ethernet_src,
-								 bit<224> value_arp_sender_MAC,
-								 bit<224> value_arp_sender_IP,
-								 bit<112> value_ethernet_src,
-								 bit<224> mask_arp_opcode ) {
+						bit<224> mask_arp_send_ip , bit<8> l_shift_arp_send_ip, bit<8> r_shift_arp_send_ip,
+						bit<112> mask_ethernet_src, bit<8> l_shift_ethernet_src, bit<8> r_shift_ethernet_src,
+						bit<224> value_arp_sender_MAC,
+						bit<224> value_arp_sender_IP,
+						bit<112> value_ethernet_src,
+						bit<224> mask_arp_opcode ) {
 		response();
 		mod_field_with_field_224(mask_arp_sender_MAC, l_shift_arp_sender_MAC, r_shift_arp_sender_MAC);
 		mod_field_with_field_224(mask_arp_send_ip, l_shift_arp_send_ip, r_shift_arp_send_ip);
@@ -187,31 +188,30 @@ control MyIngress(inout headers hdr,
 		mod_field_with_const_112(value_ethernet_src, mask_ethernet_src);
 		mod_field_with_const_224(2, mask_arp_opcode);
 	}
-	////////////////Does need marking to indicate the end of action chaining ?
+	////////////////Does need marking to indicate the end of do-action phase ?
 	/*
-	-------------------------------------Arp_proxy_tail-------------------------
+	------------meta.vdp_metadata.inst_id == 1 -- arp_proxy_tail-------------------------
 	*/
 	/*
-	-------------------------------------FW_head-------------------------
-	*/
-		action FW_forward_table (bit<9> port) {
-			do_forward(port);
-		}		
-	/*
-	-------------------------------------FW_tail-------------------------
-	*/
-	/*
-	-------------------------------------l2_switch_head-------------------------
+	------------meta.vdp_metadata.inst_id == 2 -- l2_switch_head-------------------------
 	*/
 		action l2_switch_forward(bit<9> port) {
 			do_forward(port);
 		}
 	/*
-	-------------------------------------l2_switch_tail-------------------------
+	------------meta.vdp_metadata.inst_id == 2 -- l2_switch_tail-------------------------
 	*/
-
 	/*
-	-------------------------------------NAT_head-------------------------
+	------------meta.vdp_metadata.inst_id == 3 -- FW_head-------------------------
+	*/
+		action FW_forward (bit<9> port) {
+			do_forward(port);
+		}		
+	/*
+	------------meta.vdp_metadata.inst_id == 3 -- FW_tail-------------------------
+	*/
+	/*
+	------------meta.vdp_metadata.inst_id == 4 -- NAT_head-------------------------
 	*/
 		action NAT_nat_input_output(bit<160> value_IP_dstAddr, bit<160> mask_IP_dstAddr,
 									bit<160> value_IP_srcAddr, bit<160> mask_IP_srcAddr ) {
@@ -239,8 +239,49 @@ control MyIngress(inout headers hdr,
 			NAT_send_frame (value_ethernet_smac, mask_ethernet_srcAddr);
 		}
 	/*
-	-------------------------------------NAT_tail-------------------------
+	------------meta.vdp_metadata.inst_id == 4 -- NAT_tail-------------------------
 	*/
+	/*
+	------------table for function------------
+	*/
+	table table_arp_proxy {
+		key = {
+			ACTION_BITMAP : exact;
+		}
+		actions = {
+			do_forward;
+			arp_reply;						
+		}
+	}
+	
+	table table_l2_switch {
+		key = {
+			ACTION_BITMAP : exact;
+		}
+		actions = {
+			l2_switch_forward;						
+		}
+	}
+	
+	table table_FW {
+		key = {
+			ACTION_BITMAP : exact;
+		}
+		actions = {
+			do_drop;
+			no_op;
+			FW_forward;
+		}
+	}
+	
+	table table_NAT {
+		key = {
+			ACTION_BITMAP : exact;
+		}
+		actions = {
+			NAT;
+		}
+	}
 ////////////////////////////////////////////////////////////TABLES//////////////////////////////////////////////////////////////////////                
 
 	table table_config_at_initial {
@@ -549,16 +590,23 @@ control MyIngress(inout headers hdr,
                     else if(meta.vdp_metadata.table_chain&4 != 0)
                       table_header_match_224_stage1.apply();
                 }
-            if (meta.vdp_metadata.match_chain_bitmap & BIT_MASK_STD_META !=0 ){
-                      table_std_meta_match_stage1.apply();
-            }
-            if (meta.vdp_metadata.match_chain_bitmap & BIT_MASK_USER_META !=0){
-                      table_user_meta_stage1.apply();
-            }
-            if (ACTION_BITMAP != 0){
-                action_do();
-            }                               
-            }
+				if (meta.vdp_metadata.match_chain_bitmap & BIT_MASK_STD_META !=0 ){
+						table_std_meta_match_stage1.apply();
+				}
+				if (meta.vdp_metadata.match_chain_bitmap & BIT_MASK_USER_META !=0){
+						table_user_meta_stage1.apply();
+				}
+				if (ACTION_BITMAP != 0){
+					if(ACTION_BITMAP == 1)
+						table_arp_proxy.apply();
+					if(ACTION_BITMAP == 2)
+						table_l2_switch.apply();
+					if(ACTION_BITMAP == 4)
+						table_FW.apply();
+					if(ACTION_BITMAP == 8)
+						table_NAT.apply();
+				}
+			}
             ////////////////////////////////////////STAGE2/////////////////////////////////////////
             if((meta.vdp_metadata.stage_id & CONST_NUM_OF_STAGE) == CONST_STAGE_2){
                 if((meta.vdp_metadata.match_chain_bitmap & BIT_MASK_HEADER) != 0){
@@ -571,16 +619,23 @@ control MyIngress(inout headers hdr,
                     else if(meta.vdp_metadata.table_chain&4 != 0)
                       table_header_match_224_stage2.apply();
                 }
-            if (meta.vdp_metadata.match_chain_bitmap & BIT_MASK_STD_META !=0 ){
-                      table_std_meta_match_stage2.apply();
-            }
-            if (meta.vdp_metadata.match_chain_bitmap & BIT_MASK_USER_META !=0){
-                      table_user_meta_stage2.apply();
-            }
-            if (ACTION_BITMAP != 0){
-                action_do();
-            }
-            }
+				if (meta.vdp_metadata.match_chain_bitmap & BIT_MASK_STD_META !=0 ){
+						table_std_meta_match_stage2.apply();
+				}
+				if (meta.vdp_metadata.match_chain_bitmap & BIT_MASK_USER_META !=0){
+						table_user_meta_stage2.apply();
+				}
+				if (ACTION_BITMAP != 0){
+					if(ACTION_BITMAP == 1)
+						table_arp_proxy.apply();
+					if(ACTION_BITMAP == 2)
+						table_l2_switch.apply();
+					if(ACTION_BITMAP == 4)
+						table_FW.apply();
+					if(ACTION_BITMAP == 8)
+						table_NAT.apply();
+				}
+			}
             ////////////////////////////////////////STAGE3/////////////////////////////////////////
 
             if((meta.vdp_metadata.stage_id & CONST_NUM_OF_STAGE) == CONST_STAGE_3){
@@ -594,15 +649,22 @@ control MyIngress(inout headers hdr,
                     else if(meta.vdp_metadata.table_chain&4 != 0)
                       table_header_match_224_stage3.apply();
                 }
-            if (meta.vdp_metadata.match_chain_bitmap & BIT_MASK_STD_META !=0 ){
-                      table_std_meta_match_stage3.apply();
-            }
-            if (meta.vdp_metadata.match_chain_bitmap & BIT_MASK_USER_META !=0){
-                      table_user_meta_stage3.apply();
-            }
-            if (ACTION_BITMAP != 0){
-                action_do();
-            }                               
+				if (meta.vdp_metadata.match_chain_bitmap & BIT_MASK_STD_META !=0 ){
+						table_std_meta_match_stage3.apply();
+				}
+				if (meta.vdp_metadata.match_chain_bitmap & BIT_MASK_USER_META !=0){
+						table_user_meta_stage3.apply();
+				}
+				if (ACTION_BITMAP != 0){
+					if(ACTION_BITMAP == 1)
+						table_arp_proxy.apply();
+					if(ACTION_BITMAP == 2)
+						table_l2_switch.apply();
+					if(ACTION_BITMAP == 4)
+						table_FW.apply();
+					if(ACTION_BITMAP == 8)
+						table_NAT.apply();
+				}                               
             }
             ////////////////////////////////////////STAGE4/////////////////////////////////////////
             if((meta.vdp_metadata.stage_id & CONST_NUM_OF_STAGE) == CONST_STAGE_4){
@@ -616,16 +678,22 @@ control MyIngress(inout headers hdr,
                     else if(meta.vdp_metadata.table_chain&4 != 0)
                       table_header_match_224_stage4.apply();
                 }
-            if (meta.vdp_metadata.match_chain_bitmap & BIT_MASK_STD_META !=0 ){
-                      table_std_meta_match_stage4.apply();
-            }
-            if (meta.vdp_metadata.match_chain_bitmap & BIT_MASK_USER_META !=0){
-                      table_user_meta_stage4.apply();
-            }
-            if (ACTION_BITMAP != 0){
-                action_do();
-            }
-                               
+				if (meta.vdp_metadata.match_chain_bitmap & BIT_MASK_STD_META !=0 ){
+						table_std_meta_match_stage4.apply();
+				}
+				if (meta.vdp_metadata.match_chain_bitmap & BIT_MASK_USER_META !=0){
+						table_user_meta_stage4.apply();
+				}
+				if (ACTION_BITMAP != 0){
+					if(ACTION_BITMAP == 1)
+						table_arp_proxy.apply();
+					if(ACTION_BITMAP == 2)
+						table_l2_switch.apply();
+					if(ACTION_BITMAP == 4)
+						table_FW.apply();
+					if(ACTION_BITMAP == 8)
+						table_NAT.apply();
+				}                              
             }
         } 
     }

@@ -717,6 +717,10 @@ control MyIngress(inout headers hdr,
   standard_metadata.egress_spec = port;
  }
 
+ action no_op() {
+
+ }
+
  action do_drop() {
   mark_to_drop();
  }
@@ -860,12 +864,12 @@ control MyIngress(inout headers hdr,
  }
 
  action arp_reply( bit<224> mask_arp_sender_MAC, bit<8> l_shift_arp_sender_MAC, bit<8> r_shift_arp_sender_MAC,
-      bit<224> mask_arp_send_ip , bit<8> l_shift_arp_send_ip, bit<8> r_shift_arp_send_ip,
-      bit<112> mask_ethernet_src, bit<8> l_shift_ethernet_src, bit<8> r_shift_ethernet_src,
-      bit<224> value_arp_sender_MAC,
-      bit<224> value_arp_sender_IP,
-      bit<112> value_ethernet_src,
-      bit<224> mask_arp_opcode ) {
+         bit<224> mask_arp_send_ip , bit<8> l_shift_arp_send_ip, bit<8> r_shift_arp_send_ip,
+         bit<112> mask_ethernet_src, bit<8> l_shift_ethernet_src, bit<8> r_shift_ethernet_src,
+         bit<224> value_arp_sender_MAC,
+         bit<224> value_arp_sender_IP,
+         bit<112> value_ethernet_src,
+         bit<224> mask_arp_opcode ) {
   response();
   mod_field_with_field_224(mask_arp_sender_MAC, l_shift_arp_sender_MAC, r_shift_arp_sender_MAC);
   mod_field_with_field_224(mask_arp_send_ip, l_shift_arp_send_ip, r_shift_arp_send_ip);
@@ -875,10 +879,60 @@ control MyIngress(inout headers hdr,
   mod_field_with_const_112(value_ethernet_src, mask_ethernet_src);
   mod_field_with_const_224(2, mask_arp_opcode);
  }
+ ////////////////Does need marking to indicate the end of action chaining ?
  /*
 	-------------------------------------Arp_proxy_tail-------------------------
 	*/
+ /*
+	-------------------------------------FW_head-------------------------
+	*/
+  action FW_forward_table (bit<9> port) {
+   do_forward(port);
+  }
+ /*
+	-------------------------------------FW_tail-------------------------
+	*/
+ /*
+	-------------------------------------l2_switch_head-------------------------
+	*/
+  action l2_switch_forward(bit<9> port) {
+   do_forward(port);
+  }
+ /*
+	-------------------------------------l2_switch_tail-------------------------
+	*/
 
+ /*
+	-------------------------------------NAT_head-------------------------
+	*/
+  action NAT_nat_input_output(bit<160> value_IP_dstAddr, bit<160> mask_IP_dstAddr,
+         bit<160> value_IP_srcAddr, bit<160> mask_IP_srcAddr ) {
+   mod_field_with_const_160_1(value_IP_dstAddr, mask_IP_dstAddr);
+   mod_field_with_const_160_1(value_IP_srcAddr, mask_IP_srcAddr);
+  }
+
+  action NAT_set_dmac (bit<112> value_ethernet_dmac, bit<112> mask_ethernet_dstAddr,
+       bit<9> port ) {
+   mod_field_with_const_112(value_ethernet_dmac, mask_ethernet_dstAddr);
+   do_forward(port);
+  }
+
+  action NAT_send_frame (bit<112> value_ethernet_smac, bit<112> mask_ethernet_srcAddr) {
+   mod_field_with_const_112(value_ethernet_smac, mask_ethernet_srcAddr);
+  }
+
+  action NAT (bit<160> value_IP_dstAddr, bit<160> mask_IP_dstAddr,
+     bit<160> value_IP_srcAddr, bit<160> mask_IP_srcAddr,
+     bit<112> value_ethernet_dmac, bit<112> mask_ethernet_dstAddr,
+     bit<9> port,
+     bit<112> value_ethernet_smac, bit<112> mask_ethernet_srcAddr ) {
+   NAT_nat_input_output (value_IP_dstAddr, mask_IP_dstAddr, value_IP_srcAddr, mask_IP_srcAddr);
+   NAT_set_dmac (value_ethernet_dmac, mask_ethernet_dstAddr, port);
+   NAT_send_frame (value_ethernet_smac, mask_ethernet_srcAddr);
+  }
+ /*
+	-------------------------------------NAT_tail-------------------------
+	*/
 ////////////////////////////////////////////////////////////TABLES//////////////////////////////////////////////////////////////////////                
 
  table table_config_at_initial {

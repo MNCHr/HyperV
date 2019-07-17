@@ -347,7 +347,7 @@
       "id" : 0,
       "source_info" : {
         "filename" : "main.p4",
-        "line" : 597,
+        "line" : 651,
         "column" : 8,
         "source_fragment" : "MyDeparser"
       },
@@ -663,7 +663,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 42,
+            "line" : 46,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = match_result|meta.vdp_metadata.match_chain_result"
           }
@@ -682,7 +682,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -701,7 +701,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -720,7 +720,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -739,7 +739,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -758,7 +758,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -777,7 +777,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -837,7 +837,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 42,
+            "line" : 46,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = match_result|meta.vdp_metadata.match_chain_result"
           }
@@ -856,7 +856,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -875,7 +875,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -894,7 +894,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -913,7 +913,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -932,7 +932,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -951,7 +951,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -1011,7 +1011,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 42,
+            "line" : 46,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = match_result|meta.vdp_metadata.match_chain_result"
           }
@@ -1030,7 +1030,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -1049,7 +1049,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -1068,7 +1068,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -1087,7 +1087,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -1106,7 +1106,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -1125,7 +1125,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -1185,7 +1185,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 42,
+            "line" : 46,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = match_result|meta.vdp_metadata.match_chain_result"
           }
@@ -1204,7 +1204,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -1223,7 +1223,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -1242,7 +1242,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -1261,7 +1261,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -1280,7 +1280,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -1299,7 +1299,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -1359,7 +1359,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 42,
+            "line" : 46,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = match_result|meta.vdp_metadata.match_chain_result"
           }
@@ -1378,7 +1378,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -1397,7 +1397,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -1416,7 +1416,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -1435,7 +1435,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -1454,7 +1454,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -1473,7 +1473,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -1533,7 +1533,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 42,
+            "line" : 46,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = match_result|meta.vdp_metadata.match_chain_result"
           }
@@ -1552,7 +1552,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -1571,7 +1571,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -1590,7 +1590,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -1609,7 +1609,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -1628,7 +1628,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -1647,7 +1647,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -1707,7 +1707,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 42,
+            "line" : 46,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = match_result|meta.vdp_metadata.match_chain_result"
           }
@@ -1726,7 +1726,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -1745,7 +1745,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -1764,7 +1764,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -1783,7 +1783,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -1802,7 +1802,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -1821,7 +1821,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -1881,7 +1881,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 42,
+            "line" : 46,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = match_result|meta.vdp_metadata.match_chain_result"
           }
@@ -1900,7 +1900,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -1919,7 +1919,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -1938,7 +1938,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -1957,7 +1957,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -1976,7 +1976,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -1995,7 +1995,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -2055,7 +2055,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 42,
+            "line" : 46,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = match_result|meta.vdp_metadata.match_chain_result"
           }
@@ -2074,7 +2074,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -2093,7 +2093,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -2112,7 +2112,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -2131,7 +2131,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -2150,7 +2150,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -2169,7 +2169,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -2229,7 +2229,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 42,
+            "line" : 46,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = match_result|meta.vdp_metadata.match_chain_result"
           }
@@ -2248,7 +2248,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -2267,7 +2267,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -2286,7 +2286,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -2305,7 +2305,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -2324,7 +2324,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -2343,7 +2343,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -2403,7 +2403,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 42,
+            "line" : 46,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = match_result|meta.vdp_metadata.match_chain_result"
           }
@@ -2422,7 +2422,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -2441,7 +2441,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -2460,7 +2460,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -2479,7 +2479,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -2498,7 +2498,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -2517,7 +2517,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -2577,7 +2577,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 42,
+            "line" : 46,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = match_result|meta.vdp_metadata.match_chain_result"
           }
@@ -2596,7 +2596,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -2615,7 +2615,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -2634,7 +2634,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -2653,7 +2653,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -2672,7 +2672,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -2691,7 +2691,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -2751,7 +2751,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 42,
+            "line" : 46,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = match_result|meta.vdp_metadata.match_chain_result"
           }
@@ -2770,7 +2770,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -2789,7 +2789,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -2808,7 +2808,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -2827,7 +2827,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -2846,7 +2846,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -2865,7 +2865,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -2925,7 +2925,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 42,
+            "line" : 46,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = match_result|meta.vdp_metadata.match_chain_result"
           }
@@ -2944,7 +2944,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -2963,7 +2963,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -2982,7 +2982,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -3001,7 +3001,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -3020,7 +3020,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -3039,7 +3039,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -3099,7 +3099,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 42,
+            "line" : 46,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = match_result|meta.vdp_metadata.match_chain_result"
           }
@@ -3118,7 +3118,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -3137,7 +3137,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -3156,7 +3156,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -3175,7 +3175,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -3194,7 +3194,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -3213,7 +3213,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -3273,7 +3273,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 42,
+            "line" : 46,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = match_result|meta.vdp_metadata.match_chain_result"
           }
@@ -3292,7 +3292,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -3311,7 +3311,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -3330,7 +3330,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -3349,7 +3349,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -3368,7 +3368,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -3387,7 +3387,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -3447,7 +3447,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 42,
+            "line" : 46,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = match_result|meta.vdp_metadata.match_chain_result"
           }
@@ -3466,7 +3466,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -3485,7 +3485,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -3504,7 +3504,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -3523,7 +3523,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -3542,7 +3542,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -3561,7 +3561,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -3621,7 +3621,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 42,
+            "line" : 46,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = match_result|meta.vdp_metadata.match_chain_result"
           }
@@ -3640,7 +3640,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -3659,7 +3659,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -3678,7 +3678,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -3697,7 +3697,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -3716,7 +3716,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -3735,7 +3735,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -3795,7 +3795,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 42,
+            "line" : 46,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = match_result|meta.vdp_metadata.match_chain_result"
           }
@@ -3814,7 +3814,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -3833,7 +3833,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -3852,7 +3852,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -3871,7 +3871,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -3890,7 +3890,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -3909,7 +3909,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -3969,7 +3969,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 42,
+            "line" : 46,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = match_result|meta.vdp_metadata.match_chain_result"
           }
@@ -3988,7 +3988,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -4007,7 +4007,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -4026,7 +4026,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -4045,7 +4045,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -4064,7 +4064,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -4083,7 +4083,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -4143,7 +4143,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 42,
+            "line" : 46,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = match_result|meta.vdp_metadata.match_chain_result"
           }
@@ -4162,7 +4162,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -4181,7 +4181,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -4200,7 +4200,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -4219,7 +4219,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -4238,7 +4238,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -4257,7 +4257,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -4317,7 +4317,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 42,
+            "line" : 46,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = match_result|meta.vdp_metadata.match_chain_result"
           }
@@ -4336,7 +4336,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -4355,7 +4355,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -4374,7 +4374,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -4393,7 +4393,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -4412,7 +4412,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -4431,7 +4431,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -4491,7 +4491,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 42,
+            "line" : 46,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = match_result|meta.vdp_metadata.match_chain_result"
           }
@@ -4510,7 +4510,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -4529,7 +4529,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -4548,7 +4548,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -4567,7 +4567,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -4586,7 +4586,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -4605,7 +4605,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -4665,7 +4665,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 42,
+            "line" : 46,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = match_result|meta.vdp_metadata.match_chain_result"
           }
@@ -4684,7 +4684,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -4703,7 +4703,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -4722,7 +4722,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -4741,7 +4741,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -4760,7 +4760,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -4779,7 +4779,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -4810,7 +4810,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -4829,7 +4829,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -4848,7 +4848,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -4867,7 +4867,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -4886,7 +4886,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -4905,7 +4905,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -4936,7 +4936,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -4955,7 +4955,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -4974,7 +4974,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -4993,7 +4993,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -5012,7 +5012,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -5031,7 +5031,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -5062,7 +5062,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -5081,7 +5081,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -5100,7 +5100,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -5119,7 +5119,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -5138,7 +5138,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -5157,7 +5157,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -5188,7 +5188,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -5207,7 +5207,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -5226,7 +5226,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -5245,7 +5245,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -5264,7 +5264,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -5283,7 +5283,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -5314,7 +5314,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -5333,7 +5333,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -5352,7 +5352,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -5371,7 +5371,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -5390,7 +5390,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -5409,7 +5409,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -5440,7 +5440,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -5459,7 +5459,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -5478,7 +5478,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -5497,7 +5497,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -5516,7 +5516,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -5535,7 +5535,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -5566,7 +5566,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -5585,7 +5585,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -5604,7 +5604,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -5623,7 +5623,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -5642,7 +5642,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -5661,7 +5661,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -5692,7 +5692,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -5711,7 +5711,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -5730,7 +5730,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -5749,7 +5749,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -5768,7 +5768,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -5787,7 +5787,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -5818,7 +5818,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -5837,7 +5837,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -5856,7 +5856,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -5875,7 +5875,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -5894,7 +5894,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -5913,7 +5913,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -5944,7 +5944,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -5963,7 +5963,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -5982,7 +5982,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -6001,7 +6001,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -6020,7 +6020,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -6039,7 +6039,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -6070,7 +6070,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -6089,7 +6089,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -6108,7 +6108,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -6127,7 +6127,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -6146,7 +6146,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -6165,7 +6165,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -6196,7 +6196,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -6215,7 +6215,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -6234,7 +6234,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -6253,7 +6253,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -6272,7 +6272,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -6291,7 +6291,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -6322,7 +6322,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -6341,7 +6341,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -6360,7 +6360,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -6379,7 +6379,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -6398,7 +6398,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -6417,7 +6417,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -6448,7 +6448,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -6467,7 +6467,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -6486,7 +6486,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -6505,7 +6505,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -6524,7 +6524,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -6543,7 +6543,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -6574,7 +6574,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -6593,7 +6593,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -6612,7 +6612,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -6631,7 +6631,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -6650,7 +6650,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -6669,7 +6669,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -6700,7 +6700,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -6719,7 +6719,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -6738,7 +6738,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -6757,7 +6757,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -6776,7 +6776,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -6795,7 +6795,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -6826,7 +6826,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -6845,7 +6845,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -6864,7 +6864,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -6883,7 +6883,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -6902,7 +6902,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -6921,7 +6921,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -6952,7 +6952,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -6971,7 +6971,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -6990,7 +6990,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -7009,7 +7009,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -7028,7 +7028,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -7047,7 +7047,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -7078,7 +7078,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -7097,7 +7097,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -7116,7 +7116,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -7135,7 +7135,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -7154,7 +7154,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -7173,7 +7173,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -7204,7 +7204,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -7223,7 +7223,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -7242,7 +7242,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -7261,7 +7261,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -7280,7 +7280,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -7299,7 +7299,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -7330,7 +7330,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -7349,7 +7349,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -7368,7 +7368,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -7387,7 +7387,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -7406,7 +7406,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -7425,7 +7425,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -7456,7 +7456,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -7475,7 +7475,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -7494,7 +7494,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -7513,7 +7513,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -7532,7 +7532,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -7551,7 +7551,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -7582,7 +7582,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -7601,7 +7601,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -7620,7 +7620,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -7639,7 +7639,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -7658,7 +7658,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -7677,7 +7677,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -7708,7 +7708,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 33,
+            "line" : 37,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap = action_bitmap; ..."
           }
@@ -7727,7 +7727,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 34,
+            "line" : 38,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap = match_bitmap; ..."
           }
@@ -7746,7 +7746,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 35,
+            "line" : 39,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.stage_id = next_stage; ..."
           }
@@ -7765,7 +7765,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 36,
+            "line" : 40,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.inst_id = next_prog; ..."
           }
@@ -7784,7 +7784,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 37,
+            "line" : 41,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.action_chain_id = meta"
           }
@@ -7803,7 +7803,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 38,
+            "line" : 42,
             "column" : 2,
             "source_fragment" : "meta.vdp_metadata.match_chain_result = 0"
           }
@@ -7853,7 +7853,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 254,
+            "line" : 308,
             "column" : 3,
             "source_fragment" : "hdr.hdr_160[0].buffer"
           }
@@ -7879,7 +7879,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 299,
+            "line" : 353,
             "column" : 3,
             "source_fragment" : "hdr.hdr_160[1].buffer"
           }
@@ -7905,7 +7905,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 265,
+            "line" : 319,
             "column" : 3,
             "source_fragment" : "hdr.hdr_160[0].buffer"
           }
@@ -7931,7 +7931,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 310,
+            "line" : 364,
             "column" : 3,
             "source_fragment" : "hdr.hdr_160[1].buffer"
           }
@@ -7957,7 +7957,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 276,
+            "line" : 330,
             "column" : 3,
             "source_fragment" : "hdr.hdr_160[0].buffer"
           }
@@ -7983,7 +7983,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 321,
+            "line" : 375,
             "column" : 3,
             "source_fragment" : "hdr.hdr_160[1].buffer"
           }
@@ -8009,7 +8009,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 287,
+            "line" : 341,
             "column" : 3,
             "source_fragment" : "hdr.hdr_160[0].buffer"
           }
@@ -8035,7 +8035,7 @@
           ],
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 332,
+            "line" : 386,
             "column" : 3,
             "source_fragment" : "hdr.hdr_160[1].buffer"
           }
@@ -8060,7 +8060,7 @@
           "id" : 0,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 192,
+            "line" : 246,
             "column" : 7,
             "source_fragment" : "table_config_at_initial"
           },
@@ -8109,7 +8109,7 @@
           "id" : 1,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 203,
+            "line" : 257,
             "column" : 7,
             "source_fragment" : "table_header_match_112_stage1"
           },
@@ -8159,7 +8159,7 @@
           "id" : 2,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 254,
+            "line" : 308,
             "column" : 3,
             "source_fragment" : "hdr.hdr_160[0].buffer"
           },
@@ -8188,7 +8188,7 @@
           "id" : 3,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 250,
+            "line" : 304,
             "column" : 7,
             "source_fragment" : "table_header_match_160_1_stage1"
           },
@@ -8238,7 +8238,7 @@
           "id" : 4,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 299,
+            "line" : 353,
             "column" : 3,
             "source_fragment" : "hdr.hdr_160[1].buffer"
           },
@@ -8267,7 +8267,7 @@
           "id" : 5,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 295,
+            "line" : 349,
             "column" : 7,
             "source_fragment" : "table_header_match_160_2_stage1"
           },
@@ -8317,7 +8317,7 @@
           "id" : 6,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 340,
+            "line" : 394,
             "column" : 7,
             "source_fragment" : "table_header_match_224_stage1"
           },
@@ -8367,7 +8367,7 @@
           "id" : 7,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 384,
+            "line" : 438,
             "column" : 7,
             "source_fragment" : "table_std_meta_match_stage1"
           },
@@ -8429,7 +8429,7 @@
           "id" : 8,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 436,
+            "line" : 490,
             "column" : 7,
             "source_fragment" : "table_user_meta_stage1"
           },
@@ -8479,7 +8479,7 @@
           "id" : 9,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 505,
+            "line" : 559,
             "column" : 16,
             "source_fragment" : "action_do()"
           },
@@ -8508,7 +8508,7 @@
           "id" : 10,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 215,
+            "line" : 269,
             "column" : 7,
             "source_fragment" : "table_header_match_112_stage2"
           },
@@ -8558,7 +8558,7 @@
           "id" : 11,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 265,
+            "line" : 319,
             "column" : 3,
             "source_fragment" : "hdr.hdr_160[0].buffer"
           },
@@ -8587,7 +8587,7 @@
           "id" : 12,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 261,
+            "line" : 315,
             "column" : 7,
             "source_fragment" : "table_header_match_160_1_stage2"
           },
@@ -8637,7 +8637,7 @@
           "id" : 13,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 310,
+            "line" : 364,
             "column" : 3,
             "source_fragment" : "hdr.hdr_160[1].buffer"
           },
@@ -8666,7 +8666,7 @@
           "id" : 14,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 306,
+            "line" : 360,
             "column" : 7,
             "source_fragment" : "table_header_match_160_2_stage2"
           },
@@ -8716,7 +8716,7 @@
           "id" : 15,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 351,
+            "line" : 405,
             "column" : 7,
             "source_fragment" : "table_header_match_224_stage2"
           },
@@ -8766,7 +8766,7 @@
           "id" : 16,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 397,
+            "line" : 451,
             "column" : 7,
             "source_fragment" : "table_std_meta_match_stage2"
           },
@@ -8828,7 +8828,7 @@
           "id" : 17,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 447,
+            "line" : 501,
             "column" : 7,
             "source_fragment" : "table_user_meta_stage2"
           },
@@ -8878,7 +8878,7 @@
           "id" : 18,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 527,
+            "line" : 581,
             "column" : 16,
             "source_fragment" : "action_do()"
           },
@@ -8907,7 +8907,7 @@
           "id" : 19,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 226,
+            "line" : 280,
             "column" : 7,
             "source_fragment" : "table_header_match_112_stage3"
           },
@@ -8957,7 +8957,7 @@
           "id" : 20,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 276,
+            "line" : 330,
             "column" : 3,
             "source_fragment" : "hdr.hdr_160[0].buffer"
           },
@@ -8986,7 +8986,7 @@
           "id" : 21,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 272,
+            "line" : 326,
             "column" : 7,
             "source_fragment" : "table_header_match_160_1_stage3"
           },
@@ -9036,7 +9036,7 @@
           "id" : 22,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 321,
+            "line" : 375,
             "column" : 3,
             "source_fragment" : "hdr.hdr_160[1].buffer"
           },
@@ -9065,7 +9065,7 @@
           "id" : 23,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 317,
+            "line" : 371,
             "column" : 7,
             "source_fragment" : "table_header_match_160_2_stage3"
           },
@@ -9115,7 +9115,7 @@
           "id" : 24,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 362,
+            "line" : 416,
             "column" : 7,
             "source_fragment" : "table_header_match_224_stage3"
           },
@@ -9165,7 +9165,7 @@
           "id" : 25,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 410,
+            "line" : 464,
             "column" : 7,
             "source_fragment" : "table_std_meta_match_stage3"
           },
@@ -9227,7 +9227,7 @@
           "id" : 26,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 458,
+            "line" : 512,
             "column" : 7,
             "source_fragment" : "table_user_meta_stage3"
           },
@@ -9277,7 +9277,7 @@
           "id" : 27,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 550,
+            "line" : 604,
             "column" : 16,
             "source_fragment" : "action_do()"
           },
@@ -9306,7 +9306,7 @@
           "id" : 28,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 237,
+            "line" : 291,
             "column" : 7,
             "source_fragment" : "table_header_match_112_stage4"
           },
@@ -9356,7 +9356,7 @@
           "id" : 29,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 287,
+            "line" : 341,
             "column" : 3,
             "source_fragment" : "hdr.hdr_160[0].buffer"
           },
@@ -9385,7 +9385,7 @@
           "id" : 30,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 283,
+            "line" : 337,
             "column" : 7,
             "source_fragment" : "table_header_match_160_1_stage4"
           },
@@ -9435,7 +9435,7 @@
           "id" : 31,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 332,
+            "line" : 386,
             "column" : 3,
             "source_fragment" : "hdr.hdr_160[1].buffer"
           },
@@ -9464,7 +9464,7 @@
           "id" : 32,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 328,
+            "line" : 382,
             "column" : 7,
             "source_fragment" : "table_header_match_160_2_stage4"
           },
@@ -9514,7 +9514,7 @@
           "id" : 33,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 373,
+            "line" : 427,
             "column" : 7,
             "source_fragment" : "table_header_match_224_stage4"
           },
@@ -9564,7 +9564,7 @@
           "id" : 34,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 423,
+            "line" : 477,
             "column" : 7,
             "source_fragment" : "table_std_meta_match_stage4"
           },
@@ -9626,7 +9626,7 @@
           "id" : 35,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 469,
+            "line" : 523,
             "column" : 7,
             "source_fragment" : "table_user_meta_stage4"
           },
@@ -9676,7 +9676,7 @@
           "id" : 36,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 572,
+            "line" : 626,
             "column" : 16,
             "source_fragment" : "action_do()"
           },
@@ -9708,7 +9708,7 @@
           "id" : 0,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 481,
+            "line" : 535,
             "column" : 12,
             "source_fragment" : "meta.vdp_metadata.inst_id == 0"
           },
@@ -9734,7 +9734,7 @@
           "id" : 1,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 485,
+            "line" : 539,
             "column" : 12,
             "source_fragment" : "meta.vdp_metadata.inst_id != 0"
           },
@@ -9760,7 +9760,7 @@
           "id" : 2,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 487,
+            "line" : 541,
             "column" : 15,
             "source_fragment" : "(meta.vdp_metadata.stage_id & 0x1f) == 1"
           },
@@ -9796,7 +9796,7 @@
           "id" : 3,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 488,
+            "line" : 542,
             "column" : 19,
             "source_fragment" : "(meta.vdp_metadata.match_chain_bitmap & 4) != 0"
           },
@@ -9832,7 +9832,7 @@
           "id" : 4,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 489,
+            "line" : 543,
             "column" : 23,
             "source_fragment" : "meta.vdp_metadata.table_chain&1 != 0"
           },
@@ -9868,7 +9868,7 @@
           "id" : 5,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 491,
+            "line" : 545,
             "column" : 28,
             "source_fragment" : "meta.vdp_metadata.table_chain&2 != 0"
           },
@@ -9904,7 +9904,7 @@
           "id" : 6,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 493,
+            "line" : 547,
             "column" : 28,
             "source_fragment" : "meta.vdp_metadata.table_chain&3 != 0"
           },
@@ -9940,7 +9940,7 @@
           "id" : 7,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 495,
+            "line" : 549,
             "column" : 28,
             "source_fragment" : "meta.vdp_metadata.table_chain&4 != 0"
           },
@@ -9976,7 +9976,7 @@
           "id" : 8,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 498,
+            "line" : 552,
             "column" : 16,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap & 1 !=0"
           },
@@ -10012,7 +10012,7 @@
           "id" : 9,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 501,
+            "line" : 555,
             "column" : 16,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap & 2 !=0"
           },
@@ -10048,7 +10048,7 @@
           "id" : 10,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 504,
+            "line" : 558,
             "column" : 16,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap != 0"
           },
@@ -10074,7 +10074,7 @@
           "id" : 11,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 509,
+            "line" : 563,
             "column" : 15,
             "source_fragment" : "(meta.vdp_metadata.stage_id & 0x1f) == 2"
           },
@@ -10110,7 +10110,7 @@
           "id" : 12,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 510,
+            "line" : 564,
             "column" : 19,
             "source_fragment" : "(meta.vdp_metadata.match_chain_bitmap & 4) != 0"
           },
@@ -10146,7 +10146,7 @@
           "id" : 13,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 511,
+            "line" : 565,
             "column" : 23,
             "source_fragment" : "meta.vdp_metadata.table_chain&1 != 0"
           },
@@ -10182,7 +10182,7 @@
           "id" : 14,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 513,
+            "line" : 567,
             "column" : 28,
             "source_fragment" : "meta.vdp_metadata.table_chain&2 != 0"
           },
@@ -10218,7 +10218,7 @@
           "id" : 15,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 515,
+            "line" : 569,
             "column" : 28,
             "source_fragment" : "meta.vdp_metadata.table_chain&3 != 0"
           },
@@ -10254,7 +10254,7 @@
           "id" : 16,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 517,
+            "line" : 571,
             "column" : 28,
             "source_fragment" : "meta.vdp_metadata.table_chain&4 != 0"
           },
@@ -10290,7 +10290,7 @@
           "id" : 17,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 520,
+            "line" : 574,
             "column" : 16,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap & 1 !=0"
           },
@@ -10326,7 +10326,7 @@
           "id" : 18,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 523,
+            "line" : 577,
             "column" : 16,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap & 2 !=0"
           },
@@ -10362,7 +10362,7 @@
           "id" : 19,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 526,
+            "line" : 580,
             "column" : 16,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap != 0"
           },
@@ -10388,7 +10388,7 @@
           "id" : 20,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 532,
+            "line" : 586,
             "column" : 15,
             "source_fragment" : "(meta.vdp_metadata.stage_id & 0x1f) == 3"
           },
@@ -10424,7 +10424,7 @@
           "id" : 21,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 533,
+            "line" : 587,
             "column" : 19,
             "source_fragment" : "(meta.vdp_metadata.match_chain_bitmap & 4) != 0"
           },
@@ -10460,7 +10460,7 @@
           "id" : 22,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 534,
+            "line" : 588,
             "column" : 23,
             "source_fragment" : "meta.vdp_metadata.table_chain&1 != 0"
           },
@@ -10496,7 +10496,7 @@
           "id" : 23,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 536,
+            "line" : 590,
             "column" : 28,
             "source_fragment" : "meta.vdp_metadata.table_chain&2 != 0"
           },
@@ -10532,7 +10532,7 @@
           "id" : 24,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 538,
+            "line" : 592,
             "column" : 28,
             "source_fragment" : "meta.vdp_metadata.table_chain&3 != 0"
           },
@@ -10568,7 +10568,7 @@
           "id" : 25,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 540,
+            "line" : 594,
             "column" : 28,
             "source_fragment" : "meta.vdp_metadata.table_chain&4 != 0"
           },
@@ -10604,7 +10604,7 @@
           "id" : 26,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 543,
+            "line" : 597,
             "column" : 16,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap & 1 !=0"
           },
@@ -10640,7 +10640,7 @@
           "id" : 27,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 546,
+            "line" : 600,
             "column" : 16,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap & 2 !=0"
           },
@@ -10676,7 +10676,7 @@
           "id" : 28,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 549,
+            "line" : 603,
             "column" : 16,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap != 0"
           },
@@ -10702,7 +10702,7 @@
           "id" : 29,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 554,
+            "line" : 608,
             "column" : 15,
             "source_fragment" : "(meta.vdp_metadata.stage_id & 0x1f) == 4"
           },
@@ -10738,7 +10738,7 @@
           "id" : 30,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 555,
+            "line" : 609,
             "column" : 19,
             "source_fragment" : "(meta.vdp_metadata.match_chain_bitmap & 4) != 0"
           },
@@ -10774,7 +10774,7 @@
           "id" : 31,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 556,
+            "line" : 610,
             "column" : 23,
             "source_fragment" : "meta.vdp_metadata.table_chain&1 != 0"
           },
@@ -10810,7 +10810,7 @@
           "id" : 32,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 558,
+            "line" : 612,
             "column" : 28,
             "source_fragment" : "meta.vdp_metadata.table_chain&2 != 0"
           },
@@ -10846,7 +10846,7 @@
           "id" : 33,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 560,
+            "line" : 614,
             "column" : 28,
             "source_fragment" : "meta.vdp_metadata.table_chain&3 != 0"
           },
@@ -10882,7 +10882,7 @@
           "id" : 34,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 562,
+            "line" : 616,
             "column" : 28,
             "source_fragment" : "meta.vdp_metadata.table_chain&4 != 0"
           },
@@ -10918,7 +10918,7 @@
           "id" : 35,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 565,
+            "line" : 619,
             "column" : 16,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap & 1 !=0"
           },
@@ -10954,7 +10954,7 @@
           "id" : 36,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 568,
+            "line" : 622,
             "column" : 16,
             "source_fragment" : "meta.vdp_metadata.match_chain_bitmap & 2 !=0"
           },
@@ -10990,7 +10990,7 @@
           "id" : 37,
           "source_info" : {
             "filename" : "main.p4",
-            "line" : 571,
+            "line" : 625,
             "column" : 16,
             "source_fragment" : "meta.vdp_metadata.action_chain_bitmap != 0"
           },
@@ -11018,7 +11018,7 @@
       "id" : 1,
       "source_info" : {
         "filename" : "main.p4",
-        "line" : 584,
+        "line" : 638,
         "column" : 8,
         "source_fragment" : "MyEgress"
       },

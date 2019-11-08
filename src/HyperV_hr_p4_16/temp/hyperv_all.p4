@@ -972,7 +972,7 @@ action set_stage_and_bitmap (action_bitmap,
 	modify_field(MATCH_BITMAP, match_bitmap);
 	modify_field(STAGE_ID, next_stage);
 	modify_field(PROGRAM_ID, next_prog);
-	modify_field(ACTION_ID, MATCH_RESULT);
+	modify_field(ACTION_ID, MATCH_R3ESULT);
 	modify_field(MATCH_RESULT, 0);
 }
 

@@ -14,7 +14,7 @@ control MyIngress(inout headers hdr,
                   inout standard_metadata_t standard_metadata) {
 
 
-	action set_initial_config (bit<8> progid, bit<8> stageid, bit<3> match_bitmap, bit<4> table_chain) {
+	action set_initial_config (bit<8> progid, bit<8> stageid, bit<3> match_bitmap, bit<4> table_chain) { //need-to-check
 		meta.vdp_metadata.inst_id = progid; 
 		meta.vdp_metadata.stage_id = stageid;
 		meta.vdp_metadata.match_chain_bitmap = match_bitmap;
@@ -22,7 +22,7 @@ control MyIngress(inout headers hdr,
 	}
 
 	action do_forward(bit<9> port) {
-		standard_metadata.egress_spec = port;
+		standard_metadata.egress_spec = port;4
 	}
 
 	action no_op() {
@@ -33,7 +33,7 @@ control MyIngress(inout headers hdr,
 		mark_to_drop(standard_metadata);
 	}
 
-	action set_stage_and_bitmap(bit<48> action_bitmap, bit<3> match_bitmap, bit<8> next_stage, bit<8> next_prog) {
+	action set_stage_and_bitmap(bit<48> action_bitmap, bit<3> match_bitmap, bit<8> next_stage, bit<8> next_prog) { //need-to-check
 		meta.vdp_metadata.action_chain_bitmap = action_bitmap;
 		meta.vdp_metadata.match_chain_bitmap = match_bitmap;
 		meta.vdp_metadata.stage_id = next_stage;
@@ -46,12 +46,12 @@ control MyIngress(inout headers hdr,
 		meta.vdp_metadata.match_chain_result = match_result|meta.vdp_metadata.match_chain_result;
 	}
 		
-	action set_action_id(bit<48> match_result, bit<48> action_bitmap, bit<3> match_bitmap, bit<8> next_stage, bit<8> next_prog) {
+	action set_action_id(bit<48> match_result, bit<48> action_bitmap, bit<3> match_bitmap, bit<8> next_stage, bit<8> next_prog) { //need-to-check
 		set_match_result(match_result);
 		set_stage_and_bitmap(action_bitmap, match_bitmap, next_stage, next_prog);
 	}
 
-	action end(bit<8> next_prog) {
+	action end(bit<8> next_prog) { //need-to-check
 		set_action_id(0,0,0,0,next_prog);
 	}
 

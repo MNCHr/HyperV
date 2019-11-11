@@ -4,7 +4,7 @@
 
 struct vdp_metadata_t {
     bit<8> inst_id; //program id
-    bit<8> stage_id; //indicate where program installed
+    bit<8> stage_id; //indicate where programs are installed
     bit<3> match_chain_bitmap; //3 options/ 100:header, 010:user md, 001: std md
     bit<48> match_chain_result; //temp to make chain for action_chain_id
     bit<48> action_chain_bitmap; //call defined actions, next stage =0

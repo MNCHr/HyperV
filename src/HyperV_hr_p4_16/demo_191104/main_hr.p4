@@ -22,7 +22,7 @@ control MyIngress(inout headers hdr,
 	}
 
 	action do_forward(bit<9> port) {
-		standard_metadata.egress_spec = port;4
+		standard_metadata.egress_spec = port;
 	}
 
 	action no_op() {
@@ -41,13 +41,14 @@ control MyIngress(inout headers hdr,
 		meta.vdp_metadata.action_chain_id = meta.vdp_metadata.match_chain_result;
 		meta.vdp_metadata.match_chain_result = 0;
 	}
-		
+	/*	
 	action set_match_result(bit<48> match_result) {
 		meta.vdp_metadata.match_chain_result = match_result|meta.vdp_metadata.match_chain_result;
 	}
-		
+	*/	
 	action set_action_id(bit<48> match_result, bit<48> action_bitmap, bit<3> match_bitmap, bit<8> next_stage, bit<8> next_prog) { //need-to-check
-		set_match_result(match_result);
+		//set_match_result(match_result);
+		meta.vdp_metadata.match_chain_result = match_result|meta.vdp_metadata.match_chain_result;
 		set_stage_and_bitmap(action_bitmap, match_bitmap, next_stage, next_prog);
 	}
 

@@ -78,7 +78,7 @@ table check_opcode {
 action arp_reply(IP, MAC) {
   modify_field(standard_metadata.egress_spec, standard_metadata.ingress_port);
   
-  modify_field(arp.targest_MAC, arp.sender_MAC);
+  modify_field(arp.target_MAC, arp.sender_MAC);
   modify_field(arp.target_IP, arp.send_ip);
   modify_field(ethernet.dest, ethernet.src);
 

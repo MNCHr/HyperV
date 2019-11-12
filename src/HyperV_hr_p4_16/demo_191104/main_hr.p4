@@ -181,9 +181,11 @@ control MyIngress(inout headers hdr,
 						bit<112> value_ethernet_src,
 						bit<224> mask_arp_opcode ) {
 		response();
+
 		mod_field_with_field_224(mask_arp_sender_MAC, l_shift_arp_sender_MAC, r_shift_arp_sender_MAC);
 		mod_field_with_field_224(mask_arp_send_ip, l_shift_arp_send_ip, r_shift_arp_send_ip);
 		mod_field_with_field_112(mask_ethernet_src, l_shift_ethernet_src, r_shift_ethernet_src);
+		
 		mod_field_with_const_224(value_arp_sender_MAC, mask_arp_sender_MAC);
 		mod_field_with_const_224(value_arp_sender_IP, mask_arp_send_ip);
 		mod_field_with_const_112(value_ethernet_src, mask_ethernet_src);

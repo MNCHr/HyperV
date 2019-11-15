@@ -19,7 +19,7 @@ header hdr_160_t {
     bit<160> buffer;
 }
 
-//L3
+//L3 arp
 header hdr_224_t {
     bit<224> buffer;
 }

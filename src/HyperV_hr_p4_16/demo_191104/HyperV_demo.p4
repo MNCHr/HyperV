@@ -389,6 +389,13 @@ control MyIngress(inout headers hdr,
 	}
 
 ////////////////////////////////////////////////////////////TABLES//////////////////////////////////////////////////////////////////////                
+/*
+const entries = {exact , ternary
+            (16w0x2ee0, 128w0x22222222222222220000000000000000 &&& 128w0xFFFFFFFFFFFFFFFF0000000000000000) : ipv6_forward(1) ;            
+            (16w0x2715, 128w0x22222222222222220000000000000000 &&& 128w0xFFFFFFFFFFFFFFFF0000000000000000) : ipv6_forward(2) ;
+        }
+
+*/
 
 	table table_config_at_initial {
 		key = {

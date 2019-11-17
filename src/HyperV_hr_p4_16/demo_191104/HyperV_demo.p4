@@ -692,7 +692,7 @@ const entries = {exact , ternary
         
         if (PROG_ID != 0) {
             ////////////////////////////////////////STAGE1/////////////////////////////////////////
-            if((meta.vdp_metadata.stage_id & CONST_NUM_OF_STAGE) == CONST_STAGE_1){
+            if(meta.vdp_metadata.stage_id == CONST_STAGE_1){
                 if((meta.vdp_metadata.match_chain_bitmap & BIT_MASK_HEADER) != 0){
                     if(meta.vdp_metadata.table_chain&1 != 0)
                       table_header_match_112_1_stage1.apply();
@@ -709,6 +709,16 @@ const entries = {exact , ternary
 				if (meta.vdp_metadata.match_chain_bitmap & BIT_MASK_USER_META !=0){
 						table_user_meta_stage1.apply();
 				}
+			// match 
+			
+			// action	
+				if (ACTION_BITMAP != 0) {
+					
+				}
+
+
+
+
 				if (ACTION_BITMAP != 0){
 					if(ACTION_BITMAP == 1)
 						action_vdp1_1.apply();
@@ -721,7 +731,7 @@ const entries = {exact , ternary
 				}
 			}
             ////////////////////////////////////////STAGE2/////////////////////////////////////////
-            if((meta.vdp_metadata.stage_id & CONST_NUM_OF_STAGE) == CONST_STAGE_2){
+            if(meta.vdp_metadata.stage_id == CONST_STAGE_2){
                 if((meta.vdp_metadata.match_chain_bitmap & BIT_MASK_HEADER) != 0){
                     if(meta.vdp_metadata.table_chain&1 != 0)
                       table_header_match_112_1_stage2.apply();
@@ -751,7 +761,7 @@ const entries = {exact , ternary
 			}
             ////////////////////////////////////////STAGE3/////////////////////////////////////////
 
-            if((meta.vdp_metadata.stage_id & CONST_NUM_OF_STAGE) == CONST_STAGE_3){
+            if(meta.vdp_metadata.stage_id == CONST_STAGE_3){
                 if((meta.vdp_metadata.match_chain_bitmap & BIT_MASK_HEADER) != 0){
                     if(meta.vdp_metadata.table_chain&1 != 0)
                       table_header_match_112_1_stage3.apply();
@@ -780,7 +790,7 @@ const entries = {exact , ternary
 				}                               
             }
             ////////////////////////////////////////STAGE4/////////////////////////////////////////
-            if((meta.vdp_metadata.stage_id & CONST_NUM_OF_STAGE) == CONST_STAGE_4){
+            if(meta.vdp_metadata.stage_id == CONST_STAGE_4){
                 if((meta.vdp_metadata.match_chain_bitmap & BIT_MASK_HEADER) != 0){
                     if(meta.vdp_metadata.table_chain&1 != 0)
                       table_header_match_112_1_stage4.apply();

@@ -15,7 +15,7 @@ control MyIngress(inout headers hdr,
 
 
 	action set_initial_config (bit<8> progid, bit<8> stageid, bit<3> match_bitmap, bit<4> table_chain) { //need-to-check
-		meta.vdp_metadata.inst_id = progid; 
+		meta.vdp_metadata.inst_id = progid; //어떤 프로그램이 설치되었는지
 		meta.vdp_metadata.stage_id = stageid;
 		meta.vdp_metadata.match_chain_bitmap = match_bitmap;
 		meta.vdp_metadata.table_chain = table_chain;        

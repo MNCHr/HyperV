@@ -2,7 +2,7 @@
 #define _DEFINE_
 
 
-//#define CONST_NUM_OF_STAGE 0x1f
+#define CONST_NUM_OF_STAGE 0x1f
 
 #define CONST_STAGE_1				1
 #define	CONST_STAGE_2				2

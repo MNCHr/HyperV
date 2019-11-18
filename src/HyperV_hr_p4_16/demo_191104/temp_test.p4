@@ -30,6 +30,7 @@ control MyIngress(inout headers hdr,
         const entries = {
             1 : set_initial_config(1,1,0b100,0b0001);  //1 = l2 forwarding
             2 : set_initial_config(2,2,0b100,0b0010);  //2 = l3 router
+            3 : set_initial_config(3,3,0b101,0b0110);  //3 = TCP fw
         }
     }
 
@@ -68,6 +69,33 @@ control MyIngress(inout headers hdr,
         }
     }
 
+    table table_header_match_160_stage3 {
+        key = {
+            meta.vdp_metadata.inst_id : exact ;
+            hdr.hdr_160[0].buffer : ternary ; // should include mask field
+        }
+        actions = {
+            set_action_id(); // enabling primitive actions
+        }
+        const entries = { 
+            (3, 160w0x0000000000000000000000000000000A0000000A &&& 160w0x000000000000000000000000FFFFFFFFFFFFFFFF) : set_action_id(0x000000000111);
+            
+        }
+    }
+    table table_header_match_161_stage3 { //161 : tcp
+        key = {
+            meta.vdp_metadata.inst_id : exact ;
+            hdr.hdr_160[1].buffer : ternary ; // should include mask field
+        }
+        actions = {
+            set_action_id(); // enabling primitive actions
+        }
+        const entries = { 
+            (3, 160w0x000A000A0000000000000000000000000000000A &&& 160w0xFFFFFFFF00000000000000000000000000000000) : set_action_id(0x000000000111);
+            
+        }
+    }
+
 /////primitive actions + tables + entries /////
 
 	action action_forward(bit<9> port) { // 1st primitive
@@ -82,7 +110,7 @@ control MyIngress(inout headers hdr,
             action_forward();
         }
         const entries = {
-            1 : action_forward(2); //daechung
+            1 : action_forward(1); //daechung
         }
     }
     table table_action_forward_stage2 {
@@ -93,16 +121,34 @@ control MyIngress(inout headers hdr,
             action_forward();
         }
         const entries = {
-            2 : action_forward(3); //daechung
+            2 : action_forward(2); //daechung
+        }
+    }
+    table table_action_forward_stage3 {
+        key = {
+            meta.vdp_metadata.inst_id : exact;
+        }
+        actions = {
+            action_forward();
+        }
+        const entries = {
+            3 : action_forward(3); //daechung
         }
     }
 
 #define def_mask_112_dstAddr 112w0xFFFFFFFFFFFF0000000000000000
 #define def_mask_112_srcAddr 112w0x000000000000FFFFFFFFFFFF0000
 #define def_mask_160_dstAddr 160w0x00000000000000000000000000000000FFFFFFFF
+#define def_mask_160_srcAddr 160w0x000000000000000000000000FFFFFFFF00000000
+#define def_mask_161_dstPort 160w0x0000FFFF00000000000000000000000000000000
+#define def_mask_161_srcPort 160w0xFFFF000000000000000000000000000000000000
+
 #define BIT_MASK_DO_FORWARD 1
-#define BIT_MASK_MOD_112_DSTADDR 1<<2
-#define BIT_MASK_MOD_112_SRCADDR 1<<3
+#define BIT_MASK_MOD_112_DSTADDR 1<<1
+#define BIT_MASK_MOD_112_SRCADDR 1<<2
+#define BIT_MASK_MOD_161_DSTADDR 1<<3
+#define BIT_MASK_MOD_161_SRCADDR 1<<4
+#define BIT_MASK_DROP 1<<47
 
     action action_mod_112_dstAddr(bit<112> value_112_dstAddr) {
         hdr.hdr_112.buffer = (hdr.hdr_112.buffer&(~def_mask_112_dstAddr))|(value_112_dstAddr&def_mask_112_dstAddr);
@@ -153,6 +199,24 @@ control MyIngress(inout headers hdr,
         }
         const entries = {
             2 : action_mod_112_srcAddr(0x0000000000000000000000010000);
+        }
+    }
+    
+    action action_drop() {
+		mark_to_drop(standard_metadata);
+	}
+    action no_op() {
+
+    }
+    table table_action_drop_or_not {
+        key = {
+            meta.vdp_metadata.inst_id : exact;
+        }
+        actions = {
+            action_drop();
+        }
+        const entries = {
+            3 : action_drop;
         }
     }
     

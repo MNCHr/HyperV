@@ -77,8 +77,9 @@ control MyIngress(inout headers hdr,
         actions = {
             set_action_id(); // enabling primitive actions
         }
-        const entries = { 
-            (3, 160w0x0000000000000000000000000000000A0000000A &&& 160w0x000000000000000000000000FFFFFFFFFFFFFFFF) : set_action_id(0x000000000111);
+        const entries = { //A면 pass, B면 drop
+            (3, 160w0x0000000000000000000000000000000A0000000A &&& 160w0x000000000000000000000000FFFFFFFFFFFFFFFF) : set_action_id(0x000000000001);
+            (3, 160w0x0000000000000000000000000000000B0000000B &&& 160w0x000000000000000000000000FFFFFFFFFFFFFFFF) : set_action_id(0x800000000000);
             
         }
     }
@@ -90,12 +91,25 @@ control MyIngress(inout headers hdr,
         actions = {
             set_action_id(); // enabling primitive actions
         }
-        const entries = { 
-            (3, 160w0x000A000A0000000000000000000000000000000A &&& 160w0xFFFFFFFF00000000000000000000000000000000) : set_action_id(0x000000000111);
+        const entries = { //A 면 pass, B면 drop
+            (3, 160w0x000A000A00000000000000000000000000000000 &&& 160w0xFFFFFFFF00000000000000000000000000000000) : set_action_id(0x000000000001);
+            (3, 160w0x000B000B00000000000000000000000000000000 &&& 160w0xFFFFFFFF00000000000000000000000000000000) : set_action_id(0x800000000000);
             
         }
     }
 
+    table table_std_meta_match_ingress_port_stage3 {
+        key = {
+            meta.vdp_metadata.inst_id : exact ;
+            standard_metadata.ingress_port : ternary ;
+        }
+        actions = {
+            set_action_id();
+        }
+        const entries = {
+            (3, )/////////////////(3, )/////////////////(3, )/////////////////(3, )/////////////////(3, )/////////////////(3, )/////////////////(3, )/////////////////(3, )/////////////////(3, )/////////////////(3, )/////////////////
+        }
+    }
 /////primitive actions + tables + entries /////
 
 	action action_forward(bit<9> port) { // 1st primitive
@@ -172,7 +186,18 @@ control MyIngress(inout headers hdr,
             action_mod_112_dstAddr();
         }
         const entries = {
-            2 : action_mod_112_dstAddr (0x00000000010000000000000000);
+            2 : action_mod_112_dstAddr (0x00000000020000000000000000);
+        }
+    }
+    table table_action_mod_112_dstAddr_stage2 {
+        key = {
+            meta.vdp_metadata.inst_id : exact;
+        }
+        actions = {
+            action_mod_112_dstAddr();
+        }
+        const entries = {
+            3 : action_mod_112_dstAddr (0x00000000030000000000000000);
         }
     }
 
@@ -201,14 +226,45 @@ control MyIngress(inout headers hdr,
             2 : action_mod_112_srcAddr(0x0000000000000000000000010000);
         }
     }
+    table table_action_mod_112_srcAddr_stage3 {
+        key = {
+            meta.vdp_metadata.inst_id : exact;
+        }
+        actions = {
+            action_mod_112_srcAddr();
+        }
+        const entries = {
+            2 : action_mod_112_srcAddr(0x0000000000000000000000010000);
+        }
+    }
     
     action action_drop() {
 		mark_to_drop(standard_metadata);
 	}
-    action no_op() {
-
+    
+    table table_action_drop_stage1 {
+        key = {
+            meta.vdp_metadata.inst_id : exact;
+        }
+        actions = {
+            action_drop();
+        }
+        const entries = {
+            3 : action_drop;
+        }
     }
-    table table_action_drop_or_not {
+    table table_action_drop_stage2 {
+        key = {
+            meta.vdp_metadata.inst_id : exact;
+        }
+        actions = {
+            action_drop();
+        }
+        const entries = {
+            3 : action_drop;
+        }
+    }
+    table table_action_drop_stage3 {
         key = {
             meta.vdp_metadata.inst_id : exact;
         }
@@ -255,11 +311,15 @@ control MyIngress(inout headers hdr,
                 if ((ACTION_BITMAP & BIT_MASK_MOD_112_SRCADDR) != 0) {	
 		            table_action_mod_112_srcAddr_stage1.apply();						
 	            }
+                if ((ACTION_BITMAP & BIT_MASK_DROP) != 0) {	
+		            table_action_drop_stage1.apply();						
+	            }
+                
             }
 
             if(meta.vdp_metadata.stage_id == CONST_STAGE_2){
                 if((meta.vdp_metadata.match_chain_bitmap & BIT_MASK_HEADER) != 0){
-                    if(meta.vdp_metadata.header_chain_bitmap&1 != 0)
+                    if(meta.vdp_metadata.header_chain_bitmap&2 != 0)
                         table_header_match_160_stage2.apply();
                     //   table_header_match_112_1_stage1.apply();
                     // if(meta.vdp_metadata.table_chain&2 != 0)
@@ -285,6 +345,45 @@ control MyIngress(inout headers hdr,
 	            }
                 if ((ACTION_BITMAP & BIT_MASK_MOD_112_SRCADDR) != 0) {	
 		            table_action_mod_112_srcAddr_stage2.apply();						
+	            }
+                if ((ACTION_BITMAP & BIT_MASK_DROP) != 0) {	
+		            table_action_drop_stage2.apply();						
+	            }
+            }
+
+            if(meta.vdp_metadata.stage_id == CONST_STAGE_3){
+                if((meta.vdp_metadata.match_chain_bitmap & BIT_MASK_HEADER) != 0){
+                    if(meta.vdp_metadata.header_chain_bitmap&2 != 0)
+                        table_header_match_160_stage3.apply();
+                    if(meta.vdp_metadata.header_chain_bitmap&4 != 0)
+                        table_header_match_161_stage3.apply();
+                    //   table_header_match_112_1_stage1.apply();
+                    // if(meta.vdp_metadata.table_chain&2 != 0)
+                    //   table_header_match_160_1_stage1.apply();
+                    // if(meta.vdp_metadata.table_chain&4 != 0)
+                    //   table_header_match_160_2_stage1.apply();
+                    // if(meta.vdp_metadata.table_chain&8 != 0)
+                    //   table_header_match_224_1_stage1.apply();
+                }
+				if (meta.vdp_metadata.match_chain_bitmap & BIT_MASK_STD_META !=0 ){
+						table_std_meta_match_ingress_port_stage3.apply();
+				}
+				// if (meta.vdp_metadata.match_chain_bitmap & BIT_MASK_USER_META !=0){
+				// 		table_user_meta_stage1.apply();
+				// }
+            }
+            if(ACTION_BITMAP != 0) {
+                if ((ACTION_BITMAP & BIT_MASK_DO_FORWARD) != 0) {	
+		            table_action_forward_stage3.apply();						
+	            }
+                if ((ACTION_BITMAP & BIT_MASK_MOD_112_DSTADDR) != 0) {	
+		            table_action_mod_112_dstAddr_stage3.apply();						
+	            }
+                if ((ACTION_BITMAP & BIT_MASK_MOD_112_SRCADDR) != 0) {	
+		            table_action_mod_112_srcAddr_stage3.apply();						
+	            }
+                if ((ACTION_BITMAP & BIT_MASK_DROP) != 0) {	
+		            table_action_drop_stage3.apply();						
 	            }
             }
         }

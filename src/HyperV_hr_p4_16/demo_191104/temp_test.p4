@@ -62,7 +62,7 @@ control MyIngress(inout headers hdr,
         actions = {
             set_action_id(); // enabling primitive actions
         }
-        const entries = { 160w0x00000000000000000000000000000000FFFFFFFF
+        const entries = { 
             (2, 160w0x000000000000000000000000000000000000000A &&& 160w0x00000000000000000000000000000000FFFFFFFF) : set_action_id(0x000000000111);
             
         }
@@ -89,6 +89,7 @@ control MyIngress(inout headers hdr,
 
 #define def_mask_112_dstAddr 112w0xFFFFFFFFFFFF0000000000000000
 #define def_mask_112_srcAddr 112w0x000000000000FFFFFFFFFFFF0000
+#define def_mask_160_dstAddr 160w0x00000000000000000000000000000000FFFFFFFF
 #define BIT_MASK_DO_FORWARD 1
 #define BIT_MASK_MOD_112_DSTADDR 1<<2
 #define BIT_MASK_MOD_112_SRCADDR 1<<3

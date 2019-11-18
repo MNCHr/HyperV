@@ -29,7 +29,7 @@ control MyIngress(inout headers hdr,
         }
         const entries = {
             1 : set_initial_config(1,1,0b100,0b0001);  //1 = l2 forwarding
-            2 : set_initial_config(2,2,0b100,0b0010);
+            2 : set_initial_config(2,2,0b100,0b0010);  //2 = l3 router
         }
     }
 
@@ -54,6 +54,19 @@ control MyIngress(inout headers hdr,
         }
     }
 
+    table table_header_match_160_stage2 {
+        key = {
+            meta.vdp_metadata.inst_id : exact ;
+            hdr.hdr_160.buffer : ternary ; // should include mask field
+        }
+        actions = {
+            set_action_id(); // enabling primitive actions
+        }
+        const entries = { 160w0x00000000000000000000000000000000FFFFFFFF
+            (2, 160w0x000000000000000000000000000000000000000A &&& 160w0x00000000000000000000000000000000FFFFFFFF) : set_action_id(0x000000000111);
+            
+        }
+    }
 
 /////primitive actions + tables + entries /////
 

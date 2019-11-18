@@ -20,6 +20,7 @@ control MyIngress(inout headers hdr,
 		meta.vdp_metadata.match_chain_bitmap = match_bitmap;
 		meta.vdp_metadata.table_chain = table_chain;        
 	}
+	
 
 	action do_forward(bit<9> port) {
 		standard_metadata.egress_spec = port;
@@ -719,13 +720,6 @@ const entries = {exact , ternary
 			// match - tail
 			
 			// action	
-				if (ACTION_BITMAP != 0) {
-					
-				}
-
-
-
-
 				if (ACTION_BITMAP != 0){
 					if(ACTION_BITMAP == 1)
 						action_vdp1_1.apply();

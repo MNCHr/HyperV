@@ -280,7 +280,7 @@ control MyIngress(inout headers hdr,
 			arp_reply;						
 		}
 	}
-	
+	////////////////////////
 	table action_vdp2_1 {
 		key = {
 			
@@ -316,7 +316,7 @@ control MyIngress(inout headers hdr,
 			l2_switch_forward;						
 		}
 	}
-	
+	////////////////////////
 	table action_vdp3_1 {
 		key = {
 			
@@ -353,7 +353,7 @@ control MyIngress(inout headers hdr,
 			do_drop;
 		}
 	}
-	
+	////////////////////////
 	table action_vdp4_1 {
 		key = {
 			
@@ -387,7 +387,15 @@ control MyIngress(inout headers hdr,
 			NAT;
 		}
 	}
+////////////////////////////////generally behave//////////////////////////////////
+	table table_action_vdp0 {
+		key = {		
+			
+		}
+		actions = {
 
+		}
+	}
 ////////////////////////////////////////////////////////////TABLES//////////////////////////////////////////////////////////////////////                
 /*
 const entries = {exact , ternary
@@ -400,14 +408,12 @@ const entries = {exact , ternary
 	table table_config_at_initial {
 		key = {
 			hdr.desc_hdr.vdp_id: exact;        //At initial state, 1,2,3,4  
-			meta.vdp_metadata.inst_id: exact;  //At initial state, it should be 0
-			meta.vdp_metadata.stage_id: exact; //At initial state, it should be 0
 		}
 		actions = {
 			set_initial_config();
 		}
 	}    
-
+/////////////////////////////////////////////////////////////////////////
 	table table_header_match_112_1_stage1 {                                          
 		key = {                                                                 
 			meta.vdp_metadata.inst_id : exact ;                                		
@@ -692,15 +698,16 @@ const entries = {exact , ternary
         
         if (PROG_ID != 0) {
             ////////////////////////////////////////STAGE1/////////////////////////////////////////
-            if(meta.vdp_metadata.stage_id == CONST_STAGE_1){
+			// match - head
+			if(meta.vdp_metadata.stage_id == CONST_STAGE_1){
                 if((meta.vdp_metadata.match_chain_bitmap & BIT_MASK_HEADER) != 0){
                     if(meta.vdp_metadata.table_chain&1 != 0)
                       table_header_match_112_1_stage1.apply();
-                    else if(meta.vdp_metadata.table_chain&2 != 0)
+                    if(meta.vdp_metadata.table_chain&2 != 0)
                       table_header_match_160_1_stage1.apply();
-                    else if(meta.vdp_metadata.table_chain&4 != 0)
+                    if(meta.vdp_metadata.table_chain&4 != 0)
                       table_header_match_160_2_stage1.apply();
-                    else if(meta.vdp_metadata.table_chain&8 != 0)
+                    if(meta.vdp_metadata.table_chain&8 != 0)
                       table_header_match_224_1_stage1.apply();
                 }
 				if (meta.vdp_metadata.match_chain_bitmap & BIT_MASK_STD_META !=0 ){
@@ -709,7 +716,7 @@ const entries = {exact , ternary
 				if (meta.vdp_metadata.match_chain_bitmap & BIT_MASK_USER_META !=0){
 						table_user_meta_stage1.apply();
 				}
-			// match 
+			// match - tail
 			
 			// action	
 				if (ACTION_BITMAP != 0) {

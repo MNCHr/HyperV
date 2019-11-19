@@ -127,6 +127,18 @@ control MyIngress(inout headers hdr,
             (3, 3) : set_action_id(0x000000000001);
         }
     }
+    table table_std_meta_match_ingress_port_stage4 {
+        key = {
+            meta.vdp_metadata.inst_id : exact ;
+            standard_metadata.ingress_port : ternary ;
+        }
+        actions = {
+            set_action_id();
+        }
+        const entries = {
+            (4, 4) : set_action_id(0x000000001F81);
+        }
+    }
 /////primitive actions + tables + entries /////
 //bit mask for each field of each header 
 #define def_mask_112_dstAddr  112w0xFFFFFFFFFFFF0000000000000000

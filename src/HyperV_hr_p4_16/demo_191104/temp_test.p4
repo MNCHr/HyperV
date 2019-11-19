@@ -78,7 +78,7 @@ control MyIngress(inout headers hdr,
             set_action_id(); // enabling primitive actions
         }
         const entries = { //A면 pass, B면 drop
-            (3, 160w0x0000000000000000000000000000000A0000000A &&& 160w0x000000000000000000000000FFFFFFFFFFFFFFFF) : set_action_id(0x000000000001);
+            (3, 160w0x0000000000000000000000000000000A0000000A &&& 160w0x000000000000000000000000FFFFFFFFFFFFFFFF) : set_action_id(0x000000000000);
             (3, 160w0x0000000000000000000000000000000B0000000B &&& 160w0x000000000000000000000000FFFFFFFFFFFFFFFF) : set_action_id(0x800000000000);
             
         }
@@ -92,11 +92,13 @@ control MyIngress(inout headers hdr,
             set_action_id(); // enabling primitive actions
         }
         const entries = { //A 면 pass, B면 drop
-            (3, 160w0x000A000A00000000000000000000000000000000 &&& 160w0xFFFFFFFF00000000000000000000000000000000) : set_action_id(0x000000000001);
+            (3, 160w0x000A000A00000000000000000000000000000000 &&& 160w0xFFFFFFFF00000000000000000000000000000000) : set_action_id(0x000000000000);
             (3, 160w0x000B000B00000000000000000000000000000000 &&& 160w0xFFFFFFFF00000000000000000000000000000000) : set_action_id(0x800000000000);
             
         }
     }
+
+    //? escape? 
 
     table table_std_meta_match_ingress_port_stage3 {
         key = {
@@ -107,10 +109,24 @@ control MyIngress(inout headers hdr,
             set_action_id();
         }
         const entries = {
-            (3, )/////////////////(3, )/////////////////(3, )/////////////////(3, )/////////////////(3, )/////////////////(3, )/////////////////(3, )/////////////////(3, )/////////////////(3, )/////////////////(3, )/////////////////
+            (3, 3) : set_action_id(0x000000000001);
         }
     }
 /////primitive actions + tables + entries /////
+
+#define def_mask_112_dstAddr 112w0xFFFFFFFFFFFF0000000000000000
+#define def_mask_112_srcAddr 112w0x000000000000FFFFFFFFFFFF0000
+#define def_mask_160_dstAddr 160w0x00000000000000000000000000000000FFFFFFFF
+#define def_mask_160_srcAddr 160w0x000000000000000000000000FFFFFFFF00000000
+#define def_mask_161_dstPort 160w0x0000FFFF00000000000000000000000000000000
+#define def_mask_161_srcPort 160w0xFFFF000000000000000000000000000000000000
+
+#define BIT_MASK_DO_FORWARD 1
+#define BIT_MASK_MOD_112_DSTADDR 1<<1
+#define BIT_MASK_MOD_112_SRCADDR 1<<2
+#define BIT_MASK_MOD_161_DSTADDR 1<<3
+#define BIT_MASK_MOD_161_SRCADDR 1<<4
+#define BIT_MASK_DROP 1<<47
 
 	action action_forward(bit<9> port) { // 1st primitive
 		standard_metadata.egress_spec = port;
@@ -150,21 +166,7 @@ control MyIngress(inout headers hdr,
         }
     }
 
-#define def_mask_112_dstAddr 112w0xFFFFFFFFFFFF0000000000000000
-#define def_mask_112_srcAddr 112w0x000000000000FFFFFFFFFFFF0000
-#define def_mask_160_dstAddr 160w0x00000000000000000000000000000000FFFFFFFF
-#define def_mask_160_srcAddr 160w0x000000000000000000000000FFFFFFFF00000000
-#define def_mask_161_dstPort 160w0x0000FFFF00000000000000000000000000000000
-#define def_mask_161_srcPort 160w0xFFFF000000000000000000000000000000000000
-
-#define BIT_MASK_DO_FORWARD 1
-#define BIT_MASK_MOD_112_DSTADDR 1<<1
-#define BIT_MASK_MOD_112_SRCADDR 1<<2
-#define BIT_MASK_MOD_161_DSTADDR 1<<3
-#define BIT_MASK_MOD_161_SRCADDR 1<<4
-#define BIT_MASK_DROP 1<<47
-
-    action action_mod_112_dstAddr(bit<112> value_112_dstAddr) {
+    action action_mod_112_dstAddr(bit<112> value_112_dstAddr) { // 2nd primitive , error-prone?
         hdr.hdr_112.buffer = (hdr.hdr_112.buffer&(~def_mask_112_dstAddr))|(value_112_dstAddr&def_mask_112_dstAddr);
     }
     table table_action_mod_112_dstAddr_stage1 {
@@ -189,7 +191,7 @@ control MyIngress(inout headers hdr,
             2 : action_mod_112_dstAddr (0x00000000020000000000000000);
         }
     }
-    table table_action_mod_112_dstAddr_stage2 {
+    table table_action_mod_112_dstAddr_stage3 {
         key = {
             meta.vdp_metadata.inst_id : exact;
         }
@@ -201,7 +203,7 @@ control MyIngress(inout headers hdr,
         }
     }
 
-    action action_mod_112_srcAddr(bit<112> value_112_srcAddr) {
+    action action_mod_112_srcAddr(bit<112> value_112_srcAddr) { // 3rd primitive, error-prone?
         hdr.hdr_112.buffer = (hdr.hdr_112.buffer&(~def_mask_112_srcAddr))|(value_112_srcAddr&def_mask_112_srcAddr);
     }
     table table_action_mod_112_srcAddr_stage1 {
@@ -238,7 +240,7 @@ control MyIngress(inout headers hdr,
         }
     }
     
-    action action_drop() {
+    action action_drop() { //48th primitive
 		mark_to_drop(standard_metadata);
 	}
     
@@ -250,7 +252,7 @@ control MyIngress(inout headers hdr,
             action_drop();
         }
         const entries = {
-            3 : action_drop;
+            3 : action_drop();
         }
     }
     table table_action_drop_stage2 {
@@ -261,7 +263,7 @@ control MyIngress(inout headers hdr,
             action_drop();
         }
         const entries = {
-            3 : action_drop;
+            3 : action_drop();
         }
     }
     table table_action_drop_stage3 {
@@ -272,7 +274,7 @@ control MyIngress(inout headers hdr,
             action_drop();
         }
         const entries = {
-            3 : action_drop;
+            3 : action_drop();
         }
     }
     

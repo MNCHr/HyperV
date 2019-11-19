@@ -71,7 +71,7 @@
 #define BIT_MASK_REGISTER                                    ((1<<PRIMITIVE_ACTION_REGISTER_READ) | (1<<PRIMITIVE_ACTION_REGISTER_WRITE))
 #define BIT_MASK_COUNTER                                     ((1<<PRIMITIVE_ACTION_COUNT))
 
-#define BIT_MASK_DROP                                        (1<<PRIMITIVE_ACTION_DROP)
+//#define BIT_MASK_DROP                                        (1<<PRIMITIVE_ACTION_DROP)
 #define BIT_MASK_BIT_OR                                      (1<<PRIMITIVE_ACTION_BIT_OR)
 #define BIT_MASK_BIT_XOR                                     (1<<PRIMITIVE_ACTION_BIT_XOR)
 #define BIT_MASK_BIT_AND                                     (1<<PRIMITIVE_ACTION_BIT_AND)

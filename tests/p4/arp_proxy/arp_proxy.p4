@@ -79,7 +79,7 @@ action arp_reply(IP, MAC) {
   modify_field(standard_metadata.egress_spec, standard_metadata.ingress_port);
   
   modify_field(arp.target_MAC, arp.sender_MAC);
-  modify_field(arp.target_IP, arp.send_ip);
+  modify_field(arp.target_IP, arp.sender_IP);
   modify_field(ethernet.dest, ethernet.src);
 
   modify_field(arp.sender_MAC, MAC);

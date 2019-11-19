@@ -31,6 +31,7 @@ control MyIngress(inout headers hdr,
             1 : set_initial_config(1,1,0b100,0b0001);  //1 = l2 forwarding
             2 : set_initial_config(2,2,0b100,0b0010);  //2 = l3 router
             3 : set_initial_config(3,3,0b101,0b0110);  //3 = TCP fw
+            4 : set_initial_config(4,4,0b101,0b1000);  //4 = NAT
         }
     }
 
@@ -98,6 +99,20 @@ control MyIngress(inout headers hdr,
         }
     }
 
+    table table_header_match_224_stage4 { 
+        key = {
+            meta.vdp_metadata.inst_id : exact ;
+            hdr.hdr_224.buffer : ternary ; // should include mask field
+        }
+        actions = {
+            set_action_id(); // enabling primitive actions
+        }
+        const entries = { //A 면 pass, B면 drop
+        //#define def_mask_224_opcode  224w0x000000000000FFFF0000000000000000000000000000000000000000
+        // set_action_id = 48w0b(0001 1111 1000 0001) = 48w0x1F81
+            (4, 224w0x00000000000000010000000000000000000000000000000000000000 &&& 224w0x000000000000FFFF0000000000000000000000000000000000000000) : set_action_id(0x000000001F81);
+        }
+    }
     //? escape? 
 
     table table_std_meta_match_ingress_port_stage3 {
@@ -143,14 +158,14 @@ control MyIngress(inout headers hdr,
 #define BIT_MASK_MOD_161_DSTADDR 1<<5 //unused
 #define BIT_MASK_MOD_161_SRCADDR 1<<6 //unused
 
-#define BIT_MASK_MOD_224_OPCODE_n_RESPONSE 1<< // arp
+#define BIT_MASK_MOD_224_OPCODE_n_RESPONSE 1<<7 // arp
 
-#define BIT_MASK_EXTRACT_n_SHIFT_112_SRCADDR 1<< //Extract from src & Shift to dst
-#define BIT_MASK_MOD_112_BOTHADDR 1<<
-#define BIT_MASK_EXTRACT_n_SHIFT_224_SRCMAC 1<<
-#define BIT_MASK_MOD_224_BOTHMAC 1<<
-#define BIT_MASK_EXTRACT_n_SHIFT_224_SRCIP 1<<
-#define BIT_MASK_MOD_224_BOTHIP 1<<
+#define BIT_MASK_EXTRACT_n_SHIFT_112_SRCADDR 1<<8 //arp //Extract from src & Shift to dst
+#define BIT_MASK_MOD_112_BOTHADDR 1<<9 //arp 
+#define BIT_MASK_EXTRACT_n_SHIFT_224_SRCMAC 1<<10 //arp 
+#define BIT_MASK_MOD_224_BOTHMAC 1<<11 //arp 
+#define BIT_MASK_EXTRACT_n_SHIFT_224_SRCIP 1<<12 //arp 
+#define BIT_MASK_MOD_224_BOTHIP 1<<13 //arp 
 
 
 #define BIT_MASK_DROP 1<<47
@@ -178,7 +193,7 @@ control MyIngress(inout headers hdr,
             action_forward();
         }
         const entries = {
-            2 : action_forward(2); //daechung
+            2 : action_forward(2); //
         }
     }
     table table_action_forward_stage3 {
@@ -189,7 +204,18 @@ control MyIngress(inout headers hdr,
             action_forward();
         }
         const entries = {
-            3 : action_forward(3); //daechung
+            3 : action_forward(3); //
+        }
+    }
+    table table_action_forward_stage4 {
+        key = {
+            meta.vdp_metadata.inst_id : exact;
+        }
+        actions = {
+            action_forward();
+        }
+        const entries = {
+            4 : action_forward(4); //
         }
     }
 

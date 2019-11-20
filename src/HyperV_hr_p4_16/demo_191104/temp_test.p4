@@ -107,7 +107,7 @@ control MyIngress(inout headers hdr,
         actions = {
             set_action_id(); // enabling primitive actions
         }
-        const entries = { //A 면 pass, B면 drop
+        const entries = { 
         //#define def_mask_224_opcode  224w0x000000000000FFFF0000000000000000000000000000000000000000
         // set_action_id = 48w0b(0001 1111 1000 0001) = 48w0x1F81
             (4, 224w0x00000000000000010000000000000000000000000000000000000000 &&& 224w0x000000000000FFFF0000000000000000000000000000000000000000) : set_action_id(0x000000001F81);
@@ -136,6 +136,7 @@ control MyIngress(inout headers hdr,
             set_action_id();
         }
         const entries = {
+        // set_action_id = 48w0b(0001 1111 1000 0001) = 48w0x1F81
             (4, 4) : set_action_id(0x000000001F81);
         }
     }
@@ -179,13 +180,11 @@ control MyIngress(inout headers hdr,
 #define BIT_MASK_EXTRACT_n_SHIFT_224_SRCIP 1<<12 //arp 
 #define BIT_MASK_MOD_224_BOTHIP 1<<13 //arp 
 
-
 #define BIT_MASK_DROP 1<<47
 
 	action action_forward(bit<9> port) { // 1st primitive
 		standard_metadata.egress_spec = port;
 	}
-
     table table_action_forward_stage1 {
         key = {
             meta.vdp_metadata.inst_id : exact;
@@ -267,6 +266,17 @@ control MyIngress(inout headers hdr,
             3 : action_mod_112_dstAddr (0x00000000030000000000000000);
         }
     }
+    table table_action_mod_112_dstAddr_stage4 {
+        key = {
+            meta.vdp_metadata.inst_id : exact;
+        }
+        actions = {
+            action_mod_112_dstAddr();
+        }
+        const entries = {
+            4 : action_mod_112_dstAddr (0x00000000040000000000000000);
+        }
+    }
 
     action action_mod_112_srcAddr(bit<112> value_112_srcAddr) { // 3rd primitive, error-prone?
         hdr.hdr_112.buffer = (hdr.hdr_112.buffer&(~def_mask_112_srcAddr))|(value_112_srcAddr&def_mask_112_srcAddr);
@@ -304,12 +314,23 @@ control MyIngress(inout headers hdr,
             2 : action_mod_112_srcAddr(0x0000000000000000000000010000);
         }
     }
+    table table_action_mod_112_srcAddr_stage4 {
+        key = {
+            meta.vdp_metadata.inst_id : exact;
+        }
+        actions = {
+            action_mod_112_srcAddr();
+        }
+        const entries = {
+            4 : action_mod_112_srcAddr(0x0000000000000000000000040000);
+        }
+    }
     
     action action_mod_224_opcode_n_response(bit<224> value_224_opcode) {
         hdr.hdr_224.buffer = (hdr.hdr_224.buffer&(~def_mask_224_opcode))|(value_224_opcode&def_mask_224_opcode);
         standard_metadata.egress_spec = standard_metadata.ingress_port;
     }
-    table table_action_response {
+    table table_action_mod_224_opcode_n_response_stage4 {
         key = {
             meta.vdp_metadata.inst_id : exact;
         }
@@ -317,17 +338,17 @@ control MyIngress(inout headers hdr,
             action_mod_224_opcode_n_response();
         }
         const entries = {
-            4 : action_mod_224_opcode_n_response();
+            4 : action_mod_224_opcode_n_response(2);
         }
     }
-
-bit<112> temp_extract_112 // variable, is this possible ?
+// variable, is this possible ?
+const bit<112> temp_extract_112 = 112w0x1; 
     action action_extract_n_shift_112_srcAddr() { // is this possible ?
-        temp_112 = (hdr.hdr_112.buffer & def_mask_112_srcAddr);
-        temp_112 = temp_112 << 48;
-        meta.temp_mdetadata.temp_112 = temp_112;
+        temp_extract_112 = (hdr.hdr_112.buffer & def_mask_112_srcAddr);
+        temp_extract_112 = temp_extract_112 << 48;
+        meta.temp_mdetadata.temp_112 = temp_extract_112;
     }
-    table table_action_extract_n_shift_112_srcAddr {
+    table table_action_extract_n_shift_112_srcAddr_stage4 {
         key = {
             meta.vdp_metadata.inst_id : exact;
         }
@@ -343,7 +364,7 @@ bit<112> temp_extract_112 // variable, is this possible ?
         meta.temp_mdetadata.temp_112 = (meta.temp_mdetadata.temp_112 | value_112_srcAddr); //(pre-process) merge to md
         hdr.hdr_112.buffer = (hdr.hdr_112.buffer&(~def_mask_112_bothAddr))| meta.temp_mdetadata.temp_112;
     }
-    table table_action_mod_112_bothAddr_stage1 {
+    table table_action_mod_112_bothAddr_stage4 {
         key = {
             meta.vdp_metadata.inst_id : exact;
         }
@@ -356,13 +377,13 @@ bit<112> temp_extract_112 // variable, is this possible ?
         }
     }
 
-bit<224> temp_extract_224 // variable, is this possible ?
+const bit<224> temp_extract_224 = 224w0x0; // variable, is this possible ?
     action action_extract_n_shift_224_srcMAC() { // is this possible ?
-        temp_224 = (hdr.hdr_224.buffer & def_mask_224_srcMAC);
-        temp_224 = temp_224 >> 80;
-        meta.temp_mdetadata.temp_224 = temp_224;
+        temp_extract_224 = (hdr.hdr_224.buffer & def_mask_224_srcMAC);
+        temp_extract_224 = temp_extract_224 >> 80;
+        meta.temp_mdetadata.temp_224 = temp_extract_224;
     }
-    table table_action_extract_n_shift_224_srcMAC {
+    table table_action_extract_n_shift_224_srcMAC_stage4 {
         key = {
             meta.vdp_metadata.inst_id : exact;
         }
@@ -374,11 +395,11 @@ bit<224> temp_extract_224 // variable, is this possible ?
         }
     }    //cont'//
     action action_mod_224_bothMAC (bit<224> value_224_srcMAC) { // -th primitive, error-prone?
-        meta.temp_mdetadata.temp_224 = 0
+        meta.temp_mdetadata.temp_224 = 0;
         meta.temp_mdetadata.temp_224 = (meta.temp_mdetadata.temp_224 | value_224_srcMAC); //(pre-process) merge to md
         hdr.hdr_224.buffer = (hdr.hdr_224.buffer&(~def_mask_224_bothMAC))| meta.temp_mdetadata.temp_224;
     }
-    table table_action_mod_224_bothMAC_stage1 {
+    table table_action_mod_224_bothMAC_stage4 {
         key = {
             meta.vdp_metadata.inst_id : exact;
         }
@@ -392,11 +413,11 @@ bit<224> temp_extract_224 // variable, is this possible ?
     }
 
     action action_extract_n_shift_224_srcIP() { // is this possible ?
-        temp_224 = (hdr.hdr_224.buffer & def_mask_224_srcIP);
-        temp_224 = temp_224 >> 80;
-        meta.temp_mdetadata.temp_224 = temp_224;
+        temp_extract_224 = (hdr.hdr_224.buffer & def_mask_224_srcIP);
+        temp_extract_224 = temp_extract_224 >> 80;
+        meta.temp_mdetadata.temp_224 = temp_extract_224;
     }
-    table table_action_extract_n_shift_224_srcIP {
+    table table_action_extract_n_shift_224_srcIP_stage4 {
         key = {
             meta.vdp_metadata.inst_id : exact;
         }
@@ -408,11 +429,11 @@ bit<224> temp_extract_224 // variable, is this possible ?
         }
     }    //cont'//
     action action_mod_224_bothIP (bit<224> value_224_srcIP) { // -th primitive, error-prone?
-        meta.temp_mdetadata.temp_224 = 0
+        meta.temp_mdetadata.temp_224 = 0;
         meta.temp_mdetadata.temp_224 = (meta.temp_mdetadata.temp_224 | value_224_srcIP); //(pre-process) merge to md
         hdr.hdr_224.buffer = (hdr.hdr_224.buffer&(~def_mask_224_bothIP))| meta.temp_mdetadata.temp_224;
     }
-    table table_action_mod_224_bothIP_stage1 {
+    table table_action_mod_224_bothIP_stage4 {
         key = {
             meta.vdp_metadata.inst_id : exact;
         }
@@ -461,6 +482,17 @@ bit<224> temp_extract_224 // variable, is this possible ?
         }
         const entries = {
             3 : action_drop();
+        }
+    }
+    table table_action_drop_stage4 {
+        key = {
+            meta.vdp_metadata.inst_id : exact;
+        }
+        actions = {
+            action_drop();
+        }
+        const entries = {
+            4 : action_drop();
         }
     }
     
@@ -573,6 +605,63 @@ bit<224> temp_extract_224 // variable, is this possible ?
 	            }
                 if ((ACTION_BITMAP & BIT_MASK_DROP) != 0) {	
 		            table_action_drop_stage3.apply();						
+	            }
+            }
+
+            if(meta.vdp_metadata.stage_id == CONST_STAGE_4){
+                if((meta.vdp_metadata.match_chain_bitmap & BIT_MASK_HEADER) != 0){
+                    if(meta.vdp_metadata.header_chain_bitmap&8 != 0)
+                        table_header_match_224_stage4.apply();
+                    //   table_header_match_112_1_stage1.apply();
+                    // if(meta.vdp_metadata.table_chain&2 != 0)
+                    //   table_header_match_160_1_stage1.apply();
+                    // if(meta.vdp_metadata.table_chain&4 != 0)
+                    //   table_header_match_160_2_stage1.apply();
+                    // if(meta.vdp_metadata.table_chain&8 != 0)
+                    //   table_header_match_224_1_stage1.apply();
+                }
+				if (meta.vdp_metadata.match_chain_bitmap & BIT_MASK_STD_META !=0 ){
+						table_std_meta_match_ingress_port_stage4.apply();
+				}
+				// if (meta.vdp_metadata.match_chain_bitmap & BIT_MASK_USER_META !=0){
+				// 		table_user_meta_stage1.apply();
+				// }
+            }
+            if(ACTION_BITMAP != 0) {
+                if ((ACTION_BITMAP & BIT_MASK_DO_FORWARD) != 0) {	
+		            table_action_forward_stage4.apply();						
+	            }
+                if ((ACTION_BITMAP & BIT_MASK_MOD_112_DSTADDR) != 0) {	
+		            table_action_mod_112_dstAddr_stage4.apply();						
+	            }
+                if ((ACTION_BITMAP & BIT_MASK_MOD_112_SRCADDR) != 0) {	
+		            table_action_mod_112_srcAddr_stage4.apply();						
+	            }
+
+                if ((ACTION_BITMAP & BIT_MASK_MOD_224_OPCODE_n_RESPONSE) != 0) {	
+		            table_action_mod_224_opcode_n_response_stage4.apply();						
+	            }
+                if ((ACTION_BITMAP & BIT_MASK_EXTRACT_n_SHIFT_112_SRCADDR) != 0) {	
+		            table_action_extract_n_shift_112_srcAddr_stage4.apply();						
+	            }
+                if ((ACTION_BITMAP & BIT_MASK_MOD_112_BOTHADDR) != 0) {	
+		            table_action_mod_112_bothAddr_stage4.apply();						
+	            }
+                if ((ACTION_BITMAP & BIT_MASK_EXTRACT_n_SHIFT_224_SRCMAC) != 0) {	
+		            table_action_extract_n_shift_224_srcMAC_stage4.apply();						
+	            }
+                if ((ACTION_BITMAP & BIT_MASK_MOD_224_BOTHMAC) != 0) {	
+		            table_action_mod_224_bothMAC_stage4.apply();						
+	            }
+                if ((ACTION_BITMAP & BIT_MASK_EXTRACT_n_SHIFT_224_SRCIP) != 0) {	
+		            table_action_extract_n_shift_224_srcIP_stage4.apply();						
+	            }
+                if ((ACTION_BITMAP & BIT_MASK_MOD_224_BOTHIP) != 0) {	
+		            table_action_mod_224_bothIP_stage4.apply();						
+	            }
+
+                if ((ACTION_BITMAP & BIT_MASK_DROP) != 0) {	
+		            table_action_drop_stage4.apply();						
 	            }
             }
         }

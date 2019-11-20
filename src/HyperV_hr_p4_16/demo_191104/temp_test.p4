@@ -344,9 +344,9 @@ control MyIngress(inout headers hdr,
 // variable, is this possible ?
 // bit<112> temp_extract_112 = 112w0x1; 
     action action_extract_n_shift_112_srcAddr() { // is this possible ?
-        temp_extract_112 = (hdr.hdr_112.buffer & def_mask_112_srcAddr);
-        temp_extract_112 = temp_extract_112 << 48;
-        meta.temp_mdetadata.temp_112 = temp_extract_112;
+        meta.temp_metadata.temp_md_mask_112 = (hdr.hdr_112.buffer & def_mask_112_srcAddr);
+        meta.temp_metadata.temp_md_mask_112 = meta.temp_metadata.temp_md_mask_112 << 48;
+        meta.temp_mdetadata.temp_112 = meta.temp_metadata.temp_md_mask_112;
     }
     table table_action_extract_n_shift_112_srcAddr_stage4 {
         key = {
@@ -377,11 +377,11 @@ control MyIngress(inout headers hdr,
         }
     }
 
-const bit<224> temp_extract_224 = 224w0x0; // variable, is this possible ?
+//const bit<224> temp_extract_224 = 224w0x0; // variable, is this possible ?
     action action_extract_n_shift_224_srcMAC() { // is this possible ?
-        temp_extract_224 = (hdr.hdr_224.buffer & def_mask_224_srcMAC);
-        temp_extract_224 = temp_extract_224 >> 80;
-        meta.temp_mdetadata.temp_224 = temp_extract_224;
+        meta.temp_metadata.temp_md_mask_224 = (hdr.hdr_224.buffer & def_mask_224_srcMAC);
+        meta.temp_metadata.temp_md_mask_224 = meta.temp_metadata.temp_md_mask_224 >> 80;
+        meta.temp_mdetadata.temp_224 = meta.temp_metadata.temp_md_mask_224;
     }
     table table_action_extract_n_shift_224_srcMAC_stage4 {
         key = {
@@ -395,7 +395,7 @@ const bit<224> temp_extract_224 = 224w0x0; // variable, is this possible ?
         }
     }    //cont'//
     action action_mod_224_bothMAC (bit<224> value_224_srcMAC) { // -th primitive, error-prone?
-        meta.temp_mdetadata.temp_224 = 0;
+//        meta.temp_mdetadata.temp_224 = 0;
         meta.temp_mdetadata.temp_224 = (meta.temp_mdetadata.temp_224 | value_224_srcMAC); //(pre-process) merge to md
         hdr.hdr_224.buffer = (hdr.hdr_224.buffer&(~def_mask_224_bothMAC))| meta.temp_mdetadata.temp_224;
     }

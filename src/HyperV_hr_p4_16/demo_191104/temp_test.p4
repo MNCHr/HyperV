@@ -342,7 +342,7 @@ control MyIngress(inout headers hdr,
         }
     }
 // variable, is this possible ?
-const bit<112> temp_extract_112 = 112w0x1; 
+// bit<112> temp_extract_112 = 112w0x1; 
     action action_extract_n_shift_112_srcAddr() { // is this possible ?
         temp_extract_112 = (hdr.hdr_112.buffer & def_mask_112_srcAddr);
         temp_extract_112 = temp_extract_112 << 48;

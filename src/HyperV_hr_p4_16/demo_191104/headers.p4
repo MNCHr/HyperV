@@ -29,14 +29,12 @@ header hdr_64_t {
     bit<64> buf;
 }
 
-
 struct headers {
     description_hdr_t  desc_hdr;
     hdr_112_t          hdr_112;
     hdr_160_t[MAX_LEN] hdr_160;
     hdr_224_t          hdr_224;
-    hdr_64_t           hdr_64;
-    	
+    hdr_64_t           hdr_64;  	
 }
 
 

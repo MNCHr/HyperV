@@ -38,7 +38,7 @@ control MyIngress(inout headers hdr,
 
 
     // stage entering
-    action set_action_id(bit<48> action_bitmap) { 
+    action set_action_id(bit<32> action_bitmap) { 
         meta.vdp_metadata.action_chain_bitmap = action_bitmap;
     }
 
@@ -51,7 +51,7 @@ control MyIngress(inout headers hdr,
             set_action_id(); // enabling primitive actions
         }
         const entries = {
-            (1, 112w0x00000000000A0000000000000000 &&& 112w0xFFFFFFFFFFFF0000000000000000) : set_action_id(0x000000000001);
+            (1, 112w0x00000000000A0000000000000000 &&& 112w0xFFFFFFFFFFFF0000000000000000) : set_action_id(0x00000001);
             
         }
     }
@@ -65,7 +65,7 @@ control MyIngress(inout headers hdr,
             set_action_id(); // enabling primitive actions
         }
         const entries = { 
-            (2, 160w0x000000000000000000000000000000000000000A &&& 160w0x00000000000000000000000000000000FFFFFFFF) : set_action_id(0x000000000111);
+            (2, 160w0x000000000000000000000000000000000000000A &&& 160w0x00000000000000000000000000000000FFFFFFFF) : set_action_id(0x00000111);
             
         }
     }
@@ -79,8 +79,8 @@ control MyIngress(inout headers hdr,
             set_action_id(); // enabling primitive actions
         }
         const entries = { //A면 pass, B면 drop
-            (3, 160w0x0000000000000000000000000000000A0000000A &&& 160w0x000000000000000000000000FFFFFFFFFFFFFFFF) : set_action_id(0x000000000000);
-            (3, 160w0x0000000000000000000000000000000B0000000B &&& 160w0x000000000000000000000000FFFFFFFFFFFFFFFF) : set_action_id(0x800000000000);
+            (3, 160w0x0000000000000000000000000000000A0000000A &&& 160w0x000000000000000000000000FFFFFFFFFFFFFFFF) : set_action_id(0x00000000);
+            (3, 160w0x0000000000000000000000000000000B0000000B &&& 160w0x000000000000000000000000FFFFFFFFFFFFFFFF) : set_action_id(0x80000000);
             
         }
     }
@@ -93,8 +93,8 @@ control MyIngress(inout headers hdr,
             set_action_id(); // enabling primitive actions
         }
         const entries = { //A 면 pass, B면 drop
-            (3, 160w0x000A000A00000000000000000000000000000000 &&& 160w0xFFFFFFFF00000000000000000000000000000000) : set_action_id(0x000000000000);
-            (3, 160w0x000B000B00000000000000000000000000000000 &&& 160w0xFFFFFFFF00000000000000000000000000000000) : set_action_id(0x800000000000);
+            (3, 160w0x000A000A00000000000000000000000000000000 &&& 160w0xFFFFFFFF00000000000000000000000000000000) : set_action_id(0x00000000);
+            (3, 160w0x000B000B00000000000000000000000000000000 &&& 160w0xFFFFFFFF00000000000000000000000000000000) : set_action_id(0x80000000);
             
         }
     }
@@ -110,7 +110,7 @@ control MyIngress(inout headers hdr,
         const entries = { 
         //#define def_mask_224_opcode  224w0x000000000000FFFF0000000000000000000000000000000000000000
         // set_action_id = 48w0b(0001 1111 1000 0001) = 48w0x1F81
-            (4, 224w0x00000000000000010000000000000000000000000000000000000000 &&& 224w0x000000000000FFFF0000000000000000000000000000000000000000) : set_action_id(0x000000001F81);
+            (4, 224w0x00000000000000010000000000000000000000000000000000000000 &&& 224w0x000000000000FFFF0000000000000000000000000000000000000000) : set_action_id(0x00001F81);
         }
     }
     //? escape? 
@@ -124,7 +124,7 @@ control MyIngress(inout headers hdr,
             set_action_id();
         }
         const entries = {
-            (3, 3) : set_action_id(0x000000000001);
+            (3, 3) : set_action_id(0x00000001);
         }
     }
     table table_std_meta_match_ingress_port_stage4 {
@@ -137,7 +137,7 @@ control MyIngress(inout headers hdr,
         }
         const entries = {
         // set_action_id = 48w0b(0001 1111 1000 0001) = 48w0x1F81
-            (4, 4) : set_action_id(0x000000001F81);
+            (4, 4) : set_action_id(0x00001F81);
         }
     }
 /////primitive actions + tables + entries /////
@@ -180,7 +180,7 @@ control MyIngress(inout headers hdr,
 #define BIT_MASK_EXTRACT_n_SHIFT_224_SRCIP 1<<12 //arp 
 #define BIT_MASK_MOD_224_BOTHIP 1<<13 //arp 
 
-#define BIT_MASK_DROP 1<<47
+#define BIT_MASK_DROP 1<<31
 
 	action action_forward(bit<9> port) { // 1st primitive
 		standard_metadata.egress_spec = port;
@@ -344,9 +344,9 @@ control MyIngress(inout headers hdr,
 // variable, is this possible ?
 // bit<112> temp_extract_112 = 112w0x1; 
     action action_extract_n_shift_112_srcAddr() { // is this possible ?
-        meta.temp_metadata.temp_md_mask_112 = (hdr.hdr_112.buffer & def_mask_112_srcAddr);
-        meta.temp_metadata.temp_md_mask_112 = meta.temp_metadata.temp_md_mask_112 << 48;
-        meta.temp_mdetadata.temp_112 = meta.temp_metadata.temp_md_mask_112;
+        meta.temp_metadata.temp_extract_112 = (hdr.hdr_112.buffer & def_mask_112_srcAddr);
+        meta.temp_metadata.temp_extract_112 = meta.temp_metadata.temp_extract_112 << 48;
+        meta.temp_metadata.temp_112 = meta.temp_metadata.temp_extract_112;
     }
     table table_action_extract_n_shift_112_srcAddr_stage4 {
         key = {
@@ -360,9 +360,8 @@ control MyIngress(inout headers hdr,
         }
     }    //cont'//
     action action_mod_112_bothAddr (bit<112> value_112_srcAddr) { // -th primitive, error-prone?
-        meta.temp_mdetadata.temp_112 = 0;
-        meta.temp_mdetadata.temp_112 = (meta.temp_mdetadata.temp_112 | value_112_srcAddr); //(pre-process) merge to md
-        hdr.hdr_112.buffer = (hdr.hdr_112.buffer&(~def_mask_112_bothAddr))| meta.temp_mdetadata.temp_112;
+        meta.temp_metadata.temp_112 = (meta.temp_metadata.temp_112 | value_112_srcAddr); //(pre-process) merge to md
+        hdr.hdr_112.buffer = (hdr.hdr_112.buffer&(~def_mask_112_bothAddr))| meta.temp_metadata.temp_112;
     }
     table table_action_mod_112_bothAddr_stage4 {
         key = {
@@ -379,9 +378,9 @@ control MyIngress(inout headers hdr,
 
 //const bit<224> temp_extract_224 = 224w0x0; // variable, is this possible ?
     action action_extract_n_shift_224_srcMAC() { // is this possible ?
-        meta.temp_metadata.temp_md_mask_224 = (hdr.hdr_224.buffer & def_mask_224_srcMAC);
-        meta.temp_metadata.temp_md_mask_224 = meta.temp_metadata.temp_md_mask_224 >> 80;
-        meta.temp_mdetadata.temp_224 = meta.temp_metadata.temp_md_mask_224;
+        meta.temp_metadata.temp_extract_224 = (hdr.hdr_224.buffer & def_mask_224_srcMAC);
+        meta.temp_metadata.temp_extract_224 = meta.temp_metadata.temp_extract_224 >> 80;
+        meta.temp_metadata.temp_224 = meta.temp_metadata.temp_extract_224;
     }
     table table_action_extract_n_shift_224_srcMAC_stage4 {
         key = {
@@ -396,8 +395,8 @@ control MyIngress(inout headers hdr,
     }    //cont'//
     action action_mod_224_bothMAC (bit<224> value_224_srcMAC) { // -th primitive, error-prone?
 //        meta.temp_mdetadata.temp_224 = 0;
-        meta.temp_mdetadata.temp_224 = (meta.temp_mdetadata.temp_224 | value_224_srcMAC); //(pre-process) merge to md
-        hdr.hdr_224.buffer = (hdr.hdr_224.buffer&(~def_mask_224_bothMAC))| meta.temp_mdetadata.temp_224;
+        meta.temp_metadata.temp_224 = (meta.temp_metadata.temp_224 | value_224_srcMAC); //(pre-process) merge to md
+        hdr.hdr_224.buffer = (hdr.hdr_224.buffer&(~def_mask_224_bothMAC))| meta.temp_metadata.temp_224;
     }
     table table_action_mod_224_bothMAC_stage4 {
         key = {
@@ -413,9 +412,9 @@ control MyIngress(inout headers hdr,
     }
 
     action action_extract_n_shift_224_srcIP() { // is this possible ?
-        temp_extract_224 = (hdr.hdr_224.buffer & def_mask_224_srcIP);
-        temp_extract_224 = temp_extract_224 >> 80;
-        meta.temp_mdetadata.temp_224 = temp_extract_224;
+        meta.temp_metadata.temp_extract_224 = (hdr.hdr_224.buffer & def_mask_224_srcIP);
+        meta.temp_metadata.temp_extract_224 = meta.temp_metadata.temp_extract_224 >> 80;
+        meta.temp_metadata.temp_224 = meta.temp_metadata.temp_extract_224;
     }
     table table_action_extract_n_shift_224_srcIP_stage4 {
         key = {
@@ -429,9 +428,8 @@ control MyIngress(inout headers hdr,
         }
     }    //cont'//
     action action_mod_224_bothIP (bit<224> value_224_srcIP) { // -th primitive, error-prone?
-        meta.temp_mdetadata.temp_224 = 0;
-        meta.temp_mdetadata.temp_224 = (meta.temp_mdetadata.temp_224 | value_224_srcIP); //(pre-process) merge to md
-        hdr.hdr_224.buffer = (hdr.hdr_224.buffer&(~def_mask_224_bothIP))| meta.temp_mdetadata.temp_224;
+        meta.temp_metadata.temp_224 = (meta.temp_metadata.temp_224 | value_224_srcIP); //(pre-process) merge to md
+        hdr.hdr_224.buffer = (hdr.hdr_224.buffer&(~def_mask_224_bothIP))| meta.temp_metadata.temp_224;
     }
     table table_action_mod_224_bothIP_stage4 {
         key = {

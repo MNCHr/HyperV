@@ -20,13 +20,13 @@ struct user_metadata_t {
 
 struct temp_metadata_t {
     bit<112> temp_112;
-    bit<112> temp_md_mask_112;
-    bit<160> temp_160_1;
-    bit<160> temp_md_mask_160_1;
-    bit<160> temp_160_2;
-    bit<160> temp_md_mask_160_2;
+    bit<112> temp_extract_112;
+    bit<160> temp_160;
+    bit<160> temp_extract_160;
+    bit<160> temp_161;
+    bit<160> temp_extract_161;
     bit<224> temp_224;
-    bit<224> temp_md_mask_224;
+    bit<224> temp_extract_224;
 }
 
 struct metadata {
